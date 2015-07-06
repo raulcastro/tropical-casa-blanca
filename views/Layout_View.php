@@ -80,6 +80,10 @@ class Layout_View
 				case 'reservations':
 					echo self :: getReservationsHead();
 				break;
+				
+				case 'rooms':
+					echo self :: getRoomsHead();
+				break;
 			}
 			?>
 		</head>
@@ -137,6 +141,10 @@ class Layout_View
 							
 							case 'calendar':
 								echo self :: getCalendar();
+							break;
+							
+							case 'rooms':
+								echo self :: getRooms();
 							break;
 							
 							default:
@@ -434,6 +442,7 @@ class Layout_View
 			</ul>
 			
 			<ul class="nav nav-sidebar">
+				<li <?php if ($_GET['section'] == 13) echo $active; ?>><a href="/rooms/">Rooms</a></li>
 				<li <?php if ($_GET['section'] == 11) echo $active; ?>><a href="/calendar/">Calendar</a></li>
 				<li <?php if ($_GET['section'] == 5) echo $active; ?>><a href="/documents/">Documents</a></li>
 			</ul>
@@ -2352,6 +2361,28 @@ class Layout_View
    		$memberReservation = ob_get_contents();
    		ob_end_clean();
    		return $memberReservation;
+   	}
+   	
+   	public function getRoomsHead()
+   	{
+   		ob_start();
+   		?>
+   			<link rel="stylesheet" href="/css/jquery-ui.css">
+   		<?php		
+   		$roomsHead = ob_get_contents();
+   		ob_end_clean();
+   		return $roomsHead;
+   	}
+   		
+   	public function getRooms()
+   	{
+   		ob_start();
+   		?>
+   			rooms mofos, rooms!
+   	   	<?php
+   	   	$rooms = ob_get_contents();
+   	   	ob_end_clean();
+   	   	return $rooms; 
    	}
    	
     public function getFooter()
