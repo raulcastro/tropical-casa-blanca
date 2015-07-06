@@ -1,3 +1,8 @@
+# Eclipse files
+.buildpath
+.project
+.settings/
+
 # Object files
 *.o
 *.ko
