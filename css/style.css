@@ -1,0 +1,910 @@
+@CHARSET "UTF-8";
+
+.login-box {
+	padding-top: 2%;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+	background-color: #f5f5f5;
+}
+
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.main-menu-holder {
+	background: #FFF;
+}
+
+.sign-out {
+	color: red;
+}
+
+.dashboard-icons .text-muted {
+	font-size: 12px;
+}
+
+.dashboard-icons i {
+	font-size: 30px;
+}
+
+.dashboard-icons a {
+	color: rgb(34, 34, 34);
+}
+
+.dashboard-icons a:hover {
+	text-decoration: none;
+}
+
+/*
+ * Add member
+ */
+ 
+ .form-control-helper {
+ 	
+ }
+ 
+ .utilities {
+ 	margin-top: 30px;
+ }
+ 
+ .history-member-panel {
+ 	margin-top: 20px;
+ 	min-height: 200px;
+ }
+ 
+ .history-member-box textarea {
+ 	margin: 10px 0 ;
+ }
+ 
+ .history-content {
+ 	  margin: 30px 0;
+ }
+ 
+.history-list {
+	 list-style-type: none;
+	 margin: 0 0 20px 0;
+	 padding: 0;
+	 width: 100%;
+	 font-size: 12px;
+	 color: #797979;
+}
+
+.history-list li {
+	padding: 10px !important;
+	background: #f5f6f8;
+	margin-bottom: 2px;
+	border-bottom: none !important;
+	border-left: 3px solid #58C9F3;
+}
+
+.history-list li i {
+  padding: 0 4px 0 10px;
+  cursor: pointer;
+  float: left;
+  color: #111;
+}
+
+.history-list .header {
+	border-bottom: 1px solid #E0E0E0;
+	margin-bottom: 8px;
+	text-align: right;
+	font-size: 10px;
+}
+
+.history-member-box {
+	display: none;
+}
+
+.member-link {
+	color: #222222;
+}
+ 
+/**** History ****/
+
+.task-member-panel {
+ 	margin-top: 20px;
+ 	min-height: 200px;
+ }
+ 
+ .task-member-box {
+}
+ 
+ .create-task-box {
+	margin-top: 15px;
+	color:#666!important;
+	display: none;
+}
+
+.create-task-box .top {
+}
+
+.create-task-box .top .to {
+	width: 20%;
+	float: left;
+}
+
+.create-task-box .top .date {
+	width: 25%;
+	float: left;
+}
+
+.create-task-box .top .date input {
+	font-size: 12px!important;
+}
+
+.create-task-box .top .hour {
+	width: 20%;
+	float: right;
+	text-align: right;
+}
+
+.create-task-box .middle textarea {
+	margin: 10px 0 10px 0 ;
+	height: 50px;
+	padding: 5px;
+}
+.clear {
+	clear: both;
+}
+.create-task-box a {
+	float: left;
+}
+
+.task-content {
+ 	  margin: 30px 0;
+ }
+
+.task-list {
+	 list-style-type: none;
+	 margin: 0 0 20px 0;
+	 padding: 0;
+	 width: 100%;
+	 font-size: 12px;
+	 color: #797979;
+}
+
+.task-list li {
+	padding: 10px !important;
+	background: #f5f6f8;
+	margin-bottom: 2px;
+	border-bottom: none !important;
+	
+}
+
+.task-list .completed {
+	border-left: 3px solid #43ac6a;
+}
+
+.task-list .pending {
+	border-left: 3px solid #f04124;
+}
+
+.task-list .today {
+	border-left: 3px solid #008cba;
+}
+
+.task-list .future {
+	border-left: 3px solid #e99002;
+}
+
+.task-list li i {
+  padding: 0 4px 0 10px;
+  cursor: pointer;
+  float: left;
+  color: #111;
+}
+
+.task-list .header {
+	border-bottom: 1px solid #E0E0E0;
+	margin-bottom: 8px;
+	font-size: 11px;
+}
+
+.task-list .header .status {
+	float: left;
+}
+
+.task-list .header .member {
+	float: right;
+}
+
+.task-list .header .info {
+	float: left;
+}
+
+.task-list .footer {
+	border-top: 1px solid #E0E0E0;
+	margin-top: 4px;
+	padding: 4px;
+	font-size: 11px;
+}
+
+.task-list .footer a {
+	float: left;
+	color: rgb(67, 172, 106);
+}
+
+.task-list  .icon {
+	float: right;
+	color: rgb(67, 172, 106);
+	margin-left: 20px;
+}
+
+
+/****** Main Task Menu ********/
+
+.main-menu-tasks {
+	
+}
+
+.main-menu-tasks a {
+	text-transform: lowercase;
+	margin-left: 30px;
+	padding-bottom: 2px;
+	color: #222;
+}
+
+.main-menu-tasks a:hover {
+	text-decoration: none;
+}
+
+.pending-task-border {
+	
+}
+
+/******* Documents ********/
+
+.documents i {
+	font-size: 16px;
+}
+
+/******* Mailbox ********/
+
+.mail-info, .mail-info:hover {
+    margin: -3px 6px 0 0;
+    font-size: 11px;
+}
+
+/*mail inbox*/
+
+.mail-box {
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    color: #797979;
+}
+
+.mail-box aside {
+    display: table-cell;
+    float: none;
+    height: 100%;
+    padding: 0;
+    vertical-align: top;
+}
+
+.mail-box .sm-side {
+    width: 20%;
+    background: #F0F0F0;
+    border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+}
+.mail-box .lg-side {
+    width: 75%;
+    background: #fff;
+    border-radius: 0px 4px 4px 0;
+    -webkit-border-radius: 0px 4px 4px 0;
+}
+
+.mail-box .sm-side .user-head {
+    background: #F0F0F0;
+    border-radius: 4px 0px 0px 0;
+    -webkit-border-radius: 4px 0px 0px 0;
+    padding: 10px;
+    color: #222;
+    min-height: 80px;
+}
+
+.user-head .inbox-avatar {
+    width: 65px;
+    float: left;
+}
+
+.user-head .inbox-avatar img {
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.user-head .user-name {
+    display: inline-block;
+    margin:0 0 0 10px;
+}
+
+.user-head .user-name h5 {
+    font-size: 14px;
+    margin-top: 15px;
+    margin-bottom: 0;
+    font-weight: 300;
+}
+.user-head .user-name h5 a {
+    color: #222;
+}
+
+.user-head .user-name span a {
+    font-size: 12px;
+    color: #949494;
+}
+
+a.mail-dropdown {
+    background: #80d3d9;
+    padding:3px 5px;
+    font-size: 10px;
+    color: #01a7b3;
+    border-radius: 2px;
+    margin-top: 20px;
+}
+
+.inbox-body {
+    padding: 20px;
+    font-size: 12px;
+}
+.view-body {
+		
+}
+
+.btn-compose {
+    background: #ff6c60;
+    padding: 12px 0;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+}
+.btn-compose:hover {
+    background: #f5675c;
+    color: #fff;
+}
+
+ul.inbox-nav  {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.inbox-divider {
+    border-bottom: 1px solid #d5d8df;
+}
+
+ul.inbox-nav li {
+    display: inline-block;
+    line-height: 45px;
+    width: 100%;
+    font-size: 12px;
+}
+
+ul.inbox-nav li a  {
+    color: #6a6a6a;
+    line-height: 45px;
+    width: 100%;
+    display: inline-block;
+    padding: 0 20px;
+}
+
+ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus  {
+    color: #6a6a6a;
+    background: #d5d7de;
+}
+
+ul.inbox-nav li a i {
+    padding-right: 10px;
+    font-size: 16px;
+    color: #6a6a6a;
+}
+
+ul.inbox-nav li a span.label {
+    margin-top: 13px;
+}
+
+ul.labels-info li h4 {
+    padding-left:15px;
+    padding-right:15px;
+    padding-top: 5px;
+    color: #5c5c5e;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+ul.labels-info li  {
+    margin: 0;
+}
+
+ul.labels-info li a {
+    color: #6a6a6a;
+    border-radius: 0;
+}
+
+ul.labels-info li a:hover, ul.labels-info li a:focus {
+    color: #6a6a6a;
+    background: #d5d7de;
+}
+
+ul.labels-info li a i {
+    padding-right: 10px;
+}
+
+.nav.nav-pills.nav-stacked.labels-info p {
+    margin-bottom: 0;
+    padding: 0 22px;
+    color: #9d9f9e;
+    font-size: 11px;
+}
+
+.inbox-head {
+    padding:10px;
+    background: #F5F5F5;
+    color: #222;
+    border-radius: 0 4px 0 0;
+    -webkit-border-radius: 0 4px 0 0;
+    min-height: 60px;
+}
+
+.inbox-head  h3 {
+    margin: 0;
+    display: inline-block;
+    padding-top: 6px;
+    font-weight: 300;
+}
+
+.inbox-head  .sr-input {
+    height: 40px;
+    border: none;
+    box-shadow: none;
+    padding: 0 10px;
+    float: left;
+    border-radius: 4px 0 0 4px;
+    color: #8a8a8a;
+}
+.inbox-head  .sr-btn {
+    height: 40px;
+    border: none;
+    background: #00a6b2;
+    color: #fff;
+    padding: 0 20px;
+    border-radius: 0 4px 4px 0;
+    -webkit-border-radius: 0 4px 4px 0;
+}
+
+.table-inbox {
+    border: 1px solid #d3d3d3;
+    margin-bottom: 0;
+}
+
+.table-inbox tr td{
+    padding: 12px !important;
+}
+
+.table-inbox tr td:hover{
+    cursor: pointer;
+}
+
+.table-inbox tr td .fa-star.inbox-started ,.table-inbox tr td .fa-star:hover{
+    color: #f78a09;
+}
+
+.table-inbox tr td .fa-star{
+    color: #d5d5d5;
+}
+
+.table-inbox tr.unread td {
+    font-weight: 600;
+    background: #f7f7f7;
+}
+
+ul.inbox-pagination  {
+    float: right;
+}
+
+ul.inbox-pagination li {
+    float: left;
+}
+
+.mail-option {
+    display: inline-block;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.mail-option .chk-all, .mail-option .btn-group {
+    margin-right: 5px;
+}
+
+.mail-option .chk-all, .mail-option .btn-group a.btn {
+    border: 1px solid #e7e7e7;
+    padding: 5px 10px;
+    display: inline-block;
+    background: #fcfcfc;
+    color: #afafaf;
+    border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
+}
+.inbox-pagination a.np-btn  {
+    border: 1px solid #e7e7e7;
+    padding: 5px 15px;
+    display: inline-block;
+    background: #fcfcfc;
+    color: #afafaf;
+    border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
+}
+
+.mail-option .chk-all input[type=checkbox] {
+    margin-top: 0;
+}
+
+.mail-option .btn-group a.all {
+    padding: 0;
+    border: none;
+}
+
+.inbox-pagination a.np-btn {
+    margin-left: 5px;
+}
+
+.inbox-pagination li span {
+    display: inline-block;
+    margin-top: 7px;
+    margin-right: 5px;
+}
+
+.fileinput-button {
+    border: 1px solid #e6e6e6;
+    background: #eeeeee;
+}
+
+.inbox-body .modal .modal-body input, .inbox-body .modal .modal-body textarea{
+    border: 1px solid #e6e6e6;
+    box-shadow: none;
+}
+
+.btn-send, .btn-send:hover {
+    background: #00A8B3;
+    color: #fff;
+}
+
+.btn-send:hover {
+    background: #009da7;
+}
+
+.modal-header h4.modal-title {
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.modal-body label {
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.heading-inbox h4{
+    font-size: 18px;
+    color: #444;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-top: 20px;
+}
+
+.sender-info {
+    margin-bottom: 20px;
+}
+
+.sender-info img {
+    width: 30px;
+    height: 30px;
+}
+
+.sender-dropdown {
+    background: #eaeaea;
+    padding:0 3px;
+    color: #777;
+    font-size: 10px;
+}
+
+.view-mail a {
+    color: #FF6C60;
+}
+
+.attachment-mail {
+    margin-top: 30px;
+}
+.attachment-mail ul {
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.attachment-mail ul li {
+    float: left;
+    width: 150px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.attachment-mail ul li img {
+    width: 100%;
+}
+
+.attachment-mail ul li span {
+    float: right;
+}
+.attachment-mail .file-name {
+    float: left;
+}
+
+.attachment-mail .links {
+    width: 100%;
+    display: inline-block;
+}
+
+/*404 page*/
+
+.body-404 {
+    background: #18d4cb;
+    color: #fff;
+}
+
+.error-wrapper {
+    text-align: center;
+    margin-top: 10%;
+}
+
+.error-wrapper .icon-404{
+    background: url("../img/404_icon.png") no-repeat;
+    width: 289px;
+    height: 274px;
+    display: inline-block;
+    margin-left: 30px;
+}
+
+
+.error-wrapper h1 {
+    font-size: 90px;
+    font-weight: 300;
+    margin: -50px 0 0 0;
+}
+
+.error-wrapper h2 {
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0 0 30px 0;
+}
+
+.error-wrapper p, .error-wrapper p a {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.error-wrapper p.page-404  {
+    color: #7dfff7;
+}
+
+.error-wrapper p.page-404 a, .error-wrapper p.page-500 a,  .error-wrapper p.page-404 a:hover, .error-wrapper p.page-500 a:hover {
+    color: #fff;
+}
+
+
+#fullcalendar {
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+.searchReservation .checkIn, .searchReservation .checkOut {
+	width: 100px;
+}
+ 
+.reservationResults {
+	margin: 30px 0;
+	font-size: 12px;
+}
+ 
+.reservationResults .roomTypeList {
+	list-style-type: none;
+}
+ 
+.reservationResults .roomTypeList li {
+	width: 300px;
+}
+
+.reservationResults .roomTypeList li .roomType {
+	padding: 6px;
+	margin-top: 15px;
+}
+
+.reservationResults .roomList {
+	width: 300px;
+	list-style-type: none;
+}
+
+.reservationResults .roomList li {
+	width: 275px;
+	padding: 4px 8px;
+	margin: 6px 0;
+	color: #575757;
+}
+ 
+.rightSideReservations {
+	margin: 50px 0;
+	display: none;
+}
+
+.rightSideReservations .roomName {
+	padding: 4px;
+}
+
+.rightSideReservations .row {
+	margin: 15px 0;
+}
+ 
+#completeProfileBtn {
+	display: none;
+}
+ 
+.memberReservations {
+	margin: 30px 0;
+	font-size: 12px;
+	min-height: 200px;
+}
+
+.memberReservations .reservation-item {
+	margin-bottom: 14px;
+}
+
+.memberReservations .reservation-item .title {
+	padding: 4px;
+}
+
+.memberReservations .reservation-item .info {
+	padding: 4px;
+}
+
+.memberReservations .reservation-item .extra {
+	padding: 4px;
+}
+ 
+.reservation-member-panel {
+ 	margin-top: 20px;
+ 	min-height: 20px;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
