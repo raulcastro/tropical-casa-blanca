@@ -2378,7 +2378,122 @@ class Layout_View
    	{
    		ob_start();
    		?>
-   			rooms mofos, rooms!
+   			<div class="row col-sm-12 rooms-calendar">
+   				<div class="col-sm-2">Select</div>
+   				<div class="col-sm-10">
+   					<div class="row">
+   						<div class="row status-bar ">
+   							Status Bar
+   						</div>
+   						<div class="row">
+   							<div class="month-name">Julio 2015</div>
+   							<div class="days-box">
+   								<div class="row-week-day-header">
+   									<div class="week-day"><p class="text-center"><small>Sunday</small></p> <p class="text-center">05</p></div>
+   									<div class="week-day"><p class="text-center"><small>Monday</small></p> <p class="text-center">06</p></div>
+   									<div class="week-day"><p class="text-center"><small>Tuesday</small></p> <p class="text-center">07</p></div>
+   									<div class="week-day"><p class="text-center"><small>Wednesday</small></p> <p class="text-center">08</p></div>
+   									<div class="week-day"><p class="text-center"><small>Thursday</small></p> <p class="text-center">09</p></div>
+   									<div class="week-day"><p class="text-center"><small>Friday</small></p> <p class="text-center">10</p></div>
+   									<div class="week-day"><p class="text-center"><small>Sathurday</small></p> <p class="text-center">11</p></div>
+   								</div>
+   								<div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+   								</div>
+   							</div>
+   						</div>
+   					</div>
+   				</div>
+   			</div>
    	   	<?php
    	   	$rooms = ob_get_contents();
    	   	ob_end_clean();
