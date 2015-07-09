@@ -2407,7 +2407,17 @@ class Layout_View
    						}
    						
    						if (!$_GET['from'])
+   						{
    							$from = date('Y-m-d', strtotime(' -1 day'));
+   							$day['prev'] = date('Y-m-d', strtotime(' -7 day', strtotime($from)));
+   							$day['next'] = date('Y-m-d', strtotime(' +7 day', strtotime($from)));
+   						}
+   						else 
+   						{
+   							$from = date('Y-m-d', strtotime($_GET['from']));
+   							$day['prev'] = date('Y-m-d', strtotime(' -7 day', strtotime($_GET['from'])));
+   							$day['next'] = date('Y-m-d', strtotime(' +7 day', strtotime($_GET['from'])));
+   						}
    						
 
    						
@@ -2446,7 +2456,12 @@ class Layout_View
    				<div class="col-sm-10">
    					<div class="row">
    						<div class="row status-bar ">
-   							Status Bar
+   							<div class="row col-sm-9"></div>
+   							<div class="row col-sm-3">
+   								<a href="/rooms/from/<?php echo $day['prev']; ?>/">&laquo; Previus</a>
+   								<a href="/rooms/">Today</a>
+   								<a href="/rooms/from/<?php echo $day['next']; ?>/">Next &raquo;</a>
+   							</div>
    						</div>
    						<div class="row">
    							<div class="month-name"><?php echo date('F Y'); ?></div>

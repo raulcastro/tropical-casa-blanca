@@ -31,3 +31,4 @@ RewriteRule ^broker/([0-9]+)/([A-Za-z0-9-]+)/$ /add-broker.php?brokerId=$1&secti
 RewriteRule ^calendar/$ /calendar.php?section=11
 RewriteRule ^reservations/$ /reservations.php?section=12
 RewriteRule ^rooms/$ /rooms.php?section=13
+RewriteRule ^rooms/from/([A-Za-z0-9-]+)/$ /rooms.php?from=$1&section=13
