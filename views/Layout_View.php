@@ -437,14 +437,14 @@ class Layout_View
 			<ul class="nav nav-sidebar">
 				<li <?php if ($_GET['section'] == 1) echo $active; ?>><a href="/dashboard/">Dashboard</a></li>
 				<li <?php if ($_GET['section'] == 12) echo $active; ?>><a href="/reservations/">Reservations</a></li>
-				<li <?php if ($_GET['section'] == 2) echo $active; ?>><a href="/add-guest/">Add Guest</a></li>
+				<!-- <li <?php if ($_GET['section'] == 2) echo $active; ?>><a href="/add-guest/">Add Guest</a></li> -->
 				<li <?php if ($_GET['section'] == 9) echo $active; ?>><a href="/add-broker/">Add Broker</a></li>
 			</ul>
 			
 			<ul class="nav nav-sidebar">
 				<li <?php if ($_GET['section'] == 13) echo $active; ?>><a href="/rooms/">Rooms</a></li>
 				<li <?php if ($_GET['section'] == 11) echo $active; ?>><a href="/calendar/">Calendar</a></li>
-				<li <?php if ($_GET['section'] == 5) echo $active; ?>><a href="/documents/">Documents</a></li>
+				<li <?php if ($_GET['section'] == 5) echo $active; ?>><a href="/agencies/">Agencies</a></li>
 			</ul>
 		</div>
    		<?php
@@ -2379,7 +2379,33 @@ class Layout_View
    		ob_start();
    		?>
    			<div class="row col-sm-12 rooms-calendar">
-   				<div class="col-sm-2">Select</div>
+   				<div class="col-sm-2">
+   					<div class="select-month">
+   						<select>
+   							<option>June 2015 </option>
+   							<option>July 2015</option>
+   							<option>August 2015</option>
+   							<option>September 2015</option>
+   							<option>October 2015</option>
+   							<option>November 2015</option>
+   							<option>December 2015</option>
+   						</select>
+   					</div>
+   					<div class="empty-row row"></div>
+   					<div class="room-row-box">
+   						<?php 
+   						foreach ($this->data['rooms'] as $room)
+   						{
+   							?>
+   						<div>
+   							<p><?php echo $room['room'].' - '.$room['abbr']; ?></p>
+   						</div>
+   							<?php
+   							
+   						}
+   						?>
+   					</div>
+   				</div>
    				<div class="col-sm-10">
    					<div class="row">
    						<div class="row status-bar ">
@@ -2398,6 +2424,30 @@ class Layout_View
    									<div class="week-day"><p class="text-center"><small>Sathurday</small></p> <p class="text-center">11</p></div>
    								</div>
    								<div>
+<!--    								villa -->
+	   								<div class="row-week-day">
+	   									<div class="week-day full">
+	   									</div>
+	   									<div class="week-day full"></div>
+	   									<div class="week-day full"></div>
+	   									<div class="week-day full"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								
+<!-- 	   								1 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day full"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+	   								
+<!-- 	   								2 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
@@ -2407,6 +2457,17 @@ class Layout_View
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
 	   								</div>
+<!-- 	   								3 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day full"><span></span></div>
+	   									<div class="week-day full"><span></span></div>
+	   									<div class="week-day full"><span></span></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+<!-- 	   								4 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
@@ -2416,6 +2477,7 @@ class Layout_View
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
 	   								</div>
+<!-- 	   								5 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
@@ -2425,6 +2487,7 @@ class Layout_View
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
 	   								</div>
+<!-- 	   								6 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
@@ -2434,6 +2497,7 @@ class Layout_View
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
 	   								</div>
+<!-- 	   								7 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
@@ -2443,6 +2507,7 @@ class Layout_View
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
 	   								</div>
+<!-- 	   								17 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
@@ -2452,6 +2517,7 @@ class Layout_View
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
 	   								</div>
+<!-- 	   								8 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
@@ -2461,6 +2527,7 @@ class Layout_View
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
 	   								</div>
+<!-- 	   								11 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
@@ -2470,6 +2537,7 @@ class Layout_View
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
 	   								</div>
+<!-- 	   								12 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
@@ -2479,6 +2547,87 @@ class Layout_View
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>
 	   								</div>
+<!-- 	   								13 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+<!-- 	   								14 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day full"><span></span></div>
+	   									<div class="week-day full"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+<!-- 	   								15 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+<!-- 	   								16 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day full"><span></span></div>
+	   									<div class="week-day full"><span></span></div>
+	   									<div class="week-day full"><span></span></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+<!-- 	   								18 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+<!-- 	   								19 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+<!-- 	   								20 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day full"><span></span></div>
+	   									<div class="week-day full"><span></span></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+<!-- 	   								9 -->
+	   								<div class="row-week-day">
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   									<div class="week-day"></div>
+	   								</div>
+<!-- 	   								10 -->
 	   								<div class="row-week-day">
 	   									<div class="week-day"></div>
 	   									<div class="week-day"></div>

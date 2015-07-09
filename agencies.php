@@ -12,6 +12,6 @@
 
 	$data 	= $backend->loadBackend($section);
 	
-	$view 	= new Layout_View($data, 'Documents');
+	$view 	= new Layout_View($data, 'Agencies');
 	
 	echo $view->printHTMLPage('documents');

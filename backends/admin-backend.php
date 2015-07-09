@@ -171,6 +171,11 @@ class generalBackend
 				$data['reservations'] = $calendarArray;
 			break;
 			
+			case 'rooms':
+				$roomsArray = $this->model->getAllRooms();
+				$data['rooms'] = $roomsArray;
+			break;
+			
 			default:
 			break;
 		}

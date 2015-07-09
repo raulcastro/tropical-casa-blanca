@@ -929,6 +929,26 @@ ul.inbox-pagination li {
  	min-height: 25px;
 }
 
+.rooms-calendar .days-box .row-week-day .week-day span {
+	min-width: 100%;
+	float: left;
+	margin-top: 10px;
+	min-height: 6px;
+	background: #C1E1AB;
+}
+
+.rooms-calendar .empty-row {
+	min-height: 65px;
+}
+
+
+.rooms-calendar .room-row-box div {
+	border: 1px solid #E4E4E4;
+}
+
+.rooms-calendar .room-row-box div p {
+	margin: 3.5px;
+}
  
  
  
@@ -943,5 +963,26 @@ ul.inbox-pagination li {
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
  
  

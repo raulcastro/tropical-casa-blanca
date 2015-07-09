@@ -917,4 +917,17 @@ class Layout_Model
 			return false;
 		}
 	}
+	
+	public function getAllRooms()
+	{
+		try {
+			$query = 'SELECT r.*, rt.room_type, rt.abbr
+					FROM rooms r
+					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id 
+					';
+			return $this->db->getArray($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
 }

@@ -22,7 +22,7 @@ RewriteRule ^dashboard/$ /dashboard.php?section=1
 RewriteRule ^add-guest/$ /add-member.php?section=2
 RewriteRule ^guests/$ /members.php?section=3
 RewriteRule ^tasks/$ /tasks.php?section=4
-RewriteRule ^documents/$ /documents.php?section=5
+RewriteRule ^agencies/$ /agencies.php?section=5
 RewriteRule ^([0-9]+)/([A-Za-z0-9-]+)/$ /add-member.php?memberId=$1&section=6
 RewriteRule ^email/$ /email.php?section=7
 RewriteRule ^brokers/$ /brokers.php?section=8
