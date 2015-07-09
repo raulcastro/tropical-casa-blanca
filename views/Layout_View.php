@@ -2377,7 +2377,9 @@ class Layout_View
    	public function getRooms()
    	{
    		ob_start();
-   		?>
+   		
+		?>
+		<!-- <pre><?php echo print_r($this->data['rooms']);?></pre> -->
    			<div class="row col-sm-12 rooms-calendar">
    				<div class="col-sm-2">
    					<div class="select-month">
@@ -2403,6 +2405,41 @@ class Layout_View
    							<?php
    							
    						}
+   						
+   						if (!$_GET['from'])
+   							$from = date('Y-m-d', strtotime(' -1 day'));
+   						
+
+   						
+   							
+   						$day[1]['full'] 	= date('Y-m-d', strtotime($from));
+   						$day[1]['dayName'] 	= date('l', strtotime($from));
+   						$day[1]['day'] 		= date('d', strtotime($from));
+   						
+   						$day[2]['full'] 	= date('Y-m-d', strtotime(' +1 day', strtotime($from)));
+   						$day[2]['dayName'] 	= date('l', strtotime(' +1 day', strtotime($from)));
+   						$day[2]['day'] 		= date('d', strtotime(' +1 day', strtotime($from)));
+   						
+   						$day[3]['full'] 	= date('Y-m-d', strtotime(' +2 day', strtotime($from)));
+   						$day[3]['dayName'] 	= date('l', strtotime(' +2 day', strtotime($from)));
+   						$day[3]['day'] 		= date('d', strtotime(' +2 day', strtotime($from)));
+   						
+   						$day[4]['full'] 	= date('Y-m-d', strtotime(' +3 day', strtotime($from)));
+   						$day[4]['dayName'] 	= date('l', strtotime(' +3 day', strtotime($from)));
+   						$day[4]['day'] 		= date('d', strtotime(' +3 day', strtotime($from)));
+   						
+   						$day[5]['full'] 	= date('Y-m-d', strtotime(' +4 day', strtotime($from)));
+   						$day[5]['dayName'] 	= date('l', strtotime(' +4 day', strtotime($from)));
+   						$day[5]['day'] 		= date('d', strtotime(' +4 day', strtotime($from)));
+   						
+   						$day[6]['full'] 	= date('Y-m-d', strtotime(' +5 day', strtotime($from)));
+   						$day[6]['dayName'] 	= date('l', strtotime(' +5 day', strtotime($from)));
+   						$day[6]['day'] 		= date('d', strtotime(' +5 day', strtotime($from)));
+   						
+   						$day[7]['full'] 	= date('Y-m-d', strtotime(' +6 day', strtotime($from)));
+   						$day[7]['dayName'] 	= date('l', strtotime(' +6 day', strtotime($from)));
+   						$day[7]['day'] 		= date('d', strtotime(' +6 day', strtotime($from)));
+   						
    						?>
    					</div>
    				</div>
@@ -2412,231 +2449,164 @@ class Layout_View
    							Status Bar
    						</div>
    						<div class="row">
-   							<div class="month-name">Julio 2015</div>
+   							<div class="month-name"><?php echo date('F Y'); ?></div>
    							<div class="days-box">
    								<div class="row-week-day-header">
-   									<div class="week-day"><p class="text-center"><small>Sunday</small></p> <p class="text-center">05</p></div>
-   									<div class="week-day"><p class="text-center"><small>Monday</small></p> <p class="text-center">06</p></div>
-   									<div class="week-day"><p class="text-center"><small>Tuesday</small></p> <p class="text-center">07</p></div>
-   									<div class="week-day"><p class="text-center"><small>Wednesday</small></p> <p class="text-center">08</p></div>
-   									<div class="week-day"><p class="text-center"><small>Thursday</small></p> <p class="text-center">09</p></div>
-   									<div class="week-day"><p class="text-center"><small>Friday</small></p> <p class="text-center">10</p></div>
-   									<div class="week-day"><p class="text-center"><small>Sathurday</small></p> <p class="text-center">11</p></div>
+   									<div class="week-day">
+   										<p class="text-center"><small><?php echo $day['1']['dayName']; ?></small></p> 
+   										<p class="text-center"><?php echo $day['1']['day']; ?></p>
+   									</div>
+   									<div class="week-day">
+   										<p class="text-center"><small><?php echo $day['2']['dayName']; ?></small></p> 
+   										<p class="text-center"><?php echo $day['2']['day']; ?></p>
+   									</div>
+   									<div class="week-day">
+   										<p class="text-center"><small><?php echo $day['3']['dayName']; ?></small></p> 
+   										<p class="text-center"><?php echo $day['3']['day']; ?></p>
+   									</div>
+   									<div class="week-day">
+   										<p class="text-center"><small><?php echo $day['4']['dayName']; ?></small></p> 
+   										<p class="text-center"><?php echo $day['4']['day']; ?></p>
+   									</div>
+   									<div class="week-day">
+   										<p class="text-center"><small><?php echo $day['5']['dayName']; ?></small></p> 
+   										<p class="text-center"><?php echo $day['5']['day']; ?></p>
+   									</div>
+   									<div class="week-day">
+   										<p class="text-center"><small><?php echo $day['6']['dayName']; ?></small></p> 
+   										<p class="text-center"><?php echo $day['6']['day']; ?></p>
+   									</div>
+   									<div class="week-day">
+   										<p class="text-center"><small><?php echo $day['7']['dayName']; ?></small></p> 
+   										<p class="text-center"><?php echo $day['7']['day']; ?></p>
+   									</div>
    								</div>
    								<div>
-<!--    								villa -->
-	   								<div class="row-week-day">
+   								<?php
+   								
+   								
+   								foreach ($this->data['rooms'] as $room)
+   								{
+   								?>
+   								
+   									<div class="row-week-day">
+   									<?php 
+   									for ($i = 1; $i <= 7; $i++)
+   									{
+   										
+   										?>
+   									
 	   									<div class="week-day full">
+	   									<?php 
+	   									switch ($i)
+	   									{
+	   										case 1:
+	   											if ($room['0']['reservations'])
+	   											{
+	   												foreach ($room['0']['reservations'] as $reservation)
+	   												{
+	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['1']['full']))
+	   													{	?>
+	   														<span></span>
+	   														<?php
+	   													}
+	   												}
+	   											}
+	   										break;
+	   										
+	   										case 2:
+	   											if ($room['0']['reservations'])
+	   											{
+	   												foreach ($room['0']['reservations'] as $reservation)
+	   												{
+	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['2']['full']))
+	   													{	?>
+	   														<span></span>
+	   														<?php
+	   													}
+	   												}
+	   											}
+	   										break;
+	   										
+	   										case 3:
+	   											if ($room['0']['reservations'])
+	   											{
+	   												foreach ($room['0']['reservations'] as $reservation)
+	   												{
+	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['3']['full']))
+	   													{	?>
+	   														<span></span>
+	   														<?php
+	   													}
+	   												}
+	   											}
+   											break;
+	   										
+	   										case 4:
+	   											if ($room['0']['reservations'])
+	   											{
+	   												foreach ($room['0']['reservations'] as $reservation)
+	   												{
+	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['4']['full']))
+	   													{	?>
+	   														<span></span>
+	   														<?php
+	   													}
+	   												}
+	   											}
+   											break;
+	   											
+   											case 5:
+	   											if ($room['0']['reservations'])
+	   											{
+	   												foreach ($room['0']['reservations'] as $reservation)
+	   												{
+	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['5']['full']))
+	   													{	?>
+	   														<span></span>
+	   														<?php
+	   													}
+	   												}
+	   											}
+   											break;
+	   											
+   											case 6:
+	   											if ($room['0']['reservations'])
+	   											{
+	   												foreach ($room['0']['reservations'] as $reservation)
+	   												{
+	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['6']['full']))
+	   													{	?>
+	   														<span></span>
+	   														<?php
+	   													}
+	   												}
+	   											}
+   											break;
+   											
+   											case 7:
+	   											if ($room['0']['reservations'])
+	   											{
+	   												foreach ($room['0']['reservations'] as $reservation)
+	   												{
+	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['7']['full']))
+	   													{	?>
+	   														<span></span>
+	   														<?php
+	   													}
+	   												}
+	   											}
+   											break;
+	   									}
+	   									?>
 	   									</div>
-	   									<div class="week-day full"></div>
-	   									<div class="week-day full"></div>
-	   									<div class="week-day full"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-	   								
-<!-- 	   								1 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day full"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-	   								
-<!-- 	   								2 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								3 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day full"><span></span></div>
-	   									<div class="week-day full"><span></span></div>
-	   									<div class="week-day full"><span></span></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								4 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								5 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								6 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								7 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								17 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								8 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								11 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								12 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								13 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								14 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day full"><span></span></div>
-	   									<div class="week-day full"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								15 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								16 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day full"><span></span></div>
-	   									<div class="week-day full"><span></span></div>
-	   									<div class="week-day full"><span></span></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								18 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								19 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								20 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day full"><span></span></div>
-	   									<div class="week-day full"><span></span></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								9 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
-<!-- 	   								10 -->
-	   								<div class="row-week-day">
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   									<div class="week-day"></div>
-	   								</div>
+   										<?php
+   									}
+   									?>
+   									</div>
+   								<?php 
+   								}
+   								?>
    								</div>
    							</div>
    						</div>

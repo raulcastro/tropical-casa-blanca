@@ -173,7 +173,21 @@ class generalBackend
 			
 			case 'rooms':
 				$roomsArray = $this->model->getAllRooms();
-				$data['rooms'] = $roomsArray;
+				$data['rooms'] = array();
+				foreach ($roomsArray as $room)
+				{
+					$roomInfo = array(
+							'room_id' => $room['room_id'],
+							'room' => $room['room'],
+							'abbr' => $room['abbr']
+					);
+					$reservations['reservations'] = $this->model->getReservationsByRoomId($room['room_id']);
+					array_push($roomInfo, $reservations);
+// 					$data['info']['room_id']['room'] = $room['room'];
+					
+					array_push($data['rooms'], $roomInfo);
+				}
+// 				$data['rooms'] = $roomsArray;
 			break;
 			
 			default:
