@@ -2368,6 +2368,28 @@ class Layout_View
    		ob_start();
    		?>
    			<link rel="stylesheet" href="/css/jquery-ui.css">
+   			<!-- CSS file -->
+			<link type="text/css" rel="stylesheet" href="/js/qtip/jquery.qtip.css" />
+			<!-- Include either the minifed or production version, NOT both!! -->
+			<script type="text/javascript" src="/js/qtip/jquery.qtip.js"></script>
+			<!-- Optional: imagesLoaded script to better support images inside your tooltips -->
+			<script type="text/javascript" src="/js/qtip/jquery.imagesloaded.pkg.min.js"></script>
+			<script>
+			// Grab all elements with the class "hasTooltip"
+			$(document).ready(function() {
+			$('.hasTooltip').each(function() { // Notice the .each() loop, discussed below
+			    $(this).qtip({
+			        content: {
+			            text: $(this).next('div') // Use the "div" element next to this for the content
+			        },
+			        hide: {
+						fixed: true,
+						delay: 300
+					}
+			    });
+			});
+			});
+			</script>
    		<?php		
    		$roomsHead = ob_get_contents();
    		ob_end_clean();
@@ -2377,20 +2399,25 @@ class Layout_View
    	public function getRooms()
    	{
    		ob_start();
-   		
+   		$curMonth = date('M Y');
 		?>
 		<!-- <pre><?php echo print_r($this->data['rooms']);?></pre> -->
    			<div class="row col-sm-12 rooms-calendar">
    				<div class="col-sm-2">
    					<div class="select-month">
-   						<select>
-   							<option>June 2015 </option>
-   							<option>July 2015</option>
-   							<option>August 2015</option>
-   							<option>September 2015</option>
-   							<option>October 2015</option>
-   							<option>November 2015</option>
-   							<option>December 2015</option>
+   						<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+   						<option value="/rooms/">Select a month</option>
+   							<?php 
+   							for ($i = 0; $i <= 12; $i ++)
+   							{
+   								$interval = '+'.$i.' month';
+   								?>
+   								<option value="/rooms/from/<?php echo date('Y-m-d', strtotime($interval, strtotime($curMonth))); ?>/">
+   									<?php echo date('M Y', strtotime($interval, strtotime($curMonth))); ?>
+   								</option>
+   								<?php 
+   							}
+   							?>
    						</select>
    					</div>
    					<div class="empty-row row"></div>
@@ -2418,37 +2445,34 @@ class Layout_View
    							$day['prev'] = date('Y-m-d', strtotime(' -7 day', strtotime($_GET['from'])));
    							$day['next'] = date('Y-m-d', strtotime(' +7 day', strtotime($_GET['from'])));
    						}
-   						
-
-   						
    							
    						$day[1]['full'] 	= date('Y-m-d', strtotime($from));
    						$day[1]['dayName'] 	= date('l', strtotime($from));
-   						$day[1]['day'] 		= date('d', strtotime($from));
+   						$day[1]['day'] 		= date('M d', strtotime($from));
    						
    						$day[2]['full'] 	= date('Y-m-d', strtotime(' +1 day', strtotime($from)));
    						$day[2]['dayName'] 	= date('l', strtotime(' +1 day', strtotime($from)));
-   						$day[2]['day'] 		= date('d', strtotime(' +1 day', strtotime($from)));
+   						$day[2]['day'] 		= date('M d', strtotime(' +1 day', strtotime($from)));
    						
    						$day[3]['full'] 	= date('Y-m-d', strtotime(' +2 day', strtotime($from)));
    						$day[3]['dayName'] 	= date('l', strtotime(' +2 day', strtotime($from)));
-   						$day[3]['day'] 		= date('d', strtotime(' +2 day', strtotime($from)));
+   						$day[3]['day'] 		= date('M d', strtotime(' +2 day', strtotime($from)));
    						
    						$day[4]['full'] 	= date('Y-m-d', strtotime(' +3 day', strtotime($from)));
    						$day[4]['dayName'] 	= date('l', strtotime(' +3 day', strtotime($from)));
-   						$day[4]['day'] 		= date('d', strtotime(' +3 day', strtotime($from)));
+   						$day[4]['day'] 		= date('M d', strtotime(' +3 day', strtotime($from)));
    						
    						$day[5]['full'] 	= date('Y-m-d', strtotime(' +4 day', strtotime($from)));
    						$day[5]['dayName'] 	= date('l', strtotime(' +4 day', strtotime($from)));
-   						$day[5]['day'] 		= date('d', strtotime(' +4 day', strtotime($from)));
+   						$day[5]['day'] 		= date('M d', strtotime(' +4 day', strtotime($from)));
    						
    						$day[6]['full'] 	= date('Y-m-d', strtotime(' +5 day', strtotime($from)));
    						$day[6]['dayName'] 	= date('l', strtotime(' +5 day', strtotime($from)));
-   						$day[6]['day'] 		= date('d', strtotime(' +5 day', strtotime($from)));
+   						$day[6]['day'] 		= date('M d', strtotime(' +5 day', strtotime($from)));
    						
    						$day[7]['full'] 	= date('Y-m-d', strtotime(' +6 day', strtotime($from)));
    						$day[7]['dayName'] 	= date('l', strtotime(' +6 day', strtotime($from)));
-   						$day[7]['day'] 		= date('d', strtotime(' +6 day', strtotime($from)));
+   						$day[7]['day'] 		= date('M d', strtotime(' +6 day', strtotime($from)));
    						
    						?>
    					</div>
@@ -2464,7 +2488,6 @@ class Layout_View
    							</div>
    						</div>
    						<div class="row">
-   							<div class="month-name"><?php echo date('F Y'); ?></div>
    							<div class="days-box">
    								<div class="row-week-day-header">
    									<div class="week-day">
@@ -2497,6 +2520,7 @@ class Layout_View
    									</div>
    								</div>
    								<div>
+   								<!-- <pre><?php  print_r($this->data['rooms']);;?></pre> -->
    								<?php
    								
    								
@@ -2508,7 +2532,6 @@ class Layout_View
    									<?php 
    									for ($i = 1; $i <= 7; $i++)
    									{
-   										
    										?>
    									
 	   									<div class="week-day full">
@@ -2522,7 +2545,14 @@ class Layout_View
 	   												{
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['1']['full']))
 	   													{	?>
-	   														<span></span>
+	   														<span class="hasTooltip"></span>
+	   														<div class="tooltipi"> 
+															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+															    </a>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															</div>
 	   														<?php
 	   													}
 	   												}
@@ -2536,7 +2566,14 @@ class Layout_View
 	   												{
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['2']['full']))
 	   													{	?>
-	   														<span></span>
+	   														<span class="hasTooltip"></span>
+	   														<div class="tooltipi"> 
+															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+															    </a>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															</div>
 	   														<?php
 	   													}
 	   												}
@@ -2550,7 +2587,14 @@ class Layout_View
 	   												{
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['3']['full']))
 	   													{	?>
-	   														<span></span>
+	   														<span class="hasTooltip"></span>
+	   														<div class="tooltipi"> 
+															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+															    </a>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															</div>
 	   														<?php
 	   													}
 	   												}
@@ -2564,7 +2608,14 @@ class Layout_View
 	   												{
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['4']['full']))
 	   													{	?>
-	   														<span></span>
+	   														<span class="hasTooltip"></span>
+	   														<div class="tooltipi"> 
+															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+															    </a>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															</div>
 	   														<?php
 	   													}
 	   												}
@@ -2578,7 +2629,14 @@ class Layout_View
 	   												{
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['5']['full']))
 	   													{	?>
-	   														<span></span>
+	   														<span class="hasTooltip"></span>
+	   														<div class="tooltipi"> 
+															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+															    </a>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															</div>
 	   														<?php
 	   													}
 	   												}
@@ -2592,7 +2650,14 @@ class Layout_View
 	   												{
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['6']['full']))
 	   													{	?>
-	   														<span></span>
+	   														<span class="hasTooltip"></span>
+	   														<div class="tooltipi"> 
+															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+															    </a>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															</div>
 	   														<?php
 	   													}
 	   												}
@@ -2606,7 +2671,14 @@ class Layout_View
 	   												{
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['7']['full']))
 	   													{	?>
-	   														<span></span>
+	   														<span class="hasTooltip"></span>
+	   														<div class="tooltipi"> 
+															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+															    </a>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															</div>
 	   														<?php
 	   													}
 	   												}

@@ -845,11 +845,6 @@ class Layout_Model
 			$prep->bind_param('ss',
 					$data['memberName'],
 					$data['memberLastName']);
-// // 						Pretty good piece of code!
-// 						if(!$prep->execute())
-// 						{
-// 							printf("Errormessage: %s\n", $prep->error);
-// 						}
 			if ($prep->execute())
 			{
 				return $prep->insert_id;
@@ -939,7 +934,21 @@ class Layout_Model
 	{
 		try {
 			$room_id = (int) $room_id;
-			$query = 'SELECT * FROM reservations WHERE room_id = '.$room_id.' ORDER BY check_in';
+// 			$query = 'SELECT * FROM reservations WHERE room_id = '.$room_id.' ORDER BY check_in';
+			$query = 'SELECT s.reservation_id, 
+					s.check_in,
+					s.check_out,
+					rt.room_type,
+					rt.abbr,
+					r.room,
+					m.member_id, 
+					m.name,
+					m.last_name
+					FROM reservations s
+					LEFT JOIN rooms r ON s.room_id = r.room_id
+					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
+					LEFT JOIN members m ON m.member_id = s.member_id
+					WHERE s.status = 1 AND r.room_id = '.$room_id.' ORDER BY s.check_in';
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
 			return false;

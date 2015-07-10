@@ -929,7 +929,7 @@ ul.inbox-pagination li {
  	float: left;
  	display: block;
  	position: relative;
- 	border: 1px solid #E4E4E4;
+ 	border: 1px solid #ECECEC;
  	min-height: 25px;
 }
 
@@ -939,10 +939,11 @@ ul.inbox-pagination li {
 	margin-top: 10px;
 	min-height: 6px;
 	background: #C1E1AB;
+	cursor: pointer;
 }
 
 .rooms-calendar .empty-row {
-	min-height: 65px;
+	min-height: 40px;
 }
 
 
@@ -954,7 +955,9 @@ ul.inbox-pagination li {
 	margin: 3.5px;
 }
  
- 
+ .tooltipi {
+ 	display: none;
+ }
  
  
  
