@@ -2406,7 +2406,7 @@ class Layout_View
    				<div class="col-sm-2">
    					<div class="select-month">
    						<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-   						<option value="/rooms/">Select a month</option>
+   							<option value="/rooms/">Select a month</option>
    							<?php 
    							for ($i = 0; $i <= 12; $i ++)
    							{
