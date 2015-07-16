@@ -45,7 +45,7 @@ switch ($_POST['opt'])
 	case 4:
 		if ($model->addReservation($_POST))
 		{
-			$reservations = getMemberReservationsByMemberId($_POST['memberId']);
+			$reservations = $model->getMemberReservationsByMemberId($_POST['memberId']);
 			if ($reservations)
 				foreach ($reservations as $reservation)
 				{
