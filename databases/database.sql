@@ -121,6 +121,8 @@ CREATE TABLE `reservations`(
 	`check_in`	date NOT NULL,
 	`check_out` date NOT NULL,
 	`date` date NOT NULL,
+	`agency` INT(2) NULL,
+	`price_per_night` INT(100) NULL,
 	`price` INT(100) NULL,
 	`status` INT(100) NOT NULL DEFAULT '0',
 	`paid` INT(100) NOT NULL DEFAULT '0',
@@ -132,6 +134,8 @@ ALTER TABLE `room_types` ADD COLUMN `abbr` varchar(64);
 
 ALTER TABLE `reservations` ADD COLUMN `adults` int(2) NOT NULL;
 ALTER TABLE `reservations` ADD COLUMN `children` int(2) NULL;
+ALTER TABLE `reservations` ADD COLUMN `agency` INT(2) NULL;
+ALTER TABLE `reservations` ADD COLUMN `price_per_night` INT(100) NULL;
 
 CREATE TABLE `agencies` (	
 	`agency_id` INT(100) NOT NULL AUTO_INCREMENT,

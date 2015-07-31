@@ -881,8 +881,11 @@ class Layout_Model
 		$checkOut = Tools::formatToMYSQL($data['checkOut']);
 		
 		try {
-			$query = 'INSERT INTO reservations(member_id, room_id, check_in, check_out, date, price, status, adults, children)
-					VALUES('.$data['memberId'].', '.$data['roomId'].', "'.$checkIn.'", "'.$checkOut.'", CURDATE(), '.$data['price'].', 1, '.$data['reservationAdults'].', '.$data['reservationChildren'].')';
+			$query = 'INSERT INTO reservations(member_id, room_id, check_in, check_out, date, price, status, adults, children, agency, price_per_night)
+					VALUES('.$data['memberId'].', '.$data['roomId'].', "'.$checkIn.'", 
+						"'.$checkOut.'", CURDATE(), '.$data['price'].', 1, '.$data['reservationAdults'].', 
+						'.$data['reservationChildren'].', '.$data['agency'].', '.$data['pricePerNight'].')';
+			echo $query;
 			return $this->db->run($query);
 		} catch (Exception $e) {
 			return false;

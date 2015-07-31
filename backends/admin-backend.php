@@ -191,10 +191,14 @@ class generalBackend
 			break;
 			
 			case 'agencies':
-			{
 				$agenciesArray = $this->model->getAgencies();
 				$data['agencies'] = $agenciesArray;		
-			}
+			break; 
+						
+			case 'reservations':
+				$agenciesArray = $this->model->getAgencies();
+				$data['agencies'] = $agenciesArray;
+			break;
 			
 			default:
 			break;

@@ -1848,6 +1848,7 @@ class Layout_View
 		<div class="row rightSideReservations" id="rightSideReservations">
 			<p class="bg-success text-center roomName"><strong id="roomName"></strong></p>
 			<p class="text-success text-center">from <span id="checkInReservation"></span> to <span id="checkOutReservation"></span></p>
+			<p class="text-info text-center"> <span id="totalDays"></span> nights</p>
 			<div class="forms">
 				
 				<input type="hidden" id="roomId" value='0' />
@@ -1875,8 +1876,35 @@ class Layout_View
 				</div>
 					<?php
 				}
-				?>				
-
+				?>
+				
+				<div class="row">
+					<div class="col-sm-3">
+						<label>Agency</label>
+					</div>
+					<div class="col-sm-9">
+						<select id="agencyList">
+							<?php
+							foreach ($this->data['agencies'] as $agency)
+							{
+								?>
+								<option value="<?php echo $agency['agency_id']; ?>"><?php echo $agency['agency']; ?></option>
+								<?php
+							}
+							?>
+						</select>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-3">
+						<label>Price per Night</label>
+					</div>
+					<div class="col-sm-9">
+						<input type="text" id="pricePerNight" />
+					</div>
+				</div>
+				
 				<div class="row">
 					<div class="col-sm-3">
 						<label>Total</label>
