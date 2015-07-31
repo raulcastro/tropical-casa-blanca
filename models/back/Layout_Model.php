@@ -934,7 +934,6 @@ class Layout_Model
 	{
 		try {
 			$room_id = (int) $room_id;
-// 			$query = 'SELECT * FROM reservations WHERE room_id = '.$room_id.' ORDER BY check_in';
 			$query = 'SELECT s.reservation_id, 
 					s.check_in,
 					s.check_out,
@@ -954,4 +953,47 @@ class Layout_Model
 			return false;
 		}
 	}
+	
+	public function addAgency($agency)
+	{
+		try {
+		$query = 'INSERT INTO agencies(agency)
+						VALUES(?);';
+				
+			$prep = $this->db->prepare($query);
+				
+			$prep->bind_param('s',
+					$agency);
+			
+			return $prep->execute();
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function getAgencies()
+	{
+		try {
+			$query = 'SELECT * FROM agencies ORDER BY agency_id DESC';
+			return $this->db->getArray($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -84,6 +84,10 @@ class Layout_View
 				case 'rooms':
 					echo self :: getRoomsHead();
 				break;
+				
+				case 'agencies':
+					echo self::getAgenciesHead();
+				break;
 			}
 			?>
 		</head>
@@ -119,10 +123,6 @@ class Layout_View
 								echo self :: getAllTasks();
 							break;
 							
-							case 'documents':
-								echo self :: getDocuments();
-							break;
-							
 							case 'reservations':
 								echo self :: getReservations();
 							break;
@@ -145,6 +145,10 @@ class Layout_View
 							
 							case 'rooms':
 								echo self :: getRooms();
+							break;
+							
+							case 'agencies':
+								echo self :: getAgencies();
 							break;
 							
 							default:
@@ -2705,6 +2709,77 @@ class Layout_View
    	   	ob_end_clean();
    	   	return $rooms; 
    	}
+   	   	
+	public function getAgenciesHead()
+	{
+		ob_start();
+		?>
+		<script src="/js/agencies.js"></script>
+   		<?php		
+		$agenciesHead = ob_get_contents();
+		ob_end_clean();
+		return $agenciesHead;
+	}
+   		
+	public function getAgencies()
+	{
+		ob_start();
+		?>
+		<div class="row agencyForm">
+			<div class="col-sm-3">
+				<input type="text" class="" placeholder="agency" id="agency">
+			</div>
+			
+			<div class="col-sm-2">
+				<a href="javascript:void(0);" class="btn btn-info btn-xs" id="addAgency">add</a>
+			</div>
+		</div>
+				
+		<div class="table-responsive">
+   		   	<table class="table table-striped">
+   				<thead>
+   					<tr>
+   						<th>Agency</th>
+   						<th></th>
+   					</tr>
+   				</thead>
+   				<tbody id="agenciesList">
+   					<?php echo Layout_View::listAgencies($this->data['agencies']); ?>
+   				</tbody>
+   			</table>
+		</div>
+		<?php
+		$agencies = ob_get_contents();
+		ob_end_clean();
+		return $agencies; 
+	}
+	
+	public static function listAgencies($agencies)
+	{
+		ob_start();
+		if ($agencies)
+		{
+			foreach ($agencies as $agency)
+			{
+				?>
+				<tr>
+					<td>
+	   					<?php echo $agency['agency']; ?>
+	   				</td>
+					<td>
+	   					<a href="/<?php echo $member['member_id']; ?>/<?php echo Tools::slugify($member['name'].' '.$member['last_name']); ?>/">
+	   						<i class="glyphicon glyphicon-remove"></i>
+	   					</a>
+	   				</td>
+   				</tr>
+				<?php
+			}	
+		}
+		
+		$agencies = ob_get_contents();
+		ob_end_clean();
+		return $agencies;
+	}
    	
     public function getFooter()
     {
@@ -2728,7 +2803,5 @@ class Layout_View
     	$footer = ob_get_contents();
     	ob_end_clean();
     	return $footer;
-    }
-    
-    
+	}
 }

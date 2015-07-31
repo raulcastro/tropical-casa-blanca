@@ -133,6 +133,16 @@ ALTER TABLE `room_types` ADD COLUMN `abbr` varchar(64);
 ALTER TABLE `reservations` ADD COLUMN `adults` int(2) NOT NULL;
 ALTER TABLE `reservations` ADD COLUMN `children` int(2) NULL;
 
+CREATE TABLE `agencies` (	
+	`agency_id` INT(100) NOT NULL AUTO_INCREMENT,
+	`agency` VARCHAR(256) NOT NULL,
+	PRIMARY KEY (`agency_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8;
+
+
+
+
+
 
 
 

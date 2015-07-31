@@ -8,10 +8,10 @@
 	require_once $root.'backends/admin-backend.php';
 	require_once $root.'/'.'views/Layout_View.php';
 	
-	$section = 'tasks';
+	$section = 'agencies';
 
 	$data 	= $backend->loadBackend($section);
 	
 	$view 	= new Layout_View($data, 'Agencies');
 	
-	echo $view->printHTMLPage('documents');
+	echo $view->printHTMLPage('agencies');

@@ -959,7 +959,9 @@ ul.inbox-pagination li {
  	display: none;
  }
  
- 
+.agencyForm {
+	margin-bottom: 40px;
+}
  
  
  

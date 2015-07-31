@@ -190,6 +190,12 @@ class generalBackend
 // 				$data['rooms'] = $roomsArray;
 			break;
 			
+			case 'agencies':
+			{
+				$agenciesArray = $this->model->getAgencies();
+				$data['agencies'] = $agenciesArray;		
+			}
+			
 			default:
 			break;
 		}
