@@ -442,7 +442,7 @@ class Layout_View
 				<li <?php if ($_GET['section'] == 1) echo $active; ?>><a href="/dashboard/">Dashboard</a></li>
 				<li <?php if ($_GET['section'] == 12) echo $active; ?>><a href="/reservations/">Reservations</a></li>
 				<!-- <li <?php if ($_GET['section'] == 2) echo $active; ?>><a href="/add-guest/">Add Guest</a></li> -->
-				<li <?php if ($_GET['section'] == 9) echo $active; ?>><a href="/add-broker/">Add Broker</a></li>
+				<!-- <li <?php if ($_GET['section'] == 9) echo $active; ?>><a href="/add-broker/">Add Broker</a></li> -->
 			</ul>
 			
 			<ul class="nav nav-sidebar">
