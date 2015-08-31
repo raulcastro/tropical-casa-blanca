@@ -25,6 +25,20 @@ $(function(){
 		totalReservation = totalDays * pricePerNight;
 		$('#totalReservation').val(totalReservation);
 	});
+	
+	$('.reservation-options div').click(function(){
+		var optRes = $(this).attr('opt-res');
+		var singleRes =  $(this).attr('single-res');
+		$('.reservation-options div').removeClass('checked');
+		$(this).addClass('checked');
+		$('#res-option-'+singleRes).val(optRes);
+		
+	});
+	
+	$('.save-single-res-a').click(function(){
+		var singleRes =  $(this).attr('single-res');
+		updateMemberReservation(singleRes);
+	});
 });
 
 function searchReservation()
@@ -229,6 +243,40 @@ function addReservationMemberPanel()
 //	            	$('#completeProfileBtn').show();
 //	            	$('#bookRoom').hide();
 //	            	$('#completeProfileBtn').attr('href','/'+xml+'/new-reservation/');
+	            }
+	        }
+	    });
+	}
+}
+
+function updateMemberReservation(reservationId)
+{
+	var optRes = $('#res-option-'+reservationId).val();
+	
+//	var memberId 	= $('#member-id').val();
+//	var reservationAdults = $('#reservationAdults').val();
+//	var reservationChildren = $('#reservationChildren').val();
+//	var checkIn 	= $('#checkIn').val();
+//	var checkOut	= $('#checkOut').val();
+//	var roomId = $('#roomId').val();
+//	var price = $('#totalReservation').val();
+	
+	if (reservationId )
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+	        	reservationId: reservationId,
+	        	optRes : optRes,
+	            opt: 			5
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+//	            	$('#memberReservations').html(xml);
 	            }
 	        }
 	    });

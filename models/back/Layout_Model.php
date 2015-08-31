@@ -885,7 +885,6 @@ class Layout_Model
 					VALUES('.$data['memberId'].', '.$data['roomId'].', "'.$checkIn.'", 
 						"'.$checkOut.'", CURDATE(), '.$data['price'].', 1, '.$data['reservationAdults'].', 
 						'.$data['reservationChildren'].', '.$data['agency'].', '.$data['pricePerNight'].')';
-			echo $query;
 			return $this->db->run($query);
 		} catch (Exception $e) {
 			return false;
@@ -903,6 +902,7 @@ class Layout_Model
 					s.price,
 					s.adults,
 					s.children,
+					s.status,
 					rt.room_type,
 					rt.abbr,
 					r.room,
@@ -914,7 +914,7 @@ class Layout_Model
 					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
 					LEFT JOIN members m ON m.member_id = s.member_id
 					LEFT JOIN agencies a ON s.agency = a.agency_id
-					WHERE s.status = 1 AND s.member_id = '.$memberId;
+					WHERE s.member_id = '.$memberId;
 				
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
@@ -942,18 +942,37 @@ class Layout_Model
 			$query = 'SELECT s.reservation_id, 
 					s.check_in,
 					s.check_out,
+					s.status,
 					rt.room_type,
 					rt.abbr,
 					r.room,
 					m.member_id, 
 					m.name,
-					m.last_name
+					m.last_name,
+					a.agency
 					FROM reservations s
 					LEFT JOIN rooms r ON s.room_id = r.room_id
 					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
 					LEFT JOIN members m ON m.member_id = s.member_id
-					WHERE s.status = 1 AND r.room_id = '.$room_id.' ORDER BY s.check_in';
+					LEFT JOIN agencies a ON s.agency = a.agency_id
+					WHERE r.room_id = '.$room_id.' ORDER BY s.check_in';
 			return $this->db->getArray($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function uptadeSingleReservation($data)
+	{
+		try {
+			$query = 'UPDATE reservations SET status = ?
+						WHERE reservation_id = '.$data['reservationId'];
+				
+			$prep = $this->db->prepare($query);
+				
+			$prep->bind_param('i',
+					$data['optRes']);
+			$prep->execute();
 		} catch (Exception $e) {
 			return false;
 		}
@@ -985,6 +1004,8 @@ class Layout_Model
 			return false;
 		}
 	}
+	
+	
 	
 }
 

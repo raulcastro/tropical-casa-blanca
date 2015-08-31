@@ -1587,6 +1587,7 @@ class Layout_View
    		ob_start();
    		?>
    		<div class="col-sm-12 bg-success reservation-item">
+   			
    			<div class="row bg-primary title">
    				<div class="col-sm-2">Date</div>
    				<div class="col-sm-2">Room</div>
@@ -1611,16 +1612,25 @@ class Layout_View
    				<div class="col-sm-4">Children: <?php echo $data['children']; ?></div>
    			</div>
    			<div class="row extra">
+   				
+   				<input type="hidden" value="0" id="res-option-<?php echo $data['reservation_id']; ?>">
+   				
    				<div class="title-options">
    					Set Reservation as:
    				</div>
    				
    				<div class="reservation-options">
-   					<div class="option pending">Pending</div>
-   					<div class="option confirmed checked">Confirmed</div>
-   					<div class="option checked-in">Checked-In</div>
-   					<div class="option checked-out">Checked-Out</div>
+   					<div class="option pending <?php if ($data['status'] == '1') echo 'checked'; ?>" opt-res="1" single-res="<?php echo $data['reservation_id']; ?>">Pending</div>
+   					<div class="option confirmed <?php if ($data['status'] == '2') echo 'checked'; ?>" opt-res="2" single-res="<?php echo $data['reservation_id']; ?>">Confirmed</div>
+   					<div class="option checked-in <?php if ($data['status'] == '3') echo 'checked'; ?>" opt-res="3" single-res="<?php echo $data['reservation_id']; ?>">Checked-In</div>
+   					<div class="option checked-out <?php if ($data['status'] == '4') echo 'checked'; ?>" opt-res="4" single-res="<?php echo $data['reservation_id']; ?>">Checked-Out</div>
    				</div>
+   			</div>
+   			
+   			<div class="row extra save-single-res">
+   				<a href="javascript:void(0);" 
+   					class="btn btn-info btn-xs save-single-res-a" 
+   					single-res="<?php echo $data['reservation_id']; ?>">save</a>
    			</div>
    		</div>
    		<?php
@@ -1815,8 +1825,8 @@ class Layout_View
    								
    								foreach ($this->data['rooms'] as $room)
    								{
+   									
    								?>
-   								
    									<div class="row-week-day">
    									<?php 
    									for ($i = 1; $i <= 7; $i++)
@@ -1832,9 +1842,15 @@ class Layout_View
 	   											{
 	   												foreach ($room['0']['reservations'] as $reservation)
 	   												{
+	   													if ($reservation['status'] == 1){$status = 'pending'; }
+	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
+	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
+	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
+	   													
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['1']['full']))
-	   													{	?>
-	   														<span class="hasTooltip"></span>
+	   													{	
+	   														?>
+	   														<span class="hasTooltip <?php echo $status; ?>"></span>
 	   														<div class="tooltipi"> 
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
@@ -1854,9 +1870,14 @@ class Layout_View
 	   											{
 	   												foreach ($room['0']['reservations'] as $reservation)
 	   												{
+	   													if ($reservation['status'] == 1){$status = 'pending'; }
+	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
+	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
+	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
+	   													
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['2']['full']))
 	   													{	?>
-	   														<span class="hasTooltip"></span>
+	   														<span class="hasTooltip <?php echo $status; ?>"></span>
 	   														<div class="tooltipi"> 
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
@@ -1875,9 +1896,14 @@ class Layout_View
 	   											{
 	   												foreach ($room['0']['reservations'] as $reservation)
 	   												{
+	   													if ($reservation['status'] == 1){$status = 'pending'; }
+	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
+	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
+	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
+	   													
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['3']['full']))
 	   													{	?>
-	   														<span class="hasTooltip"></span>
+	   														<span class="hasTooltip <?php echo $status; ?>"></span>
 	   														<div class="tooltipi"> 
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
@@ -1896,9 +1922,14 @@ class Layout_View
 	   											{
 	   												foreach ($room['0']['reservations'] as $reservation)
 	   												{
+	   													if ($reservation['status'] == 1){$status = 'pending'; }
+	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
+	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
+	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
+	   													
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['4']['full']))
 	   													{	?>
-	   														<span class="hasTooltip"></span>
+	   														<span class="hasTooltip <?php echo $status; ?>"></span>
 	   														<div class="tooltipi"> 
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
@@ -1917,9 +1948,14 @@ class Layout_View
 	   											{
 	   												foreach ($room['0']['reservations'] as $reservation)
 	   												{
+	   													if ($reservation['status'] == 1){$status = 'pending'; }
+	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
+	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
+	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
+	   													
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['5']['full']))
 	   													{	?>
-	   														<span class="hasTooltip"></span>
+	   														<span class="hasTooltip <?php echo $status; ?>"></span>
 	   														<div class="tooltipi"> 
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
@@ -1938,9 +1974,14 @@ class Layout_View
 	   											{
 	   												foreach ($room['0']['reservations'] as $reservation)
 	   												{
+	   													if ($reservation['status'] == 1){$status = 'pending'; }
+	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
+	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
+	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
+	   													
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['6']['full']))
 	   													{	?>
-	   														<span class="hasTooltip"></span>
+	   														<span class="hasTooltip <?php echo $status; ?>"></span>
 	   														<div class="tooltipi"> 
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
@@ -1959,9 +2000,14 @@ class Layout_View
 	   											{
 	   												foreach ($room['0']['reservations'] as $reservation)
 	   												{
+	   													if ($reservation['status'] == 1){$status = 'pending'; }
+	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
+	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
+	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
+	   													
 	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['7']['full']))
 	   													{	?>
-	   														<span class="hasTooltip"></span>
+	   														<span class="hasTooltip <?php echo $status; ?>"></span>
 	   														<div class="tooltipi"> 
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>

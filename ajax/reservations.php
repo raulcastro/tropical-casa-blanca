@@ -55,7 +55,7 @@ switch ($_POST['opt'])
 	break;
 	
 	case 5:
-		if ($model->completeTask($_POST['tid'])) 
+		if ($model->uptadeSingleReservation($_POST)) 
 		{
 			echo '1';
 		}

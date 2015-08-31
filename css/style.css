@@ -923,6 +923,9 @@ ul.inbox-pagination li {
 	font-weight: bold;
 }
 
+.memberReservations .save-single-res {
+	text-align: right;
+}
 .reservation-member-panel {
  	margin-top: 20px;
  	min-height: 20px;
@@ -1007,7 +1010,23 @@ ul.inbox-pagination li {
 .agencyForm {
 	margin-bottom: 40px;
 }
- 
+
+
+.pending {
+	background: #FF9900!important;	
+}
+
+.confirmed {
+	background: #17CCF9!important;	
+}
+
+.checked-in {
+	background: #C8F17F!important;	
+}
+
+.checked-out {
+	background: #2097D8!important;	
+}
  
  
  
