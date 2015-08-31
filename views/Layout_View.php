@@ -1888,6 +1888,7 @@ class Layout_View
 															    </a>
 															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
 	   														<?php
 	   													}
@@ -1914,6 +1915,7 @@ class Layout_View
 															    </a>
 															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
 	   														<?php
 	   													}
@@ -1940,6 +1942,7 @@ class Layout_View
 															    </a>
 															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
 	   														<?php
 	   													}
@@ -1966,6 +1969,7 @@ class Layout_View
 															    </a>
 															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
 	   														<?php
 	   													}
@@ -1992,6 +1996,7 @@ class Layout_View
 															    </a>
 															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
 	   														<?php
 	   													}
@@ -2018,6 +2023,7 @@ class Layout_View
 															    </a>
 															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
 	   														<?php
 	   													}
