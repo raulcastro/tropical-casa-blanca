@@ -1344,10 +1344,6 @@ class Layout_View
 				{
 					?>
 				<li class="row">
-					<div class="roomType row bg-primary">
-						<div class="title col-sm-8"><strong><?php echo $room['room_type']; ?></strong></div>
-<!-- 						<div class="price col-sm-4"><strong>$550 USD</strong></div> -->
-					</div>
 					<ul class="roomList">
 					<?php
 					$roomType = $room['room_type_id'];
@@ -1356,6 +1352,7 @@ class Layout_View
 						<li class="row bg-success">
 							<div class="title col-sm-8">
 								<strong><?php echo $room['room']; ?></strong>
+								 - <?php echo $room['room_type']; ?>
 							</div>
 							<div class="operator col-sm-4">
 								<a href="javascript:void (0);" rn="<?php echo $room['room']; ?>" ri="<?php echo $room['room_id']; ?>">book now</a>
@@ -1368,10 +1365,7 @@ class Layout_View
 					</ul>
 				</li>
 				<li class="row">
-					<div class="roomType row bg-primary">
-						<div class="title col-sm-8"><strong><?php echo $room['room_type']; ?></strong></div>
-<!-- 						<div class="price col-sm-4"><strong>$550 USD</strong></div> -->
-					</div>
+					
 					<ul class="roomList">	
 					<?php
 					$roomType = $room['room_type_id'];
@@ -1594,27 +1588,39 @@ class Layout_View
    		?>
    		<div class="col-sm-12 bg-success reservation-item">
    			<div class="row bg-primary title">
-   				<div class="col-sm-2">date</div>
-   				<div class="col-sm-2">room</div>
-   				<div class="col-sm-2">check-in</div>
-   				<div class="col-sm-2">check-out</div>
-   				<div class="col-sm-2">price</div>
-   				<div class="col-sm-2">status</div>
+   				<div class="col-sm-2">Date</div>
+   				<div class="col-sm-2">Room</div>
+   				<div class="col-sm-2">Check-In</div>
+   				<div class="col-sm-2">Check-Out</div>
+   				<div class="col-sm-2">Price</div>
+   				<div class="col-sm-2">Status</div>
    			</div>
    				
    			<div class="row info">
    				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['date']); ?></div>
-   				<div class="col-sm-2"><?php echo $data['room']; ?></div>
-   				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['check_in']); ?></div>
-   				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['check_out']); ?></div>
+   				<div class="col-sm-2"><strong><?php echo $data['room']; ?></strong></div>
+   				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_in']); ?></strong></div>
+   				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_out']); ?></strong></div>
    				<div class="col-sm-2"><strong>$<?php echo $data['price']; ?></strong></div>
    				<div class="col-sm-2">paid</div>
    			</div>
    				
    			<div class="row extra">
-   				<div class="col-sm-4">Room Type: <?php echo $data['room_type']; ?></div>
+   				<div class="col-sm-4">Room Type: <strong><?php echo $data['room_type']; ?></strong></div>
    				<div class="col-sm-4">Adults: <?php echo $data['adults']; ?></div>
    				<div class="col-sm-4">Children: <?php echo $data['children']; ?></div>
+   			</div>
+   			<div class="row extra">
+   				<div class="title-options">
+   					Set Reservation as:
+   				</div>
+   				
+   				<div class="reservation-options">
+   					<div class="option pending">Pending</div>
+   					<div class="option confirmed checked">Confirmed</div>
+   					<div class="option checked-in">Checked-In</div>
+   					<div class="option checked-out">Checked-Out</div>
+   				</div>
    			</div>
    		</div>
    		<?php
@@ -1835,6 +1841,7 @@ class Layout_View
 															    </a>
 															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
 	   														<?php
 	   													}

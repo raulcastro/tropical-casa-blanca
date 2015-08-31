@@ -907,11 +907,13 @@ class Layout_Model
 					rt.abbr,
 					r.room,
 					m.name,
-					m.last_name
+					m.last_name,
+					a.agency
 					FROM reservations s
 					LEFT JOIN rooms r ON s.room_id = r.room_id
 					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
 					LEFT JOIN members m ON m.member_id = s.member_id
+					LEFT JOIN agencies a ON s.agency = a.agency_id
 					WHERE s.status = 1 AND s.member_id = '.$memberId;
 				
 			return $this->db->getArray($query);

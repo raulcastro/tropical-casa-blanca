@@ -833,7 +833,7 @@ ul.inbox-pagination li {
 }
 
 .reservationResults .roomList li {
-	width: 275px;
+	width: 350px;
 	padding: 4px 8px;
 	margin: 6px 0;
 	color: #575757;
@@ -877,7 +877,52 @@ ul.inbox-pagination li {
 .memberReservations .reservation-item .extra {
 	padding: 4px;
 }
- 
+
+.memberReservations .reservation-options {
+	float: left;
+}
+
+.memberReservations .title-options {
+	float: left;
+	margin-right: 20px;
+}
+
+.memberReservations .reservation-options .option {
+	float: left;
+	border-radius: 3px; 
+	-moz-border-radius: 3px; 
+	-webkit-border-radius: 3px; 
+	margin-left: 10px;
+	padding: 2px;
+	width: 100px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.memberReservations .reservation-options .option.pending {
+	background: #FF9900;	
+}
+
+.memberReservations .reservation-options .option.confirmed {
+	background: #17CCF9;	
+}
+
+.memberReservations .reservation-options .option.checked-in {
+	background: #C8F17F;	
+}
+
+.memberReservations .reservation-options .option.checked-out {
+	background: #2097D8;	
+}
+
+.memberReservations .reservation-options .option.checked {
+	font-weight: bold;
+}
+
+.memberReservations .reservation-options .option:hover {
+	font-weight: bold;
+}
+
 .reservation-member-panel {
  	margin-top: 20px;
  	min-height: 20px;
