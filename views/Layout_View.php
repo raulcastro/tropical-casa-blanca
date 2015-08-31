@@ -1611,10 +1611,14 @@ class Layout_View
    				<div class="col-sm-4">Adults: <?php echo $data['adults']; ?></div>
    				<div class="col-sm-4">Children: <?php echo $data['children']; ?></div>
    			</div>
+   			
    			<div class="row extra">
-   				
+   				<div class="col-sm-4">Agency: <strong><?php echo $data['agency']; ?></strong></div>
+   			</div>
+   			
+   			
+   			<div class="row extra">
    				<input type="hidden" value="0" id="res-option-<?php echo $data['reservation_id']; ?>">
-   				
    				<div class="title-options">
    					Set Reservation as:
    				</div>
