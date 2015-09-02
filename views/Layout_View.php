@@ -493,7 +493,7 @@ class Layout_View
 					<h4>E-Mail</h4>
 					<span class="text-muted"><?php echo $this->data['userInfo']['inbox']; ?> inbox</span>
 				</a>
-			</div> -->
+			</div> 
 			<div class="col-xs-6 col-sm-3 placeholder">
 				<a href="/brokers/">
 					<i class="glyphicon glyphicon-road"></i>
@@ -509,6 +509,7 @@ class Layout_View
 					</span>
 				</a>
 			</div>
+			-->
 		</div>
    		<?php
    		$dashboardIcons = ob_get_contents();
