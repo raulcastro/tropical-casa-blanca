@@ -57,9 +57,6 @@ class generalBackend
 		$lastMembersArray 		= $this->model->getLastMembers();
 		$data['lastMembers'] 	= $lastMembersArray;
 		
-		$lastBrokersArray 		= $this->model->getLastBrokers();
-		$data['lastBrokers'] 	= $lastBrokersArray;
-		
 		// Task Info
 		$data['taskInfo']['today'] 		= $this->model->getTotalTodayTasksByMemberId();
 		$data['taskInfo']['pending'] 	= $this->model->getTotalPendingTasksByMemberId();
@@ -118,8 +115,43 @@ class generalBackend
 				
 // 				Reservations
 				$memberReservationsArray 	= $this->model->getMemberReservationsByMemberId($memberId);
-				$data['memberReservations'] = $memberReservationsArray;
+// 				$data['memberReservations'] = $memberReservationsArray;
 				
+				$data['memberReservations'] = array();
+				
+				foreach ($memberReservationsArray as $reservation)
+				{
+					$grandTotal = $this->model->getReservationGrandTotalByReservationId($reservation['reservation_id']);
+					$paid = $this->model->getReservationPaidByReservationId($reservation['reservation_id']);
+					$unpaid = $this->model->getReservationUnpaidByReservationId($reservation['reservation_id']);
+					
+					$reservationInfo = array(
+							'reservation_id'	=> $reservation['reservation_id'],
+							'room_id' 		=> $reservation['room_id'],
+							'date'			=> $reservation['date'],
+							'check_in' 		=> $reservation['check_in'],
+							'check_out' => $reservation['check_out'],
+							'room' => $reservation['room'],
+							'room_type' => $reservation['room_type'],
+							'adults' => $reservation['adults'],
+							'children' => $reservation['children'],
+							'agency' => $reservation['agency'],
+							'external_id' => $reservation['external_id'],
+							'status' => $reservation['status'],
+							'grandTotal' => $grandTotal,
+							'paid' => $paid,
+							'unpaid' => $unpaid
+					);
+					
+					$payments['payments'] = $this->model->getPaymentsByReservationId($reservation['reservation_id']);
+					array_push($reservationInfo, $payments);
+					array_push($data['memberReservations'], $reservationInfo);
+					
+					
+					
+				}
+				
+// 				Agencies
 				$agenciesArray 		= $this->model->getAgencies();
 				$data['agencies'] 	= $agenciesArray;
 				
@@ -158,7 +190,6 @@ class generalBackend
 					array_push($roomInfo, $reservations);
 					array_push($data['rooms'], $roomInfo);
 				}
-// 				$data['rooms'] = $roomsArray;
 			break;
 			
 			case 'agencies':

@@ -576,217 +576,47 @@ class Layout_Model
 		}
 	}
 	
-	public function addBroker($data)
+	/**
+	 * addAgency
+	 *
+	 * add an agency on the agency table
+	 *
+	 * @param ustring $agency
+	 * @return true on success | false on fail
+	 */
+	public function addAgency($agency)
 	{
 		try {
-			$query = 'INSERT INTO brokers(name, user_id, last_name, address, city, state, country, notes, active, date)
-						VALUES(?, '.$_SESSION["userId"].', ?, ?, ?, ?, ?, ?, 1, CURDATE());';
-				
-			$prep = $this->db->prepare($query);
-				
-			$prep->bind_param('sssssss',
-					$data['memberName'],
-					$data['memberLastName'],
-					$data['memberAddress'],
-					$data['city'],
-					$data['mState'],
-					$data['country'],
-					$data['notes']);
-				
-			if ($prep->execute())
-			{
-				return $prep->insert_id;
-			}
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-	
-	public function addBrokerEmail($data)
-	{
-		try
-		{
-			$query = 'INSERT INTO broker_emails(broker_id, email, active)
-					VALUES(?, ?, 1)';
+			$query = 'INSERT INTO agencies(agency)
+						VALUES(?);';
 	
 			$prep = $this->db->prepare($query);
 	
-			$prep->bind_param('is',
-					$data['memberId'],
-					$data['emailVal']);
-	
-			return $prep->execute();
-		}
-		catch (Exception $e)
-		{
-			return false;
-		}
-	}
-	
-	public function addBrokerPhone($data)
-	{
-		try
-		{
-			$query = 'INSERT INTO broker_phones(broker_id, phone, active)
-					VALUES(?, ?, 1)';
-	
-			$prep = $this->db->prepare($query);
-	
-			$prep->bind_param('is',
-					$data['memberId'],
-					$data['phoneVal']);
-	
-			return $prep->execute();
-		}
-		catch (Exception $e)
-		{
-			return false;
-		}
-	}
-	
-	public function addHistoryBroker($data)
-	{
-		try
-		{
-	
-			$query = 'INSERT INTO broker_history(user_id, broker_id, date, time, history)
-	    			VALUES('.$_SESSION["userId"].', ?, CURDATE(), CURTIME(), ?)';
-				
-			$prep = $this->db->prepare($query);
-	
-			$prep->bind_param('is',
-					$data['memberId'],
-					$data['historyEntry']);
+			$prep->bind_param('s', $agency);
 				
 			return $prep->execute();
-		}
-		catch (Exception $e)
-		{
-			echo $e->getMessage();
-		}
-	}
-	
-	public function getHistoryBrokerEntries($member_id)
-	{
-		try
-		{
-			$member_id = (int) $member_id;
-			$query = 'SELECT h.*, ud.name
-					FROM broker_history h
-					LEFT JOIN user_detail ud ON ud.user_id = h.user_id
-					WHERE h.broker_id = '.$member_id.'
-					ORDER BY h.history_id DESC';
-				
-			return $this->db->getArray($query);
-		}
-		catch (Exception $e)
-		{
-			return false;
-		}
-	}
-	
-	public function getAllBrokers()
-	{
-		try {
-			$filter = '';
-	
-			if ($_SESSION['loginType'] != 1)
-			{
-				$filter = 'WHERE m.user_id = '.$_SESSION['userId'];
-			}
-	
-			$query = 'SELECT lpad(m.broker_id, 4, 0) AS broker_id, m.user_id, m.name,
-					m.last_name, m.address, m.city, m.state, m.country, m.active, m.date, 
-					d.name AS user_name
-					FROM brokers m
-					LEFT JOIN user_detail d ON m.user_id = d.user_id
-					'.$filter.'
-					 ORDER BY m.broker_id DESC
-					';
-	
-			return $this->db->getArray($query);
-	
 		} catch (Exception $e) {
 			return false;
 		}
 	}
 	
-	public function getBrokerByBrokerId($brokerId)
+	/**
+	 * getAgencies
+	 *
+	 * returns an array of agencies
+	 *
+	 * @return multitype:array of agencies on success false on fail
+	 */
+	public function getAgencies()
 	{
 		try {
-			$query = 'SELECT m.*, c.Name as country, c.Code as country_code
-					FROM brokers m
-					LEFT JOIN Country c ON m.country = c.Code
-					WHERE m.broker_id =
-					'.$brokerId;
-			return $this->db->getRow($query);
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-	
-	public function getBrokerEmailsById($brokerId)
-	{
-		try {
-			$query = 'SELECT * FROM broker_emails WHERE broker_id = '.$brokerId;
+			$query = 'SELECT * FROM agencies ORDER BY agency_id DESC';
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
 			return false;
 		}
 	}
-	
-	public function getBrokerPhonesById($brokerId)
-	{
-		try {
-			$query = 'SELECT * FROM broker_phones WHERE broker_id = '.$brokerId;
-			return $this->db->getArray($query);
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-	
-	public function getBrokerHistoryById($brokerId)
-	{
-		try {
-			$query = 'SELECT mh.* , ud.name
-					FROM broker_history mh
-					LEFT JOIN user_detail ud ON mh.user_id = ud.user_id
-					WHERE mh.broker_id = '.$brokerId.'
-					ORDER BY mh.history_id DESC
-					';
-			return $this->db->getArray($query);
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-	
-	public function getLastBrokers()
-	{
-		try {
-			$filter = '';
-	
-			if ($_SESSION['loginType'] != 1)
-			{
-				$filter = 'WHERE m.user_id = '.$_SESSION['userId'];
-			}
-	
-			$query = 'SELECT lpad(m.broker_id, 4, 0) AS broker_id, m.user_id, m.name,
-					m.last_name, m.address, m.city, m.state, m.country, m.active, m.date, 
-					d.name AS user_name
-					FROM brokers m
-					LEFT JOIN user_detail d ON m.user_id = d.user_id
-					'.$filter.'
-					 ORDER BY m.broker_id DESC
-					LIMIT 0, 10
-					';
-	
-			return $this->db->getArray($query);
-	
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-	
+		
 	public function getAllReservations()
 	{
 		try {
@@ -907,12 +737,15 @@ class Layout_Model
 					$data['pricePerNight'],
 					$data['externalId']
 					);
+			
 			if ($prep->execute())
 			{
-				return $prep->insert_id;
+				$info = array('reservationId' => $prep->insert_id, 'description' => "Staying cost", 'cost' => $data['price']);
+// 				return $prep->insert_id;
+				$this->addPayment($info);
 			}
 			
-			return $this->db->run($query);
+// 			return $this->db->run($query);
 		} catch (Exception $e) {
 			return false;
 		}
@@ -939,6 +772,7 @@ class Layout_Model
 					s.children,
 					s.status,
 					s.external_id,
+					s.room_id,
 					rt.room_type,
 					rt.abbr,
 					r.room,
@@ -981,6 +815,14 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * getReservationsByRoomId
+	 * 
+	 * returns all the reservations related to an specific room
+	 * 
+	 * @param int $room_id
+	 * @return multitype:array of reservations on success | false on fail
+	 */
 	public function getReservationsByRoomId($room_id)
 	{
 		try {
@@ -1009,6 +851,115 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * addPayment
+	 * 
+	 * add a payment item to an reservation
+	 * 
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function addPayment($data)
+	{
+		try {
+			$query = 'INSERT INTO payments(reservation_id, description, cost)
+						VALUES(?,?, ?);';
+	
+			$prep = $this->db->prepare($query);
+	
+			$prep->bind_param('isi',
+					$data['reservationId'],
+					$data['description'],
+					$data['cost']);
+			
+			return $prep->execute();
+// 			if ($prep->execute())
+// 			{
+// 				return $prep->insert_id;
+// 			}
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * getPaymentsByReservationId
+	 * 
+	 * get all the payments related to a reservation
+	 * 
+	 * @param int $reservation_id
+	 * @return multitype:unknown |boolean
+	 */
+	public function getPaymentsByReservationId($reservation_id)
+	{
+		try {
+			$reservation_id = (int) $reservation_id;
+			
+			$query = "SELECT * FROM payments WHERE reservation_id = ".$reservation_id;
+			return $this->db->getArray($query);
+			
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * getReservationGrandTotalByReservationId
+	 * 
+	 * returns the sum of the active payments by reservation id
+	 * 
+	 * @param int $reservation_id
+	 * @return int | false on failed
+	 */
+	public function getReservationGrandTotalByReservationId($reservation_id)
+	{
+		try {
+			$reservation_id = (int) $reservation_id;
+			$query = 'SELECT SUM(cost) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1";
+			return $this->db->getValue($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * getReservationPaidByReservationId
+	 *
+	 * returns the sum of the paid payments by reservation id
+	 *
+	 * @param int $reservation_id
+	 * @return int | false on failed
+	 */
+	public function getReservationPaidByReservationId($reservation_id)
+	{
+		try {
+			$reservation_id = (int) $reservation_id;
+			$query = 'SELECT SUM(cost) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 1";
+			return $this->db->getValue($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * getReservationUnpaidByReservationId
+	 *
+	 * returns the sum of the pending payments by reservation id
+	 *
+	 * @param int $reservation_id
+	 * @return int | false on failed
+	 */
+	public function getReservationUnpaidByReservationId($reservation_id)
+	{
+		try {
+			$reservation_id = (int) $reservation_id;
+			$query = 'SELECT SUM(cost) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 0";
+			return $this->db->getValue($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	public function uptadeSingleReservation($data)
 	{
 		try {
@@ -1025,46 +976,7 @@ class Layout_Model
 		}
 	}
 	
-	/**
-	 * addAgency
-	 * 
-	 * add an agency on the agency table
-	 * 
-	 * @param ustring $agency
-	 * @return true on success | false on fail
-	 */
-	public function addAgency($agency)
-	{
-		try {
-		$query = 'INSERT INTO agencies(agency)
-						VALUES(?);';
-				
-			$prep = $this->db->prepare($query);
-				
-			$prep->bind_param('s', $agency);
-			
-			return $prep->execute();
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-	
-	/**
-	 * getAgencies
-	 * 
-	 * returns an array of agencies
-	 * 
-	 * @return multitype:array of agencies on success false on fail
-	 */
-	public function getAgencies()
-	{
-		try {
-			$query = 'SELECT * FROM agencies ORDER BY agency_id DESC';
-			return $this->db->getArray($query);
-		} catch (Exception $e) {
-			return false;
-		}
-	}
+
 }
 
 

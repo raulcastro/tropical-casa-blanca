@@ -1608,7 +1608,6 @@ class Layout_View
    				<div class="col-sm-2">Check-Out</div>
    				<div class="col-sm-2">Room</div>
    				<div class="col-sm-2">Room Type</div>
-<!--    				<div class="col-sm-2">Status</div> -->
    			</div>
    				
    			<div class="row info">
@@ -1617,7 +1616,6 @@ class Layout_View
    				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_out']); ?></strong></div>
    				<div class="col-sm-2"><strong><?php echo $data['room']; ?></strong></div>
    				<div class="col-sm-2"><strong><?php echo $data['room_type']; ?></strong></div>
-<!--    				<div class="col-sm-2">paid</div> -->
    			</div>
    				
    			<div class="row extra">
@@ -1646,65 +1644,60 @@ class Layout_View
    			
    			<div class="row-extra">
    				<div class="col-sm-12">
-   					<h5>Grand Total <strong> $<span>10689</span></strong></h5>
+   					<h5>Grand Total <strong> $<span><?php echo $data['grandTotal']; ?></span></strong></h5>
    				</div>
    			</div>
    			
    			<div class="row-extra">
-   				<div class="col-sm-3">Paid: <strong>200</strong></div>
-   				<div class="col-sm-3">Pending: <strong>135</strong></div>
+   				<div class="col-sm-3">Paid: <strong><?php echo $data['paid']; ?></strong></div>
+   				<div class="col-sm-3">Pending: <strong><?php echo $data['unpaid']; ?></strong></div>
    			</div>
    			
    			<div class="clearfix"></div>
-   			
+   			<?php 
+   			foreach ($data[0]['payments'] as $payment)
+   			{
+   				?>
    			<div class="row-extra" id="payment-items">
    				<div class="row">
-	   				<div class="col-sm-3"><i>Staying cost</i></div>
-	   				<div class="col-sm-1">$ <strong>135</strong></div>
+	   				<div class="col-sm-3"><i>
+	   				<?php 
+	   				if ($payment['active'] == 0)
+	   				{
+	   					echo "<s>". $payment['description']."</s>";
+	   				} else {
+	   					echo $payment['description']; 
+	   				}
+	   				?>
+	   				</i></div>
+	   				<div class="col-sm-1">$ <strong>
+	   				<?php 
+	   				if ($payment['active'] == 0)
+	   				{
+	   					echo "<s>". $payment['cost']."</s>";
+	   				} else {
+	   					echo $payment['cost']; 
+	   				}
+	   				?>
+	   				</strong></div>
 	   				<div class="col-sm-2">
-	   					<button type="button" class="btn btn-default btn-xs">Paid</button>
-	   					<button type="button" class="btn btn-default btn-xs btn-info">Unpaid</button>
+	   					<button type="button" class="btn btn-default btn-xs <?php if ($payment['payment_type'] == '1') echo 'btn-info'; ?>">Cash</button>
+	   					<button type="button" class="btn btn-default btn-xs <?php if ($payment['payment_type'] == '2') echo 'btn-info'; ?>">CC</button>
 	   				</div>
 	   				<div class="col-sm-2">
-	   					<button type="button" class="btn btn-default btn-xs btn-info">CC</button>
-	   					<button type="button" class="btn btn-default btn-xs">Cash</button>
+	   					<button type="button" class="btn btn-default btn-xs <?php if ($payment['status'] == '1') echo 'btn-info'; ?>">Paid</button>
+	   					<button type="button" class="btn btn-default btn-xs <?php if ($payment['status'] == '0') echo 'btn-info'; ?>">Unpaid</button>
 	   				</div>
-	   				<div class="col-sm-2">
-	   					<i class="glyphicon glyphicon-remove"></i>
-	   				</div>
-   				</div>
-   				<div class="row">
-	   				<div class="col-sm-3"><i>Broken Jar</i></div>
-	   				<div class="col-sm-1">$ <strong>135</strong></div>
-	   				<div class="col-sm-2">
-	   					<button type="button" class="btn btn-default btn-xs btn-info">Paid</button>
-	   					<button type="button" class="btn btn-default btn-xs">Unpaid</button>
-	   				</div>
-	   				<div class="col-sm-2">
-	   					<button type="button" class="btn btn-default btn-xs">CC</button>
-	   					<button type="button" class="btn btn-default btn-xs">Cash</button>
-	   				</div>
-	   				<div class="col-sm-2">
-	   					<i class="glyphicon glyphicon-remove"></i>
-	   				</div>
-   				</div>
-   				
-   				<div class="row">
-	   				<div class="col-sm-3"><i>Extra day</i></div>
-	   				<div class="col-sm-1">$ <strong>135</strong></div>
-	   				<div class="col-sm-2">
-	   					<button type="button" class="btn btn-default btn-xs">Paid</button>
-	   					<button type="button" class="btn btn-default btn-xs">Unpaid</button>
-	   				</div>
-	   				<div class="col-sm-2">
-	   					<button type="button" class="btn btn-default btn-xs">CC</button>
-	   					<button type="button" class="btn btn-default btn-xs">Cash</button>
-	   				</div>
+	   				
 	   				<div class="col-sm-2">
 	   					<i class="glyphicon glyphicon-remove"></i>
 	   				</div>
    				</div>
    			</div>
+   				<?php
+   			}
+   			?>
+   			
    			
    			<div class="row-extra" id="payment-extra">
    				<div class="row">
