@@ -605,7 +605,6 @@ class Layout_View
    		ob_end_clean();
    		return $membersRecent;
    	}
-   	
    
    	public function getAllMembers()
    	{
@@ -663,7 +662,6 @@ class Layout_View
    							 <?php 
    							}
    						?>
-   						
    						<td><?php echo $member['city']; ?></td>
    						<td><?php echo $member['state']; ?></td>
    						<td><?php echo $member['country']; ?></td>
@@ -718,8 +716,6 @@ class Layout_View
    							
    				if( strtotime($date) > strtotime('now'))
    					echo 'class="future"';
-   				
-   				
    				?>
    				>
    					<div class="header">
@@ -1455,7 +1451,7 @@ class Layout_View
 		<div class="row rightSideReservations" id="rightSideReservations">
 			<p class="bg-success text-center roomName"><strong id="roomName"></strong></p>
 			<p class="text-success text-center">from <span id="checkInReservation"></span> to <span id="checkOutReservation"></span></p>
-			<p class="text-info text-center"> <span id="totalDays"></span> nights</p>
+			<p class="text-info text-center"><strong> <span id="totalDays"></span> nights</strong> </p>
 			<div class="forms">
 				
 				<input type="hidden" id="roomId" value='0' />
@@ -1500,6 +1496,15 @@ class Layout_View
 							}
 							?>
 						</select>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-3">
+						<label>External ID</label>
+					</div>
+					<div class="col-sm-9">
+						<input type="text" id="externalId" />
 					</div>
 				</div>
 				
@@ -1617,7 +1622,6 @@ class Layout_View
    				<div class="col-sm-4">Agency: <strong><?php echo $data['agency']; ?></strong></div>
    			</div>
    			
-   			
    			<div class="row extra">
    				<input type="hidden" value="0" id="res-option-<?php echo $data['reservation_id']; ?>">
    				<div class="title-options">
@@ -1629,6 +1633,12 @@ class Layout_View
    					<div class="option confirmed <?php if ($data['status'] == '2') echo 'checked'; ?>" opt-res="2" single-res="<?php echo $data['reservation_id']; ?>">Confirmed</div>
    					<div class="option checked-in <?php if ($data['status'] == '3') echo 'checked'; ?>" opt-res="3" single-res="<?php echo $data['reservation_id']; ?>">Checked-In</div>
    					<div class="option checked-out <?php if ($data['status'] == '4') echo 'checked'; ?>" opt-res="4" single-res="<?php echo $data['reservation_id']; ?>">Checked-Out</div>
+   				</div>
+   			</div>
+   			
+   			<div class="row-extra">
+   				<div class="col-sm-12">
+   					<h4>Payments</h4>
    				</div>
    			</div>
    			

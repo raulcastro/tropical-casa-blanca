@@ -851,6 +851,10 @@ ul.inbox-pagination li {
 .rightSideReservations .row {
 	margin: 15px 0;
 }
+
+.rightSideReservations select {
+	width: 174px;
+}
  
 #completeProfileBtn {
 	display: none;

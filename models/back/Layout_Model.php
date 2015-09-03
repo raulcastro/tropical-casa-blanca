@@ -802,7 +802,6 @@ class Layout_Model
 					LEFT JOIN rooms r ON s.room_id = r.room_id
 					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
 					LEFT JOIN members m ON m.member_id = s.member_id
-					WHERE s.status = 1	
 					';
 			
 			return $this->db->getArray($query);
@@ -811,10 +810,18 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * searchRooms
+	 * 
+	 * Execute a search for available rooms
+	 * 
+	 * @param array $data
+	 * @return multitype:a list of available rooms | false on fail
+	 */
 	public function searchRooms($data)
 	{
-		$checkIn = Tools::formatToMYSQL($data['checkIn']);
-		$checkOut = Tools::formatToMYSQL($data['checkOut']);
+		$checkIn 	= Tools::formatToMYSQL($data['checkIn']);
+		$checkOut 	= Tools::formatToMYSQL($data['checkOut']);
 	
 		$member_id = (int) $data['memberId'];
 		try {
@@ -825,7 +832,9 @@ class Layout_Model
 			FROM reservations 
 			WHERE (check_in <= "'.$checkIn.'" AND check_out >="'.$checkIn.'")
 			OR (check_in <= "'.$checkOut.'" AND check_out >="'.$checkOut.'")
-			OR (check_in >= "'.$checkIn.'" AND check_out <= "'.$checkOut.'"));';
+			OR (check_in >= "'.$checkIn.'" AND check_out <= "'.$checkOut.'"))
+			ORDER BY r.room_order ASC		
+			;';
 			
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
@@ -922,12 +931,22 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * getAllRooms
+	 * 
+	 * Returns the collection of rooms on table rooms
+	 * it works for the section 'Rooms'
+	 * 
+	 * @return multitype:unknown |boolean
+	 */
+	
 	public function getAllRooms()
 	{
 		try {
 			$query = 'SELECT r.*, rt.room_type, rt.abbr
 					FROM rooms r
 					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id 
+					ORDER BY r.room_order ASC
 					';
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
@@ -956,6 +975,7 @@ class Layout_Model
 					LEFT JOIN members m ON m.member_id = s.member_id
 					LEFT JOIN agencies a ON s.agency = a.agency_id
 					WHERE r.room_id = '.$room_id.' ORDER BY s.check_in';
+			
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
 			return false;
