@@ -38,11 +38,11 @@ switch ($_POST['opt'])
 		}
 	break;
 	
-	case 3:
+	case 3: // Add the reservation at the same time that the member is added
 		$model->addReservation($_POST);
 	break;
 	
-	case 4:
+	case 4: // Add the reservation when the member is already created
 		if ($model->addReservation($_POST))
 		{
 			$reservations = $model->getMemberReservationsByMemberId($_POST['memberId']);

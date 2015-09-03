@@ -1522,7 +1522,7 @@ class Layout_View
 						<label>Total</label>
 					</div>
 					<div class="col-sm-9">
-						<input type="text" id="totalReservation" />
+						<input type="text" id="totalReservation" readonly="readonly" />
 					</div>
 				</div>
 				

@@ -47,7 +47,7 @@ function searchReservation()
 	var checkIn 	= $('#checkIn').val();
 	var checkOut	= $('#checkOut').val();
 	
-	var reservationAdults = $('#reservationAdults').val();
+	var reservationAdults 	= $('#reservationAdults').val();
 	var reservationChildren = $('#reservationChildren').val();
 
 	if (checkIn && checkOut )
@@ -55,11 +55,11 @@ function searchReservation()
 		$.ajax({
 	        type:   'POST',
 	        url:    '/ajax/reservations.php',
-	        data:{  memberId: 	memberId,
-	        	checkIn: checkIn,
-				checkOut: checkOut,
-				reservationAdults: reservationAdults,
-				reservationChildren: reservationChildren,
+	        data:{  memberId: 			memberId,
+	        	checkIn: 				checkIn,
+				checkOut: 				checkOut,
+				reservationAdults: 		reservationAdults,
+				reservationChildren: 	reservationChildren,
 	            opt: 			1
 	             },
 	        success:
@@ -75,14 +75,8 @@ function searchReservation()
 	            	
 	            	$('#bookRoom').click(function(){
 	            		addReservationMember();
-//	        			processReservation(this);
 	        			return false;
 	        		});
-	            	/*getMemberTasks();
-	            	$('#task_content').val('');
-					$('#task-date').val('');
-					$('#task-box').html('');
-					$('#task-box').html(xml);*/
 	            }
 	        }
 	    });
@@ -91,8 +85,8 @@ function searchReservation()
 
 function processReservation(node)
 {
-	var roomName = $(node).attr('rn');
-	var roomId = $(node).attr('ri');
+	var roomName 	= $(node).attr('rn');
+	var roomId 		= $(node).attr('ri');
 	var checkIn 	= $('#checkIn').val();
 	var checkOut	= $('#checkOut').val();
 	var totalNights = 0;
@@ -116,22 +110,35 @@ function processReservation(node)
 	$('#totalDays').html(totalNights);
 }
 
+/**
+ * restaFechas
+ * 
+ * Returns the number of days between two dates
+ * 
+ * @param f1
+ * @param f2
+ * @returns int dias returns he difernce between f1 and f2
+ */
 function restaFechas(f1,f2)
 {
 	var aFecha1 = f1.split('/'); 
 	var aFecha2 = f2.split('/'); 
 	var fFecha1 = Date.UTC(aFecha1[2],aFecha1[0]-1,aFecha1[1]); 
 	var fFecha2 = Date.UTC(aFecha2[2],aFecha2[0]-1,aFecha2[1]); 
-	var dif = fFecha2 - fFecha1;
-	var dias = Math.floor(dif / (1000 * 60 * 60 * 24)); 
+	var dif 	= fFecha2 - fFecha1;
+	var dias	= Math.floor(dif / (1000 * 60 * 60 * 24)); 
 	return dias;
 }
 
+/**
+ * addReservationMember
+ * 
+ * Creates a member and also add a reservation under that member
+ */
 function addReservationMember()
 {
 	var memberName = $('#member-name').val();
 	var memberLastName = $('#member-last-name').val();
-	
 	
 	if (memberName && memberLastName )
 	{
@@ -139,7 +146,7 @@ function addReservationMember()
 	        type:   'POST',
 	        url:    '/ajax/reservations.php',
 	        data:{  
-	        	memberName: memberName,
+	        	memberName: 	memberName,
 	        	memberLastName: memberLastName,
 	            opt: 			2
 	             },
@@ -161,17 +168,16 @@ function addReservationMember()
 
 function addReservation()
 {
-	var memberId 	= $('#memberId').val();
-	var reservationAdults = $('#reservationAdults').val();
+	var memberId 			= $('#memberId').val();
+	var reservationAdults 	= $('#reservationAdults').val();
 	var reservationChildren = $('#reservationChildren').val();
-	var checkIn 	= $('#checkIn').val();
-	var checkOut	= $('#checkOut').val();
-	var roomId = $('#roomId').val();
-	var price = $('#totalReservation').val();
-	var pricePerNight = $('#pricePerNight').val();
-	var agency = $('#agencyList').val();
-	
-//	alert(roomId);
+	var checkIn 			= $('#checkIn').val();
+	var checkOut			= $('#checkOut').val();
+	var roomId 				= $('#roomId').val();
+	var price 				= $('#totalReservation').val();
+	var pricePerNight 		= $('#pricePerNight').val();
+	var agency 				= $('#agencyList').val();
+	var externalId			= $('#externalId').val();
 	
 	if (memberId && roomId )
 	{
@@ -179,27 +185,24 @@ function addReservation()
 	        type:   'POST',
 	        url:    '/ajax/reservations.php',
 	        data:{  
-	        	memberId: memberId,
-	        	reservationAdults: reservationAdults,
-	        	reservationChildren: reservationChildren,
-	        	checkIn: checkIn,
-	        	checkOut: checkOut,
-	        	roomId: roomId,
-	        	agency: agency,
-	        	pricePerNight: pricePerNight,
-	        	price: price,
-	            opt: 			3
+	        	memberId: 				memberId,
+	        	reservationAdults: 		reservationAdults,
+	        	reservationChildren: 	reservationChildren,
+	        	checkIn: 				checkIn,
+	        	checkOut: 				checkOut,
+	        	roomId: 				roomId,
+	        	agency: 				agency,
+	        	pricePerNight: 			pricePerNight,
+	        	price: 					price,
+	        	externalId:				externalId,
+	            opt: 					3
 	             },
 	        success:
 	        function(xml)
 	        {
 	            if (0 != xml)
 	            {
-//	            	$('#memberId').val(xml);
-//	            	addReservation();
-//	            	$('#completeProfileBtn').show();
-//	            	$('#bookRoom').hide();
-//	            	$('#completeProfileBtn').attr('href','/'+xml+'/new-reservation/');
+
 	            }
 	        }
 	    });
@@ -209,13 +212,15 @@ function addReservation()
 function addReservationMemberPanel()
 {
 	
-	var memberId 	= $('#member-id').val();
-	var reservationAdults = $('#reservationAdults').val();
+	var memberId 			= $('#member-id').val();
+	var reservationAdults 	= $('#reservationAdults').val();
 	var reservationChildren = $('#reservationChildren').val();
-	var checkIn 	= $('#checkIn').val();
-	var checkOut	= $('#checkOut').val();
-	var roomId = $('#roomId').val();
-	var price = $('#totalReservation').val();
+	var checkIn 			= $('#checkIn').val();
+	var checkOut			= $('#checkOut').val();
+	var roomId 				= $('#roomId').val();
+	var price 				= $('#totalReservation').val();
+	var agency 				= $('#agencyList').val();
+	var externalId			= $('#externalId').val();
 	
 	if (memberId && roomId )
 	{
@@ -229,7 +234,9 @@ function addReservationMemberPanel()
 	        	checkIn: checkIn,
 	        	checkOut: checkOut,
 	        	roomId: roomId,
-	        	price: price,
+	        	price: 			price,
+	        	agency: 		agency,
+	        	externalId: 	externalId,
 	            opt: 			4
 	             },
 	        success:
@@ -252,14 +259,6 @@ function addReservationMemberPanel()
 function updateMemberReservation(reservationId)
 {
 	var optRes = $('#res-option-'+reservationId).val();
-	
-//	var memberId 	= $('#member-id').val();
-//	var reservationAdults = $('#reservationAdults').val();
-//	var reservationChildren = $('#reservationChildren').val();
-//	var checkIn 	= $('#checkIn').val();
-//	var checkOut	= $('#checkOut').val();
-//	var roomId = $('#roomId').val();
-//	var price = $('#totalReservation').val();
 	
 	if (reservationId )
 	{

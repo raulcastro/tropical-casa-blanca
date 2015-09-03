@@ -146,6 +146,8 @@ CREATE TABLE `agencies` (
 
 ALTER TABLE `rooms` ADD COLUMN `room_order` INT(2);
 
+ALTER TABLE `reservations` ADD COLUMN `external_id` varchar(256) NULL;
+
 
 
 

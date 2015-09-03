@@ -863,43 +863,69 @@ class Layout_Model
 		}
 	}
 	
-// 	public function addMemberFromReservation($data)
-// 	{
-// 		try {
-// 			$query = 'INSERT INTO members(name, user_id, last_name, active, date)
-// 						VALUES(?, '.$_SESSION["userId"].', ?, 1, CURDATE());';
-	
-// 			$prep = $this->db->prepare($query);
-	
-// 			$prep->bind_param('ss',
-// 					$data['memberName'],
-// 					$data['memberLastName']);
-	
-// 			if ($prep->execute())
-// 			{
-// 				return $prep->insert_id;
-// 			}
-// 		} catch (Exception $e) {
-// 			return false;
-// 		}
-// 	}
-	
+	/**
+	 * addReservation
+	 * 
+	 * add a new reservation with a room id, check-in and checkout and other parameters
+	 * 
+	 * @param array $data
+	 * @return true on success | false on fail
+	 */
 	public function addReservation($data)
 	{
-		$checkIn = Tools::formatToMYSQL($data['checkIn']);
-		$checkOut = Tools::formatToMYSQL($data['checkOut']);
+		$checkIn 	= Tools::formatToMYSQL($data['checkIn']);
+		$checkOut 	= Tools::formatToMYSQL($data['checkOut']);
 		
 		try {
-			$query = 'INSERT INTO reservations(member_id, room_id, check_in, check_out, date, price, status, adults, children, agency, price_per_night)
-					VALUES('.$data['memberId'].', '.$data['roomId'].', "'.$checkIn.'", 
-						"'.$checkOut.'", CURDATE(), '.$data['price'].', 1, '.$data['reservationAdults'].', 
-						'.$data['reservationChildren'].', '.$data['agency'].', '.$data['pricePerNight'].')';
+			$query = 'INSERT INTO
+					reservations(
+						member_id,
+						room_id,
+						check_in,
+						check_out,
+						date,
+						price,
+						status,
+						adults,
+						children,
+						agency,
+						price_per_night,
+						external_id)
+					VALUES(?, ?, ?, ?, CURDATE(), ?, 1, ?, ?, ?, ?, ?)';
+
+			$prep = $this->db->prepare($query);
+			
+			$prep->bind_param('iissiiiiis',
+					$data['memberId'],
+					$data['roomId'],
+					$checkIn,
+					$checkOut,
+					$data['price'],
+					$data['reservationAdults'],
+					$data['reservationChildren'],
+					$data['agency'],
+					$data['pricePerNight'],
+					$data['externalId']
+					);
+			if ($prep->execute())
+			{
+				return $prep->insert_id;
+			}
+			
 			return $this->db->run($query);
 		} catch (Exception $e) {
 			return false;
 		}
 	}
 	
+	/**
+	 * getMemberReservationByMemberId
+	 * 
+	 * it gets all the reservation related to a member
+	 * 
+	 * @param int $memberId
+	 * @return array on success | false on fail
+	 */
 	public function getMemberReservationsByMemberId($memberId)
 	{
 		$memberId = (int) $memberId;
@@ -912,6 +938,7 @@ class Layout_Model
 					s.adults,
 					s.children,
 					s.status,
+					s.external_id,
 					rt.room_type,
 					rt.abbr,
 					r.room,
@@ -986,7 +1013,7 @@ class Layout_Model
 	{
 		try {
 			$query = 'UPDATE reservations SET status = ?
-						WHERE reservation_id = '.$data['reservationId'];
+					WHERE reservation_id = '.$data['reservationId'];
 				
 			$prep = $this->db->prepare($query);
 				
@@ -998,6 +1025,14 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * addAgency
+	 * 
+	 * add an agency on the agency table
+	 * 
+	 * @param ustring $agency
+	 * @return true on success | false on fail
+	 */
 	public function addAgency($agency)
 	{
 		try {
@@ -1006,8 +1041,7 @@ class Layout_Model
 				
 			$prep = $this->db->prepare($query);
 				
-			$prep->bind_param('s',
-					$agency);
+			$prep->bind_param('s', $agency);
 			
 			return $prep->execute();
 		} catch (Exception $e) {
@@ -1015,6 +1049,13 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * getAgencies
+	 * 
+	 * returns an array of agencies
+	 * 
+	 * @return multitype:array of agencies on success false on fail
+	 */
 	public function getAgencies()
 	{
 		try {
@@ -1024,9 +1065,6 @@ class Layout_Model
 			return false;
 		}
 	}
-	
-	
-	
 }
 
 

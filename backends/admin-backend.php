@@ -46,110 +46,83 @@ class generalBackend
 		$data['appInfo'] = $appInfo;
 
 		// Active Users
-		$usersActiceArray = $this->model->getActiveUsers();
-		$data['usersActive'] = $usersActiceArray;
+		$usersActiceArray 		= $this->model->getActiveUsers();
+		$data['usersActive'] 	= $usersActiceArray;
 		
 		// User Info
-		$userInfoRow = $this->model->getUserInfo();
-		$data['userInfo'] = $userInfoRow;
+		$userInfoRow 		= $this->model->getUserInfo();
+		$data['userInfo'] 	= $userInfoRow;
 		
 		// Last 20 members
-		$lastMembersArray = $this->model->getLastMembers();
-		$data['lastMembers'] = $lastMembersArray;
+		$lastMembersArray 		= $this->model->getLastMembers();
+		$data['lastMembers'] 	= $lastMembersArray;
 		
-		$lastBrokersArray = $this->model->getLastBrokers();
-		$data['lastBrokers'] = $lastBrokersArray;
+		$lastBrokersArray 		= $this->model->getLastBrokers();
+		$data['lastBrokers'] 	= $lastBrokersArray;
 		
 		// Task Info
-		$data['taskInfo']['today'] = $this->model->getTotalTodayTasksByMemberId();
-		$data['taskInfo']['pending'] = $this->model->getTotalPendingTasksByMemberId();
-		$data['taskInfo']['future'] = $this->model->getTotalFutureTasksByMemberId();
-		$data['recentMembers'] = $this->model->getRecentMembers();
-		$data['recentBrokers'] = $this->model->getRecentBrokers();
+		$data['taskInfo']['today'] 		= $this->model->getTotalTodayTasksByMemberId();
+		$data['taskInfo']['pending'] 	= $this->model->getTotalPendingTasksByMemberId();
+		$data['taskInfo']['future'] 	= $this->model->getTotalFutureTasksByMemberId();
+		$data['recentMembers'] 			= $this->model->getRecentMembers();
+		$data['recentBrokers'] 			= $this->model->getRecentBrokers();
 		
 		switch ($section) 
 		{
 			case 'companies':
 				// 		get All companies
-				$companiesArray = $this->model->getCompanies();
-				$data['companies'] = $companiesArray;
+				$companiesArray 	= $this->model->getCompanies();
+				$data['companies'] 	= $companiesArray;
 			break;
 			
 			
 			case 'add-member':
 				// 		get all countries
-				$countriesArray = $this->model->getAllCountries();
-				$data['countries'] = $countriesArray;
+				$countriesArray 	= $this->model->getAllCountries();
+				$data['countries'] 	= $countriesArray;
 			break;
 			
 			case 'add-broker':
 				// 		get all countries
-				$countriesArray = $this->model->getAllCountries();
-				$data['countries'] = $countriesArray;
+				$countriesArray 	= $this->model->getAllCountries();
+				$data['countries'] 	= $countriesArray;
 			break;
 			
 			case 'members':
 				// 		get all members
-				$membersArray = $this->model->getAllMembers();
-				$data['members'] = $membersArray;
+				$membersArray 		= $this->model->getAllMembers();
+				$data['members'] 	= $membersArray;
 			break;
 			
 			case 'member-info':
 				$memberId = (int) $_GET['memberId'];
 				
-				$memberInfoRow = $this->model->getMemberByMemberId($memberId);
+				$memberInfoRow 		= $this->model->getMemberByMemberId($memberId);
 				$data['memberInfo'] = $memberInfoRow;
 				
 // 				Emails
-				$memberEmailsArray  = $this->model->getMemberEmailsById($memberId);
-				$data['memberEmails'] = $memberEmailsArray;
+				$memberEmailsArray  	= $this->model->getMemberEmailsById($memberId);
+				$data['memberEmails'] 	= $memberEmailsArray;
 				
 // 				Phones
-				$memberPhonesArray	= $this->model->getMemberPhonesById($memberId);
-				$data['memberPhones'] = $this->model->getMemberPhonesById($memberId);
+				$memberPhonesArray		= $this->model->getMemberPhonesById($memberId);
+				$data['memberPhones'] 	= $this->model->getMemberPhonesById($memberId);
 				
 // 				History
-				$memberHistoryArray = $this->model->getMemberHistoryById($memberId);
-				$data['memberHistory'] = $memberHistoryArray;
+				$memberHistoryArray 	= $this->model->getMemberHistoryById($memberId);
+				$data['memberHistory'] 	= $memberHistoryArray;
 				
 // 				Tasks
-				$memberTasksArray	= $this->model->getMemberTaskByMemberId($memberId);
-				$data['memberTasks'] = $memberTasksArray; 
+				$memberTasksArray		= $this->model->getMemberTaskByMemberId($memberId);
+				$data['memberTasks'] 	= $memberTasksArray; 
 				
 // 				Reservations
-				$memberReservationsArray = $this->model->getMemberReservationsByMemberId($memberId);
+				$memberReservationsArray 	= $this->model->getMemberReservationsByMemberId($memberId);
 				$data['memberReservations'] = $memberReservationsArray;
 				
-			break;
-			
-			case 'brokers':
-				// 		get all members
-				$membersArray = $this->model->getAllBrokers();
-				$data['brokers'] = $membersArray;
-			break;
-			
-			case 'broker-info':
-				$brokerId = (int) $_GET['brokerId'];
-			
-				$memberInfoRow = $this->model->getBrokerByBrokerId($brokerId);
-				$data['memberInfo'] = $memberInfoRow;
-			
-				// 				Emails
-				$memberEmailsArray  = $this->model->getBrokerEmailsById($brokerId);
-				$data['memberEmails'] = $memberEmailsArray;
-			
-				// 				Phones
-				$memberPhonesArray	= $this->model->getBrokerPhonesById($brokerId);
-				$data['memberPhones'] = $memberPhonesArray;
-			
-				// 				History
-				$memberHistoryArray = $this->model->getBrokerHistoryById($brokerId);
-				$data['memberHistory'] = $memberHistoryArray;
-			
-				// 				Tasks
-				$memberTasksArray	= $this->model->getMemberTaskByMemberId($memberId);
-				$data['memberTasks'] = $memberTasksArray;
-			
+				$agenciesArray 		= $this->model->getAgencies();
+				$data['agencies'] 	= $agenciesArray;
+				
 			break;
 			
 			case 'tasks':
@@ -158,7 +131,7 @@ class generalBackend
 				else
 					$memberTasksArray	= $this->model->getAllTasksByUser();
 				
-				$data['memberTasks'] = $memberTasksArray;
+				$data['memberTasks'] 	= $memberTasksArray;
 			break;
 			
 			case 'email':
@@ -167,37 +140,35 @@ class generalBackend
 			break;
 			
 			case 'calendar':
-				$calendarArray = $this->model->getAllReservations();
-				$data['reservations'] = $calendarArray;
+				$calendarArray 			= $this->model->getAllReservations();
+				$data['reservations'] 	= $calendarArray;
 			break;
 			
 			case 'rooms':
-				$roomsArray = $this->model->getAllRooms();
-				$data['rooms'] = array();
+				$roomsArray 	= $this->model->getAllRooms();
+				$data['rooms'] 	= array();
 				foreach ($roomsArray as $room)
 				{
 					$roomInfo = array(
-							'room_id' => $room['room_id'],
-							'room' => $room['room'],
-							'abbr' => $room['abbr']
+							'room_id'	=> $room['room_id'],
+							'room' 		=> $room['room'],
+							'abbr' 		=> $room['abbr']
 					);
 					$reservations['reservations'] = $this->model->getReservationsByRoomId($room['room_id']);
 					array_push($roomInfo, $reservations);
-// 					$data['info']['room_id']['room'] = $room['room'];
-					
 					array_push($data['rooms'], $roomInfo);
 				}
 // 				$data['rooms'] = $roomsArray;
 			break;
 			
 			case 'agencies':
-				$agenciesArray = $this->model->getAgencies();
-				$data['agencies'] = $agenciesArray;		
+				$agenciesArray 		= $this->model->getAgencies();
+				$data['agencies'] 	= $agenciesArray;		
 			break; 
 						
 			case 'reservations':
-				$agenciesArray = $this->model->getAgencies();
-				$data['agencies'] = $agenciesArray;
+				$agenciesArray 		= $this->model->getAgencies();
+				$data['agencies'] 	= $agenciesArray;
 			break;
 			
 			default:
