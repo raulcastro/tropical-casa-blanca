@@ -867,7 +867,8 @@ ul.inbox-pagination li {
 }
 
 .memberReservations .reservation-item {
-	margin-bottom: 14px;
+	margin-bottom: 24px;
+	background-color: #F9F9F9;
 }
 
 .memberReservations .reservation-item .title {
@@ -1032,11 +1033,31 @@ ul.inbox-pagination li {
 	background: #2097D8!important;	
 }
  
+#payment-items {
+	margin-top: 20px;
+}
+
+#payment-items .row {
+	margin-top: 10px;
+}
+
+#payment-items button {
+	padding: 0 6px;
+	font-size: 10px;
+}
+
+#payment-extra {
+	margin-top: 15px;
+}
  
- 
- 
- 
- 
+#payment-extra .input-cost {
+	width: 60px;
+}
+
+#payment-extra button {
+	padding: 3px 6px;
+	font-size: 10px;
+}
  
  
  

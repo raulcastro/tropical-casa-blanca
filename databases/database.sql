@@ -148,7 +148,16 @@ ALTER TABLE `rooms` ADD COLUMN `room_order` INT(2);
 
 ALTER TABLE `reservations` ADD COLUMN `external_id` varchar(256) NULL;
 
-
+CREATE TABLE `payments`(
+	`payment_id` INT(100) NOT NULL AUTO_INCREMENT,
+	`reservation_id` INT(100) NOT NULL,
+	`description` VARCHAR(512) NOT NULL,
+	`cost` INT(5) NOT NULL,
+	`active` INT(1) NOT NULL DEFAULT '1',
+	`payment_type` INT(1) NOT NULL DEFAULT '1',
+	`status` INT(1) NOT NULL DEFAULT '0',
+	PRIMARY KEY(`payment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8;
 
 
 

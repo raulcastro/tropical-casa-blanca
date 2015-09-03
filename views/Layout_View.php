@@ -1588,38 +1588,46 @@ class Layout_View
    	   	return $tasks; 
    	}
 	
+   	/**
+   	 * getMemberReservationItem
+   	 * 
+   	 * print the reservation belongs to a member
+   	 * 
+   	 * @param array $data array with the reservation info
+   	 * @return string html of the reservation item
+   	 */
    	public function getMemberReservationItem($data)
    	{
    		ob_start();
    		?>
-   		<div class="col-sm-12 bg-success reservation-item">
+   		<div class="col-sm-12 reservation-item">
    			
    			<div class="row bg-primary title">
    				<div class="col-sm-2">Date</div>
-   				<div class="col-sm-2">Room</div>
    				<div class="col-sm-2">Check-In</div>
    				<div class="col-sm-2">Check-Out</div>
-   				<div class="col-sm-2">Price</div>
-   				<div class="col-sm-2">Status</div>
+   				<div class="col-sm-2">Room</div>
+   				<div class="col-sm-2">Room Type</div>
+<!--    				<div class="col-sm-2">Status</div> -->
    			</div>
    				
    			<div class="row info">
    				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['date']); ?></div>
-   				<div class="col-sm-2"><strong><?php echo $data['room']; ?></strong></div>
    				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_in']); ?></strong></div>
    				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_out']); ?></strong></div>
-   				<div class="col-sm-2"><strong>$<?php echo $data['price']; ?></strong></div>
-   				<div class="col-sm-2">paid</div>
+   				<div class="col-sm-2"><strong><?php echo $data['room']; ?></strong></div>
+   				<div class="col-sm-2"><strong><?php echo $data['room_type']; ?></strong></div>
+<!--    				<div class="col-sm-2">paid</div> -->
    			</div>
    				
    			<div class="row extra">
-   				<div class="col-sm-4">Room Type: <strong><?php echo $data['room_type']; ?></strong></div>
-   				<div class="col-sm-4">Adults: <?php echo $data['adults']; ?></div>
-   				<div class="col-sm-4">Children: <?php echo $data['children']; ?></div>
+   				<div class="col-sm-4">Adults: <strong><?php echo $data['adults']; ?></strong></div>
+   				<div class="col-sm-4">Children: <strong><?php echo $data['children']; ?></strong></div>
    			</div>
    			
    			<div class="row extra">
    				<div class="col-sm-4">Agency: <strong><?php echo $data['agency']; ?></strong></div>
+   				<div class="col-sm-4">External Id: <strong><?php echo $data['external_id']; ?></strong></div>
    			</div>
    			
    			<div class="row extra">
@@ -1638,7 +1646,75 @@ class Layout_View
    			
    			<div class="row-extra">
    				<div class="col-sm-12">
-   					<h4>Payments</h4>
+   					<h5>Grand Total <strong> $<span>10689</span></strong></h5>
+   				</div>
+   			</div>
+   			
+   			<div class="row-extra">
+   				<div class="col-sm-3">Paid: <strong>200</strong></div>
+   				<div class="col-sm-3">Pending: <strong>135</strong></div>
+   			</div>
+   			
+   			<div class="clearfix"></div>
+   			
+   			<div class="row-extra" id="payment-items">
+   				<div class="row">
+	   				<div class="col-sm-3"><i>Staying cost</i></div>
+	   				<div class="col-sm-1">$ <strong>135</strong></div>
+	   				<div class="col-sm-2">
+	   					<button type="button" class="btn btn-default btn-xs">Paid</button>
+	   					<button type="button" class="btn btn-default btn-xs btn-info">Unpaid</button>
+	   				</div>
+	   				<div class="col-sm-2">
+	   					<button type="button" class="btn btn-default btn-xs btn-info">CC</button>
+	   					<button type="button" class="btn btn-default btn-xs">Cash</button>
+	   				</div>
+	   				<div class="col-sm-2">
+	   					<i class="glyphicon glyphicon-remove"></i>
+	   				</div>
+   				</div>
+   				<div class="row">
+	   				<div class="col-sm-3"><i>Broken Jar</i></div>
+	   				<div class="col-sm-1">$ <strong>135</strong></div>
+	   				<div class="col-sm-2">
+	   					<button type="button" class="btn btn-default btn-xs btn-info">Paid</button>
+	   					<button type="button" class="btn btn-default btn-xs">Unpaid</button>
+	   				</div>
+	   				<div class="col-sm-2">
+	   					<button type="button" class="btn btn-default btn-xs">CC</button>
+	   					<button type="button" class="btn btn-default btn-xs">Cash</button>
+	   				</div>
+	   				<div class="col-sm-2">
+	   					<i class="glyphicon glyphicon-remove"></i>
+	   				</div>
+   				</div>
+   				
+   				<div class="row">
+	   				<div class="col-sm-3"><i>Extra day</i></div>
+	   				<div class="col-sm-1">$ <strong>135</strong></div>
+	   				<div class="col-sm-2">
+	   					<button type="button" class="btn btn-default btn-xs">Paid</button>
+	   					<button type="button" class="btn btn-default btn-xs">Unpaid</button>
+	   				</div>
+	   				<div class="col-sm-2">
+	   					<button type="button" class="btn btn-default btn-xs">CC</button>
+	   					<button type="button" class="btn btn-default btn-xs">Cash</button>
+	   				</div>
+	   				<div class="col-sm-2">
+	   					<i class="glyphicon glyphicon-remove"></i>
+	   				</div>
+   				</div>
+   			</div>
+   			
+   			<div class="row-extra" id="payment-extra">
+   				<div class="row">
+	   				<div class="col-sm-3">
+	   					<input type="text" placeholder="description" />
+	   				</div>
+	   				<div class="col-sm-2">$ <input type="text" class="input-cost" placeholder="cost" /></div>
+	   				<div class="col-sm-1">
+	   					<button type="button" class="btn btn-info btn-xs">ADD</button>
+	   				</div>
    				</div>
    			</div>
    			
