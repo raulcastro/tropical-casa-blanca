@@ -228,16 +228,16 @@ function addReservationMemberPanel()
 	        type:   'POST',
 	        url:    '/ajax/reservations.php',
 	        data:{  
-	        	memberId: memberId,
-	        	reservationAdults: reservationAdults,
-	        	reservationChildren: reservationChildren,
-	        	checkIn: checkIn,
-	        	checkOut: checkOut,
-	        	roomId: roomId,
-	        	price: 			price,
-	        	agency: 		agency,
-	        	externalId: 	externalId,
-	            opt: 			4
+	        	memberId: 				memberId,
+	        	reservationAdults: 		reservationAdults,
+	        	reservationChildren: 	reservationChildren,
+	        	checkIn: 				checkIn,
+	        	checkOut: 				checkOut,
+	        	roomId: 				roomId,
+	        	price: 					price,
+	        	agency: 				agency,
+	        	externalId: 			externalId,
+	            opt: 					4
 	             },
 	        success:
 	        function(xml)

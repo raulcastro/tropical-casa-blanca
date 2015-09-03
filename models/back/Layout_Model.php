@@ -741,8 +741,9 @@ class Layout_Model
 			if ($prep->execute())
 			{
 				$info = array('reservationId' => $prep->insert_id, 'description' => "Staying cost", 'cost' => $data['price']);
-// 				return $prep->insert_id;
 				$this->addPayment($info);
+				return $prep->insert_id;
+				
 			}
 			
 // 			return $this->db->run($query);

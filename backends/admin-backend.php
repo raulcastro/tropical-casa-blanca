@@ -146,9 +146,6 @@ class generalBackend
 					$payments['payments'] = $this->model->getPaymentsByReservationId($reservation['reservation_id']);
 					array_push($reservationInfo, $payments);
 					array_push($data['memberReservations'], $reservationInfo);
-					
-					
-					
 				}
 				
 // 				Agencies
