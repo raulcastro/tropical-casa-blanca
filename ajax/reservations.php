@@ -46,7 +46,6 @@ switch ($_POST['opt'])
 		if ($model->addReservation($_POST))
 		{
 			$memberReservationsArray 	= $model->getMemberReservationsByMemberId($_POST['memberId']);
-			// 				$data['memberReservations'] = $memberReservationsArray;
 			
 			$data['memberReservations'] = array();
 			if ($memberReservationsArray)
@@ -54,25 +53,25 @@ switch ($_POST['opt'])
 				foreach ($memberReservationsArray as $reservation)
 				{
 					$grandTotal = $model->getReservationGrandTotalByReservationId($reservation['reservation_id']);
-					$paid = $model->getReservationPaidByReservationId($reservation['reservation_id']);
-					$unpaid = $model->getReservationUnpaidByReservationId($reservation['reservation_id']);
+					$paid 		= $model->getReservationPaidByReservationId($reservation['reservation_id']);
+					$unpaid 	= $model->getReservationUnpaidByReservationId($reservation['reservation_id']);
 						
 					$reservationInfo = array(
 							'reservation_id'	=> $reservation['reservation_id'],
-							'room_id' 		=> $reservation['room_id'],
-							'date'			=> $reservation['date'],
-							'check_in' 		=> $reservation['check_in'],
-							'check_out' => $reservation['check_out'],
-							'room' => $reservation['room'],
-							'room_type' => $reservation['room_type'],
-							'adults' => $reservation['adults'],
-							'children' => $reservation['children'],
-							'agency' => $reservation['agency'],
-							'external_id' => $reservation['external_id'],
-							'status' => $reservation['status'],
-							'grandTotal' => $grandTotal,
-							'paid' => $paid,
-							'unpaid' => $unpaid
+							'room_id' 			=> $reservation['room_id'],
+							'date'				=> $reservation['date'],
+							'check_in' 			=> $reservation['check_in'],
+							'check_out' 		=> $reservation['check_out'],
+							'room' 				=> $reservation['room'],
+							'room_type' 		=> $reservation['room_type'],
+							'adults' 			=> $reservation['adults'],
+							'children' 			=> $reservation['children'],
+							'agency' 			=> $reservation['agency'],
+							'external_id' 		=> $reservation['external_id'],
+							'status' 			=> $reservation['status'],
+							'grandTotal' 		=> $grandTotal,
+							'paid' 				=> $paid,
+							'unpaid' 			=> $unpaid
 					);
 						
 					$payments['payments'] = $model->getPaymentsByReservationId($reservation['reservation_id']);

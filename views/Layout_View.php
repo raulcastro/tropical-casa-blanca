@@ -1698,15 +1698,14 @@ class Layout_View
    			}
    			?>
    			
-   			
    			<div class="row-extra" id="payment-extra">
    				<div class="row">
 	   				<div class="col-sm-3">
-	   					<input type="text" placeholder="description" />
+	   					<input type="text" placeholder="description" id="extra-pay-des-<?php echo $data['reservation_id']; ?>" />
 	   				</div>
-	   				<div class="col-sm-2">$ <input type="text" class="input-cost" placeholder="cost" /></div>
+	   				<div class="col-sm-2">$ <input type="text" class="input-cost" placeholder="cost" id="extra-pay-cost-<?php echo $data['reservation_id']; ?>" /></div>
 	   				<div class="col-sm-1">
-	   					<button type="button" class="btn btn-info btn-xs">ADD</button>
+	   					<button type="button" class="btn btn-info btn-xs add-extra-pay" res-id="<?php echo $data['reservation_id']; ?>" >ADD</button>
 	   				</div>
    				</div>
    			</div>

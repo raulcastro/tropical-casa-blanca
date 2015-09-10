@@ -785,7 +785,7 @@ class Layout_Model
 					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
 					LEFT JOIN members m ON m.member_id = s.member_id
 					LEFT JOIN agencies a ON s.agency = a.agency_id
-					WHERE s.member_id = '.$memberId;
+					WHERE s.member_id = '.$memberId.' ORDER BY s.reservation_id DESC';
 				
 			return $this->db->getArray($query);
 		} catch (Exception $e) {

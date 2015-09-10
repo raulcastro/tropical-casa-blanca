@@ -39,7 +39,24 @@ $(function(){
 		var singleRes =  $(this).attr('single-res');
 		updateMemberReservation(singleRes);
 	});
+	
+	$('.add-extra-pay').click(function(){
+		var resId = $(this).attr('res-id');
+		processExtraPayment(resId);
+	});
 });
+
+/**
+ * processExtraPayment
+ * 
+ * add an extra payment to the reservation
+ * 
+ * @param resId
+ */
+function processExtraPayment(resId)
+{
+	alert(resId);
+}
 
 function searchReservation()
 {
