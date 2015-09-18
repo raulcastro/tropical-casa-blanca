@@ -62,6 +62,7 @@ switch ($_POST['opt'])
 							'date'				=> $reservation['date'],
 							'check_in' 			=> $reservation['check_in'],
 							'check_out' 		=> $reservation['check_out'],
+							'check_mask' 		=> $reservation['check_mask'],
 							'room' 				=> $reservation['room'],
 							'room_type' 		=> $reservation['room_type'],
 							'adults' 			=> $reservation['adults'],

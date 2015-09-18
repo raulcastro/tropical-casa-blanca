@@ -1613,7 +1613,7 @@ class Layout_View
    			<div class="row info">
    				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['date']); ?></div>
    				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_in']); ?></strong></div>
-   				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_out']); ?></strong></div>
+   				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_mask']); ?></strong></div>
    				<div class="col-sm-2"><strong><?php echo $data['room']; ?></strong></div>
    				<div class="col-sm-2"><strong><?php echo $data['room_type']; ?></strong></div>
    			</div>
@@ -1938,7 +1938,7 @@ class Layout_View
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
 															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
@@ -1965,7 +1965,7 @@ class Layout_View
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
 															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
@@ -1992,7 +1992,7 @@ class Layout_View
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
 															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
@@ -2019,7 +2019,7 @@ class Layout_View
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
 															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
@@ -2046,7 +2046,7 @@ class Layout_View
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
 															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
@@ -2073,7 +2073,7 @@ class Layout_View
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
 															    <p><?php echo $reservation['agency']; ?></p>
 															</div>
@@ -2100,7 +2100,7 @@ class Layout_View
 															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></p>
+															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
 															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
 															    <p><?php echo $reservation['agency']; ?></p>
 															</div>

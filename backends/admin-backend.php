@@ -130,7 +130,8 @@ class generalBackend
 							'room_id' 		=> $reservation['room_id'],
 							'date'			=> $reservation['date'],
 							'check_in' 		=> $reservation['check_in'],
-							'check_out' => $reservation['check_out'],
+							'check_out' 	=> $reservation['check_out'],
+							'check_mask'	=> $reservation['check_mask'],
 							'room' => $reservation['room'],
 							'room_type' => $reservation['room_type'],
 							'adults' => $reservation['adults'],
@@ -183,6 +184,7 @@ class generalBackend
 							'room' 		=> $room['room'],
 							'abbr' 		=> $room['abbr']
 					);
+					
 					$reservations['reservations'] = $this->model->getReservationsByRoomId($room['room_id']);
 					array_push($roomInfo, $reservations);
 					array_push($data['rooms'], $roomInfo);

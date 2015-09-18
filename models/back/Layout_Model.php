@@ -82,7 +82,7 @@ class Layout_Model
 					 ORDER BY m.member_id DESC
 					LIMIT 0, 10
 					';
-			
+
 			return $this->db->getArray($query);
 			
 		} catch (Exception $e) {
@@ -705,6 +705,8 @@ class Layout_Model
 	{
 		$checkIn 	= Tools::formatToMYSQL($data['checkIn']);
 		$checkOut 	= Tools::formatToMYSQL($data['checkOut']);
+		$checkOutDate = date($checkOut);
+		$checkOutDate = date('Y-m-d', strtotime('-1 day', strtotime($checkOutDate)));
 		
 		try {
 			$query = 'INSERT INTO
@@ -729,7 +731,7 @@ class Layout_Model
 					$data['memberId'],
 					$data['roomId'],
 					$checkIn,
-					$checkOut,
+					$checkOutDate,
 					$data['price'],
 					$data['reservationAdults'],
 					$data['reservationChildren'],
@@ -767,6 +769,7 @@ class Layout_Model
 			$query = 'SELECT s.reservation_id,
 					s.check_in,
 					s.check_out,
+					DATE_ADD(s.check_out, INTERVAL 1 DAY) AS check_mask,
 					s.date,
 					s.price,
 					s.adults,
@@ -831,6 +834,7 @@ class Layout_Model
 			$query = 'SELECT s.reservation_id, 
 					s.check_in,
 					s.check_out,
+					DATE_ADD(s.check_out, INTERVAL 1 DAY) AS check_mask,
 					s.status,
 					rt.room_type,
 					rt.abbr,
