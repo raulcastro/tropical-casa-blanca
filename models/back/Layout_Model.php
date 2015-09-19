@@ -1017,6 +1017,16 @@ class Layout_Model
 		}
 	}
 	
+	public function unActivePayment($paymentId)
+	{
+		try {
+			$query = 'UPDATE payments SET active = 0 WHERE payment_id = '.$paymentId;
+			return $this->db->run($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	public function uptadeSingleReservation($data)
 	{
 		try {

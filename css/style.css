@@ -936,6 +936,10 @@ ul.inbox-pagination li {
 	margin-top: 20px;
 }
 
+.memberReservations .reservation-item .payment-items .btn-remove {
+	cursor: pointer;
+}
+
 .memberReservations .payment-items .row {
 	margin-top: 10px;
 }

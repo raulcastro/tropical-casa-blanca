@@ -148,6 +148,14 @@ switch ($_POST['opt'])
 			echo '0';
 	break;
 	
+	
+	case 13:
+		if ($model->unActivePayment($_POST['paymentId']))
+			echo '1';
+		else
+			echo '0';
+	break;
+	
 	default:
 	break;
 }

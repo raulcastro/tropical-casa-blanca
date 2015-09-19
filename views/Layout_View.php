@@ -1725,9 +1725,17 @@ class Layout_View
    				<button type="button" class="btn-status-money btn btn-default btn-xs <?php if ($payment['status'] == '1') echo 'btn-info'; ?>">Paid</button>
    				<button type="button" class="btn-status-moneys btn btn-default btn-xs <?php if ($payment['status'] == '0') echo 'btn-info'; ?>">Unpaid</button>
 	   		</div>
-	   				
-	   		<div class="col-sm-2">
-	   			<i class="glyphicon glyphicon-remove"></i>
+	   		
+	   		<div class="col-sm-2" res-id="<?php echo $payment['reservation_id']; ?>" pay-id="<?php echo $payment['payment_id']; ?>">
+	   			<?php 
+	   			if ($payment['active'] == 1)
+	   			{
+   				?>
+   				<i class="btn-remove glyphicon glyphicon-remove"></i>
+   				<?php
+	   			} 
+   				?>
+	   			
 	   		</div>
    		</div>
  		<?php

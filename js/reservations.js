@@ -59,7 +59,41 @@ $(function(){
 		var payType = $(this).attr('pay-type');
 		setPaymentType(resId, payId, payType);
 	});
+	
+	$('.btn-remove').click(function(){
+		var info  = $(this).parent();
+		var resId = $(info).attr('res-id');
+		var payId = $(info).attr('pay-id'); 
+		unActivePayment(resId, payId);
+	});
 });
+
+function unActivePayment(resId, payId)
+{
+	if (resId && payId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		        	paymentId: 		payId,
+		            opt: 			13
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	getAllPayments(resId);
+	            	getGrandTotal(resId);
+	            	getPaid(resId);
+	            	getPending(resId);
+	            }
+	        }
+	    });
+	}
+}
 
 function setPaymentStatus(resId, payId)
 {
@@ -161,6 +195,13 @@ function getAllPayments(resId)
 	            		var payId = $(info).attr('pay-id');
 	            		var payType = $(this).attr('pay-type');
 	            		setPaymentType(resId, payId, payType);
+	            	});
+	            	
+	            	$('.btn-remove').click(function(){
+	            		var info  = $(this).parent();
+	            		var resId = $(info).attr('res-id');
+	            		var payId = $(info).attr('pay-id'); 
+	            		unActivePayment(resId, payId);
 	            	});
 	            }
 	        }
