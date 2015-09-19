@@ -99,12 +99,11 @@ switch ($_POST['opt'])
 	case 6:
 		if ($model->addPayment($_POST))
 		{
-			$payments = $model->getPaymentsByReservationId($_POST['reservationId']);
-			echo Layout_View::getPaymentItems($payments);
+			echo '1';
 		}
 		else 
 		{
-			
+			echo '0';
 		}	
 		
 	break;
@@ -116,12 +115,30 @@ switch ($_POST['opt'])
 	
 	case 8:
 		if ($grandTotal = $model->getReservationPaidByReservationId($_POST['reservationId']))
-			echo $grandTotal;
+			echo '$ '.$grandTotal;
 	break;
 			
 	case 9:
 		if ($grandTotal = $model->getReservationUnpaidByReservationId($_POST['reservationId']))
-			echo $grandTotal;
+			echo '$ '.$grandTotal;
+	break;
+	
+	case 10:
+		if ($payments = $model->getPaymentsByReservationId($_POST['reservationId']))
+		{
+			echo Layout_View::getPaymentItems($payments);
+		}
+		else
+		{
+			echo '0';
+		}
+	break;
+	
+	case 11:
+		if ($model->setPaymentStatus($_POST['paymentId']))
+			echo '1';
+		else 
+			echo '0';
 	break;
 	
 	default:

@@ -44,7 +44,42 @@ $(function(){
 		var resId = $(this).attr('res-id');
 		processExtraPayment(resId);
 	});
+	
+	$('.btn-status-money').click(function(){
+		var info  = $(this).parent();
+		var resId = $(info).attr('res-id');
+		var payId = $(info).attr('pay-id'); 
+		setPaymentStatus(resId, payId);
+	});
 });
+
+function setPaymentStatus(resId, payId)
+{
+	if (resId && payId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		        	paymentId: payId,
+		            opt: 			11
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	getAllPayments(resId);
+	            	getGrandTotal(resId);
+	            	getPaid(resId);
+	            	getPending(resId);
+	            	
+	            }
+	        }
+	    });
+	}
+}
 
 /**
  * processExtraPayment
@@ -56,9 +91,39 @@ $(function(){
 function processExtraPayment(resId)
 {
 	addExtraPayment(resId);
+	getAllPayments(resId);
 	getGrandTotal(resId);
 	getPaid(resId);
 	getPending(resId);
+}
+
+function getAllPayments(resId)
+{
+	if (resId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		            opt: 			10
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	$('#payment-items-'+resId).html(xml);
+	            	$('.btn-status-money').click(function(){
+	            		var info  = $(this).parent();
+	            		var resId = $(info).attr('res-id');
+	            		var payId = $(info).attr('pay-id'); 
+	            		setPaymentStatus(resId, payId);
+	            	});
+	            }
+	        }
+	    });
+	}
 }
 
 /**
@@ -89,7 +154,6 @@ function addExtraPayment(resId)
 	        {
 	            if (0 != xml)
 	            {
-	            	$('#payment-items-'+resId).html(xml);
 	            	$('#extra-pay-des-'+resId).val('');
 	            	$('#extra-pay-cost-'+resId).val('');
 	            }

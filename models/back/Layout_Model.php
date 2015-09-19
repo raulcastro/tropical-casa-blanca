@@ -996,6 +996,17 @@ class Layout_Model
 		}
 	}
 	
+	public function setPaymentStatus($paymentId)
+	{
+		try {
+			$query = 'UPDATE payments SET status = 1 WHERE payment_id = '.$paymentId;
+			
+			return $this->db->run($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	public function uptadeSingleReservation($data)
 	{
 		try {
