@@ -970,7 +970,7 @@ class Layout_Model
 	{
 		try {
 			$reservation_id = (int) $reservation_id;
-			$query = 'SELECT SUM(cost) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 1";
+			$query = 'SELECT IFNULL(SUM(cost), 0) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 1";
 			return $this->db->getValue($query);
 		} catch (Exception $e) {
 			return false;
@@ -989,7 +989,7 @@ class Layout_Model
 	{
 		try {
 			$reservation_id = (int) $reservation_id;
-			$query = 'SELECT SUM(cost) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 0";
+			$query = 'SELECT IFNULL(SUM(cost), 0) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 0";
 			return $this->db->getValue($query);
 		} catch (Exception $e) {
 			return false;

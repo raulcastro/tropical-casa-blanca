@@ -122,8 +122,8 @@ class generalBackend
 				foreach ($memberReservationsArray as $reservation)
 				{
 					$grandTotal = $this->model->getReservationGrandTotalByReservationId($reservation['reservation_id']);
-					$paid = $this->model->getReservationPaidByReservationId($reservation['reservation_id']);
-					$unpaid = $this->model->getReservationUnpaidByReservationId($reservation['reservation_id']);
+					$paid 		= $this->model->getReservationPaidByReservationId($reservation['reservation_id']);
+					$unpaid 	= $this->model->getReservationUnpaidByReservationId($reservation['reservation_id']);
 					
 					$reservationInfo = array(
 							'reservation_id'	=> $reservation['reservation_id'],

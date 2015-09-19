@@ -49,13 +49,122 @@ $(function(){
 /**
  * processExtraPayment
  * 
- * add an extra payment to the reservation
+ * add and calculate the accounts of a payment reservation
  * 
  * @param resId
  */
 function processExtraPayment(resId)
 {
-	alert(resId);
+	addExtraPayment(resId);
+	getGrandTotal(resId);
+	getPaid(resId);
+	getPending(resId);
+}
+
+/**
+ * addExtraPayment
+ * 
+ * add a payment related to a reservation
+ * 
+ * @param resId
+ */
+function addExtraPayment(resId)
+{
+	var extraDes 	= $('#extra-pay-des-'+resId).val();
+	var extraCost 	= $('#extra-pay-cost-'+resId).val();
+	
+	if (extraDes && extraCost)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		        	description: 	extraDes,
+					cost: 			extraCost,
+		            opt: 			6
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	$('#payment-items-'+resId).html(xml);
+	            	$('#extra-pay-des-'+resId).val('');
+	            	$('#extra-pay-cost-'+resId).val('');
+	            }
+	        }
+	    });
+	}
+}
+
+function getGrandTotal(resId)
+{
+	if (resId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		            opt: 			7
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	$('#payment-grand-total-'+resId).html(xml);
+	            }
+	        }
+	    });
+	}
+}
+
+function getPaid(resId)
+{
+	if (resId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		            opt: 			8
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	$('#payment-paid-total-'+resId).html(xml);
+	            }
+	        }
+	    });
+	}
+}
+
+function getPending(resId)
+{
+	if (resId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		            opt: 			9
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	$('#payment-pending-total-'+resId).html(xml);
+	            }
+	        }
+	    });
+	}
 }
 
 function searchReservation()

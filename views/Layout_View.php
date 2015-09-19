@@ -1644,61 +1644,25 @@ class Layout_View
    			
    			<div class="row-extra">
    				<div class="col-sm-12">
-   					<h5>Grand Total <strong> $<span><?php echo $data['grandTotal']; ?></span></strong></h5>
+   					<h5>Grand Total <strong> $<span  id="payment-grand-total-<?php echo $data['reservation_id']; ?>"><?php echo $data['grandTotal']; ?></span></strong></h5>
    				</div>
    			</div>
    			
    			<div class="row-extra">
-   				<div class="col-sm-3">Paid: <strong><?php echo $data['paid']; ?></strong></div>
-   				<div class="col-sm-3">Pending: <strong><?php echo $data['unpaid']; ?></strong></div>
+   				<div class="col-sm-3">Paid: <strong id="payment-paid-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['paid']; ?></strong></div>
+   				<div class="col-sm-3">Pending: <strong id="payment-pending-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['unpaid']; ?></strong></div>
    			</div>
    			
    			<div class="clearfix"></div>
-   			<?php 
-   			foreach ($data[0]['payments'] as $payment)
-   			{
-   				?>
-   			<div class="row-extra" id="payment-items">
-   				<div class="row">
-	   				<div class="col-sm-3"><i>
-	   				<?php 
-	   				if ($payment['active'] == 0)
-	   				{
-	   					echo "<s>". $payment['description']."</s>";
-	   				} else {
-	   					echo $payment['description']; 
-	   				}
-	   				?>
-	   				</i></div>
-	   				<div class="col-sm-1">$ <strong>
-	   				<?php 
-	   				if ($payment['active'] == 0)
-	   				{
-	   					echo "<s>". $payment['cost']."</s>";
-	   				} else {
-	   					echo $payment['cost']; 
-	   				}
-	   				?>
-	   				</strong></div>
-	   				<div class="col-sm-2">
-	   					<button type="button" class="btn btn-default btn-xs <?php if ($payment['payment_type'] == '1') echo 'btn-info'; ?>">Cash</button>
-	   					<button type="button" class="btn btn-default btn-xs <?php if ($payment['payment_type'] == '2') echo 'btn-info'; ?>">CC</button>
-	   				</div>
-	   				<div class="col-sm-2">
-	   					<button type="button" class="btn btn-default btn-xs <?php if ($payment['status'] == '1') echo 'btn-info'; ?>">Paid</button>
-	   					<button type="button" class="btn btn-default btn-xs <?php if ($payment['status'] == '0') echo 'btn-info'; ?>">Unpaid</button>
-	   				</div>
-	   				
-	   				<div class="col-sm-2">
-	   					<i class="glyphicon glyphicon-remove"></i>
-	   				</div>
-   				</div>
-   			</div>
-   				<?php
-   			}
-   			?>
    			
-   			<div class="row-extra" id="payment-extra">
+   			<div class="row-extra payment-items" id="payment-items-<?php echo $data['reservation_id']; ?>" >
+   			<?php 
+   			if ($data[0]['payments'])
+   				echo Layout_View::getPaymentItems($data[0]['payments']);
+   			?>
+   			</div>
+   			
+   			<div class="row-extra payment-extra" id="">
    				<div class="row">
 	   				<div class="col-sm-3">
 	   					<input type="text" placeholder="description" id="extra-pay-des-<?php echo $data['reservation_id']; ?>" />
@@ -1720,6 +1684,57 @@ class Layout_View
    		$item = ob_get_contents();
    		ob_end_clean();
    		return $item;
+   	}
+   	
+   	public function getPaymentItems($payments)
+   	{
+   		ob_start();
+   		foreach ($payments as $payment)
+   		{
+   		?>
+   		<div class="row">
+   			<div class="col-sm-3">
+   				<i>
+ 			<?php 
+   			if ($payment['active'] == 0)
+   			{
+   				echo "<s>".$payment['description']."</s>";
+   			} else {
+   				echo $payment['description']; 
+   			}
+   			?>
+   				</i>
+   			</div>
+   			<div class="col-sm-1">$ 
+   				<strong>
+   			<?php 
+   			if ($payment['active'] == 0)
+   			{
+   				echo "<s>".$payment['cost']."</s>";
+   			} else {
+   				echo $payment['cost']; 
+   			}
+   			?>
+   				</strong>
+   			</div>
+   			<div class="col-sm-2">
+   				<button type="button" class="btn btn-default btn-xs <?php if ($payment['payment_type'] == '1') echo 'btn-info'; ?>">Cash</button>
+   				<button type="button" class="btn btn-default btn-xs <?php if ($payment['payment_type'] == '2') echo 'btn-info'; ?>">CC</button>
+   			</div>
+   			<div class="col-sm-2">
+   				<button type="button" class="btn btn-default btn-xs <?php if ($payment['status'] == '1') echo 'btn-info'; ?>">Paid</button>
+   				<button type="button" class="btn btn-default btn-xs <?php if ($payment['status'] == '0') echo 'btn-info'; ?>">Unpaid</button>
+	   		</div>
+	   				
+	   		<div class="col-sm-2">
+	   			<i class="glyphicon glyphicon-remove"></i>
+	   		</div>
+   		</div>
+ 		<?php
+   		}
+   		$paymentItems = ob_get_contents();
+   		ob_end_clean();
+   		return $paymentItems;
    	}
    	
    	public function getMemberReservations()

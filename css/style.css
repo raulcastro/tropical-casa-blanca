@@ -931,6 +931,34 @@ ul.inbox-pagination li {
 .memberReservations .save-single-res {
 	text-align: right;
 }
+
+.memberReservations .reservation-item .payment-items {
+	margin-top: 20px;
+}
+
+.memberReservations .payment-items .row {
+	margin-top: 10px;
+}
+
+.memberReservations .payment-items button {
+	padding: 0 6px;
+	font-size: 10px;
+}
+
+.memberReservations .payment-extra {
+	margin-top: 15px;
+}
+ 
+.memberReservations .payment-extra .input-cost {
+	width: 60px;
+}
+
+.memberReservations .payment-extra button {
+	padding: 3px 6px;
+	font-size: 10px;
+}
+ 
+
 .reservation-member-panel {
  	margin-top: 20px;
  	min-height: 20px;
@@ -1033,32 +1061,7 @@ ul.inbox-pagination li {
 	background: #2097D8!important;	
 }
  
-#payment-items {
-	margin-top: 20px;
-}
 
-#payment-items .row {
-	margin-top: 10px;
-}
-
-#payment-items button {
-	padding: 0 6px;
-	font-size: 10px;
-}
-
-#payment-extra {
-	margin-top: 15px;
-}
- 
-#payment-extra .input-cost {
-	width: 60px;
-}
-
-#payment-extra button {
-	padding: 3px 6px;
-	font-size: 10px;
-}
- 
  
  
  

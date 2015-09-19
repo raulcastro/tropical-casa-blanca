@@ -15,9 +15,6 @@ switch ($_POST['opt'])
 	case 1:	 
 		if ($rooms = $model->searchRooms($_POST))
 		{
-// 			echo "<pre>";
-// 			var_dump($rooms);
-// 			echo "</pre>";
 			echo Layout_View::getRoomsList($rooms);
 		}
 	break;
@@ -97,6 +94,34 @@ switch ($_POST['opt'])
 		{
 			echo '0';
 		}
+	break;
+	
+	case 6:
+		if ($model->addPayment($_POST))
+		{
+			$payments = $model->getPaymentsByReservationId($_POST['reservationId']);
+			echo Layout_View::getPaymentItems($payments);
+		}
+		else 
+		{
+			
+		}	
+		
+	break;
+	
+	case 7:
+		if ($grandTotal = $model->getReservationGrandTotalByReservationId($_POST['reservationId']))
+			echo $grandTotal;
+	break;
+	
+	case 8:
+		if ($grandTotal = $model->getReservationPaidByReservationId($_POST['reservationId']))
+			echo $grandTotal;
+	break;
+			
+	case 9:
+		if ($grandTotal = $model->getReservationUnpaidByReservationId($_POST['reservationId']))
+			echo $grandTotal;
 	break;
 	
 	default:
