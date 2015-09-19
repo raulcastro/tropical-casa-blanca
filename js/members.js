@@ -146,7 +146,7 @@ function saveMemberEmails()
 	
 	$('.memberEmail').each(function(){
 		emailId 	= 0;
-		if ($(this).attr('eid'))
+		if ($(this).attr('eid') && $(this).val())
 		{
 			emailId		= $(this).attr('eid');
 			emailVal	= $(this).val();
@@ -177,26 +177,29 @@ function saveMemberPhones()
 	phoneVal 	= '';
 	memberId 	= $('#member-id').val();
 	
-	$('.memberPhone').each(function(){
-		phoneId		= $(this).attr('pid');
-		phoneVal	= $(this).val();
-		
-		$.ajax({
-	        type:   'POST',
-	        url:    '/ajax/members.php',
-	        data:{  memberId: 	memberId,
-	        	phoneId: 		phoneId,
-	        	phoneVal: 		phoneVal,
-	            opt: 			3
-	             },
-	        success:
-	        function(xml)
-	        {
-	            if (0 != xml)
-	            {
-	            	
-	            }
-	        }
-	    });
-	});
+	if ($(this).val())
+	{
+		$('.memberPhone').each(function(){
+			phoneId		= $(this).attr('pid');
+			phoneVal	= $(this).val();
+			
+			$.ajax({
+		        type:   'POST',
+		        url:    '/ajax/members.php',
+		        data:{  memberId: 	memberId,
+		        	phoneId: 		phoneId,
+		        	phoneVal: 		phoneVal,
+		            opt: 			3
+		             },
+		        success:
+		        function(xml)
+		        {
+		            if (0 != xml)
+		            {
+		            	
+		            }
+		        }
+		    });
+		});
+	}
 }
