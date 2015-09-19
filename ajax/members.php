@@ -31,7 +31,7 @@ switch ($_POST['opt'])
 	
 // 	E-mails
 	case 2:
-		if ($_POST['memberId'])
+		if ($_POST['memberId'] && $_POST['emailVal'])
 		{
 			$model->addMemberEmail($_POST);
 		}
@@ -39,7 +39,7 @@ switch ($_POST['opt'])
 	
 	// 	Phones
 	case 3:
-		if ($_POST['memberId'])
+		if ($_POST['memberId'] && $_POST['phoneVal'])
 		{
 			$model->addMemberPhone($_POST);
 		}

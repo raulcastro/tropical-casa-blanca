@@ -132,16 +132,16 @@ class generalBackend
 							'check_in' 		=> $reservation['check_in'],
 							'check_out' 	=> $reservation['check_out'],
 							'check_mask'	=> $reservation['check_mask'],
-							'room' => $reservation['room'],
-							'room_type' => $reservation['room_type'],
-							'adults' => $reservation['adults'],
-							'children' => $reservation['children'],
-							'agency' => $reservation['agency'],
-							'external_id' => $reservation['external_id'],
-							'status' => $reservation['status'],
-							'grandTotal' => $grandTotal,
-							'paid' => $paid,
-							'unpaid' => $unpaid
+							'room' 			=> $reservation['room'],
+							'room_type' 	=> $reservation['room_type'],
+							'adults' 		=> $reservation['adults'],
+							'children' 		=> $reservation['children'],
+							'agency' 		=> $reservation['agency'],
+							'external_id' 	=> $reservation['external_id'],
+							'status' 		=> $reservation['status'],
+							'grandTotal' 	=> $grandTotal,
+							'paid' 			=> $paid,
+							'unpaid' 		=> $unpaid
 					);
 					
 					$payments['payments'] = $this->model->getPaymentsByReservationId($reservation['reservation_id']);
