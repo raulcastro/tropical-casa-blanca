@@ -141,6 +141,13 @@ switch ($_POST['opt'])
 			echo '0';
 	break;
 	
+	case 12:
+		if ($model->setPaymentType($_POST))
+			echo '1';
+		else
+			echo '0';
+	break;
+	
 	default:
 	break;
 }

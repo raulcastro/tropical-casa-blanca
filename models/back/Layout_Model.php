@@ -1007,6 +1007,16 @@ class Layout_Model
 		}
 	}
 	
+	public function setPaymentType($data)
+	{
+		try {
+			$query = 'UPDATE payments SET payment_type = '.$data['payType'].' WHERE payment_id = '.$data['paymentId'];
+			return $this->db->run($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	public function uptadeSingleReservation($data)
 	{
 		try {

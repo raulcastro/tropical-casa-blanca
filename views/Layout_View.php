@@ -1644,7 +1644,7 @@ class Layout_View
    			
    			<div class="row-extra">
    				<div class="col-sm-12">
-   					<h5>Grand Total <strong> $<span  id="payment-grand-total-<?php echo $data['reservation_id']; ?>"><?php echo $data['grandTotal']; ?></span></strong></h5>
+   					<h5>Grand Total <strong> $ <span id="payment-grand-total-<?php echo $data['reservation_id']; ?>"><?php echo $data['grandTotal']; ?></span></strong></h5>
    				</div>
    			</div>
    			
@@ -1717,9 +1717,9 @@ class Layout_View
    			?>
    				</strong>
    			</div>
-   			<div class="col-sm-2">
-   				<button type="button" class="btn btn-default btn-xs <?php if ($payment['payment_type'] == '1') echo 'btn-info'; ?>">Cash</button>
-   				<button type="button" class="btn btn-default btn-xs <?php if ($payment['payment_type'] == '2') echo 'btn-info'; ?>">CC</button>
+   			<div class="col-sm-2" res-id="<?php echo $payment['reservation_id']; ?>" pay-id="<?php echo $payment['payment_id']; ?>">
+   				<button type="button" pay-type="1" class="btn-pay-type btn btn-default btn-xs <?php if ($payment['payment_type'] == '1') echo 'btn-info'; ?>">Cash</button>
+   				<button type="button" pay-type="2" class="btn-pay-type btn btn-default btn-xs <?php if ($payment['payment_type'] == '2') echo 'btn-info'; ?>">CC</button>
    			</div>
    			<div class="col-sm-2" res-id="<?php echo $payment['reservation_id']; ?>" pay-id="<?php echo $payment['payment_id']; ?>">
    				<button type="button" class="btn-status-money btn btn-default btn-xs <?php if ($payment['status'] == '1') echo 'btn-info'; ?>">Paid</button>

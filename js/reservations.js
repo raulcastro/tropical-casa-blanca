@@ -51,6 +51,14 @@ $(function(){
 		var payId = $(info).attr('pay-id'); 
 		setPaymentStatus(resId, payId);
 	});
+	
+	$('.btn-pay-type').click(function(){
+		var info  = $(this).parent();
+		var resId = $(info).attr('res-id');
+		var payId = $(info).attr('pay-id');
+		var payType = $(this).attr('pay-type');
+		setPaymentType(resId, payId, payType);
+	});
 });
 
 function setPaymentStatus(resId, payId)
@@ -75,6 +83,31 @@ function setPaymentStatus(resId, payId)
 	            	getPaid(resId);
 	            	getPending(resId);
 	            	
+	            }
+	        }
+	    });
+	}
+}
+
+function setPaymentType(resId, payId, payType)
+{
+	if (resId && payId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		        	paymentId: 	payId,
+		        	payType: 	payType,
+		            opt: 		12
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	getAllPayments(resId);
 	            }
 	        }
 	    });
@@ -114,11 +147,20 @@ function getAllPayments(resId)
 	            if (0 != xml)
 	            {
 	            	$('#payment-items-'+resId).html(xml);
+	            	
 	            	$('.btn-status-money').click(function(){
 	            		var info  = $(this).parent();
 	            		var resId = $(info).attr('res-id');
 	            		var payId = $(info).attr('pay-id'); 
 	            		setPaymentStatus(resId, payId);
+	            	});
+	            	
+	            	$('.btn-pay-type').click(function(){
+	            		var info  = $(this).parent();
+	            		var resId = $(info).attr('res-id');
+	            		var payId = $(info).attr('pay-id');
+	            		var payType = $(this).attr('pay-type');
+	            		setPaymentType(resId, payId, payType);
 	            	});
 	            }
 	        }
