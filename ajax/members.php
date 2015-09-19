@@ -15,7 +15,10 @@ switch ($_POST['opt'])
 	case 1:	 
 		if ($memberId > 0)
 		{
-			
+			if ($updateMember = $model->updateMember($_POST))
+				echo str_pad($updateMember, 4, 0, STR_PAD_LEFT);
+			else 
+				echo 0;
 		} 
 		else 
 		{

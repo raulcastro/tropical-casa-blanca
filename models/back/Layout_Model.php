@@ -189,6 +189,37 @@ class Layout_Model
 		}
 	}
 	
+	public function updateMember($data)
+	{
+		try {
+			$query = 'UPDATE members SET name = ?, last_name = ?, address = ?, city = ?, state = ?, country = ?, notes = ?
+					WHERE member_id = ?';
+			
+			$prep = $this->db->prepare($query);
+			
+			$prep->bind_param('sssssssi',
+					$data['memberName'],
+					$data['memberLastName'],
+					$data['memberAddress'],
+					$data['city'],
+					$data['mState'],
+					$data['country'],
+					$data['notes'],
+					$data['memberId']
+					);
+			
+			if ($prep->execute())
+			{
+				return $data['memberId'];
+			}
+			else {
+				printf("Errormessage: %s\n", $prep->error);
+			}
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	public function addMemberEmail($data)
 	{
 		try
