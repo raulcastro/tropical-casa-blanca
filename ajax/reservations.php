@@ -119,8 +119,8 @@ switch ($_POST['opt'])
 	break;
 			
 	case 9:
-		if ($grandTotal = $model->getReservationUnpaidByReservationId($_POST['reservationId']))
-			echo '$ '.$grandTotal;
+		$grandTotal = $model->getReservationUnpaidByReservationId($_POST['reservationId']);
+		echo '$ '.$grandTotal;
 	break;
 	
 	case 10:
@@ -147,7 +147,6 @@ switch ($_POST['opt'])
 		else
 			echo '0';
 	break;
-	
 	
 	case 13:
 		if ($model->unActivePayment($_POST['paymentId']))

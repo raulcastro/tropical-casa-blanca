@@ -305,7 +305,7 @@ function getPending(resId)
 	        success:
 	        function(xml)
 	        {
-	            if (0 != xml)
+	            if ('Null' != xml)
 	            {
 	            	$('#payment-pending-total-'+resId).html(xml);
 	            }
