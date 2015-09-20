@@ -6,7 +6,6 @@ require_once $root.'/backends/admin-backend.php';
 require_once $root.'/Framework/Tools.php';
 $model	= new Layout_Model();
 
-
 $memberId = (int) $_POST['memberId'];
 
 switch ($_POST['opt'])

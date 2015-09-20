@@ -52,41 +52,37 @@ class Layout_View
 				case 'sign-in':
  					echo self :: getSignInHead();
 				break;
+
+				case 'dashboard':
+					# code...
+				break;
 			
+				case 'members':
+					# code...
+				break;
+
 				case 'add-member':
 					echo self :: getMembersHead();
-				break;
-				
-				case 'add-broker':
-					echo self :: getBrokersHead();
-				break;
-				
-				case 'tasks':
-					echo self :: getTasksHead();
-				break;
-				
-				case 'email':
-					echo self :: getEmailsHead();
-				break;
-				
-				case 'edit-company-events':
-					echo self :: getEventsListHead();
-				break;
-				
-				case 'calendar':
-					echo self :: getCalendarHead();
 				break;
 				
 				case 'reservations':
 					echo self :: getReservationsHead();
 				break;
-				
+
 				case 'rooms':
 					echo self :: getRoomsHead();
+				break;
+
+				case 'calendar':
+					echo self :: getCalendarHead();
 				break;
 				
 				case 'agencies':
 					echo self::getAgenciesHead();
+				break;
+
+				case 'tasks':
+					echo self :: getTasksHead();
 				break;
 			}
 			?>
@@ -106,52 +102,41 @@ class Layout_View
 						<?php 
 						echo self :: getDashboardIcons();
 						switch ($section) {
+
 							case 'dashboard':
 								echo self :: getRecentMembers();
-// 								echo self :: getRecentBrokers();
 							break;
-							
-							case 'add-member':
-								echo self :: getAddMember();
-							break;
-							
+
 							case 'members':
 								echo self :: getAllMembers();
 							break;
-							
-							case 'tasks':
-								echo self :: getAllTasks();
+
+							case 'add-member':
+								echo self :: getAddMember();
 							break;
 							
 							case 'reservations':
 								echo self :: getReservations();
 							break;
 							
-							case 'email':
-								echo self :: getEmail();
-							break;
-							
-							case 'brokers':
-								echo self :: getAllBrokers();
-							break;
-							
-							case 'add-broker':
-								echo self :: getAddBroker();
-							break;
-							
-							case 'calendar':
-								echo self :: getCalendar();
-							break;
-							
 							case 'rooms':
 								echo self :: getRooms();
+							break;
+
+							case 'calendar':
+								echo self :: getCalendar();
 							break;
 							
 							case 'agencies':
 								echo self :: getAgencies();
 							break;
+
+							case 'tasks':
+								echo self :: getAllTasks();
+							break;
 							
-							default:
+							default :
+								# code...
 							break;
 						}
 						?>
@@ -170,16 +155,10 @@ class Layout_View
 					break;
 					
 					default:
-						break;
+					break;
 				}
 			}
-			 
- 			//echo self :: getFooter(); 
 			?>
-			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		   
-		    <!-- Include all compiled plugins (below), or include individual files as needed -->
-		    
 		</body>
 	</html>
     <?php
@@ -208,7 +187,6 @@ class Layout_View
 	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	    <![endif]-->
        	<link href="/css/style.css" media="screen" rel="stylesheet" type="text/css" />
-       	
     	<script src="/js/scripts.js"></script>
        	<?php 
        	$documents = ob_get_contents();
@@ -281,50 +259,7 @@ class Layout_View
     	return $signIn;
     }
     
-    public function getTasksHead()
-    {
-    	ob_start();
-    	?>
-       	<script src="/js/tasks.js"></script>
-        <script>
-    	</script>
-        <?php
-        $signIn = ob_get_contents();
-        ob_end_clean();
-        return $signIn;
-    }
     
-    public function getEmailsHead()
-    {
-    	ob_start();
-    	?>
-           	<script src="/js/emails.js"></script>
-            
-        <?php
-        $signIn = ob_get_contents();
-        ob_end_clean();
-        return $signIn;
-    }
-    
-    public function getBrokersHead()
-    {
-    	ob_start();
-    	?>
-		<link rel="stylesheet" href="/css/jquery-ui.css">
-		<script src="/js/jquery-ui.js"></script>
-		<script src="/js/brokers.js"></script>
-		<script src="/js/broker-history.js"></script>
-		<script src="/js/tasks.js"></script>
-		<script>
-		$(function() {
-			$( "#task-date" ).datepicker();
-		});
-		</script>
-		<?php
-		$signIn = ob_get_contents();
-		ob_end_clean();
-		return $signIn;
-	}
     
     /**
      * getSignInContent
@@ -399,38 +334,7 @@ class Layout_View
 		$wideBody = ob_get_contents();
 		ob_end_clean();
 		return $wideBody;
-     }
-   	
-   	/**
-   	 * getSearchBar
-   	 * 
-   	 * it's the search bar, actually it doesn't work
-   	 * 
-   	 * @return string
-   	 */
-    
-   	public static function getSearchBar()
-   	{
-   		ob_start();
-   		?>
-   		<!-- /search bar -->
-   		<div class='filter-bar hide search-bar' id='x-search'>
-   			<div class='inside cf'>
-   				<form class='search-bar' href='#'>
-   					<input name='search' id='input-search' placeholder='Type here to search, for example: La fe' type='text'>
-   				</form>
-   	   				<ul class='toggle-nav'>
-   					<li>
-   						<a class='action search' href='#' onclick="showTopBar(); return false;" id='x-hide-search'></a>
-   					</li>
-   				</ul>
-   			</div><!-- /inside cf -->
-   		</div>
-   		<?php
-   		$searchBar = ob_get_contents();
-   		ob_end_clean();
-   		return $searchBar;
-   	}
+    }
    	
    	public function getSidebar()
    	{
@@ -454,7 +358,7 @@ class Layout_View
    		<?php
    		$sideBar = ob_get_contents();
    		ob_end_clean();
-   		return $sideBar;	
+   		return $sideBar;
    	}
    	
    	public function getDashboardIcons() 
@@ -692,368 +596,9 @@ class Layout_View
    	   	return $membersRecent;
    	}
    	
-   	public static function listTasks($tasks)
-   	{
-   		ob_start();
-   		
-   		if ($tasks)
-   		{
-   			foreach ($tasks as $task)
-   			{
-   				$date = Tools::formatMYSQLToFront($task['date']);
-   				$time = Tools::formatHourMYSQLToFront($task['time']);
-   				?>
-				<li
-   				<?php 
-   				if( $task['status'] == 1)
-   					echo 'class="completed"';
-   				
-   				if( strtotime($date) == strtotime(@date('d-M-Y', strtotime('now'))))
-   					echo 'class="today"';
-   							
-   				if( strtotime($date) < strtotime('now'))
-   					echo 'class="pending"';
-   							
-   				if( strtotime($date) > strtotime('now'))
-   					echo 'class="future"';
-   				?>
-   				>
-   					<div class="header">
-   						<div class="info">
-   							<strong><?php echo $task['assigned_to']; ?> </strong>
-   							<span class="text-primary"><?php echo $date.' '.$time; ?></span>
-   							<span class="text-muted"><?php echo $task['assigned_by']; ?></span>
-   						</div>
-   						<?php 
-	                    if ($task['status'] == 0)
-	                    {
-	                    ?>
-	                    	<a href="javascript: void(0);" class="completeTask" tid="<?php echo $task['task_id']; ?>"><i class="glyphicon glyphicon-check icon" ></i></a>
-	                    <?php 
-	                    }
-	                    
-   						if ($task['member_id'])
-   						{
-   						?>
-   						<div class="member">
-   							<a href="/<?php echo $task['member_id']; ?>/<?php echo Tools::slugify($task['name'].' '.$task['last_name']); ?>/">
-   								<?php echo $task['name'].' '.$task['last_name']; ?>
-   							</a>
-   						</div>
-   						<?php
-   						}
-   						?>
-   						<div class="clear"></div>
-   					</div>
-   					<div class="clear"></div>
-   					<div>
-   						<i class="glyphicon glyphicon-option-vertical"></i>
-   						<div class="history-title">
-   							<span class="task-title-sp"><?php echo $task['content']; ?></span>
-   						</div>
-   					</div>
-   					<div class="clear"></div>
-   				</li>
-   				<?php
-   				}
-   			}
-   		$tasks = ob_get_contents();
-   		ob_end_clean();
-   		return $tasks;
-   	}
    	
-   	public function getHistoryPanel()
-   	{
-   		ob_start();
-   		?>
-   		<div class="col-sm-12 history-member-panel">
-			<div class="row text-right">
-				<a href="javascript:void(0);" class="btn btn-info btn-xs display-add-history">add history</a>
-			</div>
-			
-			<div class="row history-member-box">
-				<textarea rows="2" cols="" class="form-control" placeholder="history" id="history-entry"></textarea>
-				<a href="javascript:void(0);" class="btn btn-info btn-xs" id="add-history">save</a>
-			</div>
-			
-			<div class="row history-content">
-				<ul class="history-list">
-					<?php
-					if ($this->data['memberHistory'])
-					{
-						foreach ($this->data['memberHistory'] as $history)
-						{
-						?>
-					<li>
-                    	<div class="header"><?php echo $history['name']; ?> | <?php echo Tools::formatMYSQLToFront($history['date']).'  '.Tools::formatHourMYSQLToFront($history['time']); ?></div>
-                        	<div>
-							<i class="glyphicon glyphicon-option-vertical"></i>
-							<div class="history-title">
-								<span class="task-title-sp">
-									<?php echo $history['history']; ?>
-								</span>
-							</div>
-						</div>
-					</li>
-					<?php
-						}
-					}
-					?>
-				</ul>
-			</div>
-		</div>
-   		<?php
-   		$historyPanel = ob_get_contents();
-   		ob_end_clean();
-   		return $historyPanel;
-   	}
    	
-   	public function getAllTasks()
-   	{
-   		ob_start();
-   		?>
-		<div class="col-sm-12 task-member-panel">
-			<div class="row main-menu-tasks text-center">
-				<ul class="nav nav-pills">
-					<li>
-						<a href="#" class="text-danger" id="get-pending-tasks">
-							Pending
-							<?php if ($this->data['taskInfo']['pending'] > 0) {?><span class="badge"><?php echo $this->data['taskInfo']['pending']; ?></span><?php } ?>
-						</a>
-					</li>
-					<li>
-						<a href="#" class="text-primary" id="get-today-tasks">
-							Today 
-							<?php if ($this->data['taskInfo']['today'] > 0) {?><span class="badge"><?php echo $this->data['taskInfo']['today']; ?></span><?php } ?>
-						</a>
-					</li>
-					<li>
-						<a href="#" class="text-warning" id="get-future-tasks">
-							Future 
-							<?php if ($this->data['taskInfo']['future'] > 0) {?><span class="badge"><?php echo $this->data['taskInfo']['future']; ?></span><?php } ?>
-						</a>
-					</li>
-					<li>
-						<a href="#" class="text-success" id="get-completed-tasks">
-							Completed
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div class="row task-content">
-				<ul class="task-list">
-				<?php 
-				echo $this->listTasks($this->data['memberTasks']);
-				?>
-				</ul>
-			</div>
-		</div>
-   		<?php
-   		$tasks = ob_get_contents();
-   		ob_end_clean();
-   		return $tasks; 
-   	}
    	
-   	public function getDocuments()
-   	{
-   		ob_start();
-   		?>
-   		<div class="table-responsive">
-			<!-- <table class="table table-striped documents">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Document</th>
-						<th>Description</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>
-							<a href="/files/documents/001-call-center-project.pdf" target="_blank">Call Center Project Pitch</a>
-						</td>
-						<td>Pitch for the call center</td>
-						<td>
-							<a href="/files/documents/001-call-center-project.pdf" download="001-call-center-project.pdf">
-								<i class="glyphicon glyphicon-download text-success"></i>
-							</a>
-						</td>
-					</tr>
-				</tbody>
-			</table> -->
-		</div>
-   	   	<?php
-   	   	$tasks = ob_get_contents();
-   	   	ob_end_clean();
-   	   	return $tasks; 
-   	}
-   	
-   	public function getCalendarHead()
-   	{
-   		ob_start();
-   		?>
-<!-- 		<script src="/js/calendar.js"></script> -->
-   				<link href='/js/calendar/fullcalendar.css' rel='stylesheet' />
-   				<link href='/js/calendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-   				<script src='/js/calendar/lib/moment.min.js'></script>
-   	<!-- 			<script src='../lib/jquery.min.js'></script> -->
-   				<script src='/js/calendar/fullcalendar.js'></script>
-   				<script>
-   				$(document).ready(function() {
-   					
-   					$('#fullcalendar').fullCalendar({
-   						header: {
-   							left: 'prev,next today',
-   							center: 'title',
-   							right: 'month,agendaWeek,agendaDay'
-   						},
-//    						defaultDate: '2015-02-12',
-   						editable: true,
-   						eventLimit: true, // allow "more" link when too many events
-   						events: [
-   		   					<?php
-   		   					$c = 0;
-   		   					
-   		   					foreach ($this->data['reservations'] as $reservation)
-   		   					{
-   		   						$c++;
-   		   						?>
-	   		   					{
-		   		   					id: <?php echo $reservation['reservation_id']?>,
-	   								title: '<?php echo $reservation['abbr'].' '.$reservation['room'].' '.$reservation['name'].' '.$reservation['last_name']; ?>',
-	   								start: '<?php echo $reservation['check_in']; ?>',
-	   								end: '<?php echo $reservation['check_out']; ?>'
-	   							}
-   		   						<?php
-   		   						if ($c < sizeof($this->data['reservations']))
-   		   							echo ',';
-   		   					}
-   		   					?>
-   						]
-   					});
-   					
-   				});
-   			
-		</script>
-		<?php		
-	   	$signIn = ob_get_contents();
-		ob_end_clean();
-		return $signIn;
-	}
-   	
-   	public function getCalendar()
-   	{
-   		ob_start();
-   		?>
-   	   	<div id='fullcalendar'></div>
-		<?php
-   	   	$tasks = ob_get_contents();
-		ob_end_clean();
-		return $tasks; 
-	}
-   	
-   	public function getTaskPanel()
-   	{
-   		ob_start();
-   		?>
-   		<div class="col-sm-12 task-member-panel">
-			<div class="row text-right">
-				<a href="javascript:void(0);" class="btn btn-info btn-xs display-add-task">add task</a>
-			</div>
-			
-			<div class="row task-member-box">
-				<div class="create-task-box" id="create-task-box">
-					<div class="top">
-						<?php 
-						if ($this->data['userInfo']['type'] == 1)
-						{
-						?>
-						<div class="to">
-							<label>To</label>
-							<select id="task_to">
-							<?php 
-							if ($this->data['usersActive'])
-							{
-								foreach ($this->data['usersActive'] as $user) 
-								{
-									?>
-								<option value="<?php echo $user['user_id']; ?>"><?php echo $user['name']; ?></option>
-									<?php
-								}
-							}
-							?>
-							</select>
-						</div>
-						<?php 
-						}
-						else
-						{
-							?>
-						<input type="hidden" id="task_to" value="<?php echo $this->data['userInfo']['user_id']; ?>">
-							<?php
-						}
-						?>
-						
-						<div class="date">
-							<label>Date</label>
-							<input type="text" id="task-date" />
-						</div>
-						
-						<div class="hour">
-							<label>Time</label>
-							<select id="task_hour">
-								<option value="8:00">8:00</option>
-								<option value="8:30">8:30</option>
-								<option value="9:00">9:00</option>
-								<option value="9:30">9:30</option>
-								<option value="10:00">10:00</option>
-								<option value="10:30">10:30</option>
-								<option value="11:00">11:00</option>
-								<option value="11:30">11:30</option>
-								<option value="12:00">12:00</option>
-								<option value="12:30">12:30</option>
-								<option value="13:00">13:00</option>
-								<option value="13:30">13:30</option>
-								<option value="14:00">14:00</option>
-								<option value="14:30">14:30</option>
-								<option value="15:00">15:00</option>
-								<option value="15:30">15:30</option>
-								<option value="16:00">16:00</option>
-								<option value="15:30">16:30</option>
-								<option value="17:00">17:00</option>
-								<option value="17:30">17:30</option>
-								<option value="18:00">18:00</option>
-								<option value="18:30">18:30</option>
-								<option value="19:00">19:00</option>
-								<option value="19:30">19:30</option>
-								<option value="20:00">20:00</option>
-								<option value="20:30">20:30</option>
-							</select>
-						</div>
-						<div class="clear"></div>
-					</div><!--  /top -->
-					<div class="middle">
-						<textarea rows="" cols="" id="task_content" class="form-control" placeholder="new task"></textarea>
-						<a href="javascript:void(0);" class="btn btn-info btn-xs" id="add-task">save</a>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row task-content">
-				<ul class="task-list">
-					<?php
-					echo $this->listTasks($this->data['memberTasks']);
-					?>
-				</ul>
-			</div>
-		</div>
-   		<?php
-   		$taskPanel = ob_get_contents();
-   		ob_end_clean();
-   		return $taskPanel;
-   	}
    	
    	public function getMembersHead()
    	{
@@ -1322,7 +867,34 @@ class Layout_View
 		return $membersRecent;
 	}
    	
-	public static function getRoomsList($rooms)
+	public function getMemberReservations()
+   	{
+   		ob_start();
+   		?>
+   		<div class="row">
+   			<?php echo $this->getReservationPanel(); ?>
+   		</div>
+   		
+   		<div class="row memberReservations" id="memberReservations">
+   			<?php
+   			if ($this->data['memberReservations'])
+   				foreach ($this->data['memberReservations'] as $reservation)
+   				{
+   					echo $this->getMemberReservationItem($reservation);
+   				}
+   			?>
+   		</div>
+   		<?php
+   		$memberReservation = ob_get_contents();
+   		ob_end_clean();
+   		return $memberReservation;
+   	}
+
+   	/**
+   	used in an ajax
+	*/
+
+   	public static function getRoomsList($rooms)
 	{
 		ob_start();
 		?>
@@ -1380,8 +952,8 @@ class Layout_View
 		ob_end_clean();
 		return $roomList;
 	}
-	
-	public function getReservationPanel()
+
+   	public function getReservationPanel()
 	{
 		ob_start();
 		?>
@@ -1487,14 +1059,14 @@ class Layout_View
 					</div>
 					<div class="col-sm-9">
 						<select id="agencyList">
-							<?php
-							foreach ($this->data['agencies'] as $agency)
-							{
-								?>
-								<option value="<?php echo $agency['agency_id']; ?>"><?php echo $agency['agency']; ?></option>
-								<?php
-							}
+						<?php
+						foreach ($this->data['agencies'] as $agency)
+						{
 							?>
+							<option value="<?php echo $agency['agency_id']; ?>"><?php echo $agency['agency']; ?></option>
+							<?php
+						}
+						?>
 						</select>
 					</div>
 				</div>
@@ -1555,40 +1127,8 @@ class Layout_View
 		ob_end_clean();
 		return $rightSideReservations;
 	}
-	
-	
-	public function getReservationsHead()
-	{
-		ob_start();
-		?>
-		<link rel="stylesheet" href="/css/jquery-ui.css">
-		<script src="/js/jquery-ui.js"></script>
-		<script src="/js/reservations.js"></script>
-		<script>
-		$(function() {
-			$( "#checkIn, #checkOut" ).datepicker({
-				altFormat: "d M, y"
-				});
-			});
-		</script>
-		<?php		
-	   	$signIn = ob_get_contents();
-		ob_end_clean();
-		return $signIn;
-	}
-	
-	public function getReservations()
-	{
-		ob_start();
-		?>
-	   	   	<?php echo $this->getReservationPanel(); ?>
-   	   	<?php
-   	   	$tasks = ob_get_contents();
-   	   	ob_end_clean();
-   	   	return $tasks; 
-   	}
-	
-   	/**
+
+	/**
    	 * getMemberReservationItem
    	 * 
    	 * print the reservation belongs to a member
@@ -1744,29 +1284,197 @@ class Layout_View
    		ob_end_clean();
    		return $paymentItems;
    	}
-   	
-   	public function getMemberReservations()
+
+	public function getHistoryPanel()
    	{
    		ob_start();
    		?>
-   		<div class="row">
-   			<?php echo $this->getReservationPanel(); ?>
-   		</div>
-   		
-   		<div class="row memberReservations" id="memberReservations">
-   			<?php
-   			if ($this->data['memberReservations'])
-   				foreach ($this->data['memberReservations'] as $reservation)
-   				{
-   					echo $this->getMemberReservationItem($reservation);
-   				}
-   			?>
-   		</div>
+   		<div class="col-sm-12 history-member-panel">
+			<div class="row text-right">
+				<a href="javascript:void(0);" class="btn btn-info btn-xs display-add-history">add history</a>
+			</div>
+			
+			<div class="row history-member-box">
+				<textarea rows="2" cols="" class="form-control" placeholder="history" id="history-entry"></textarea>
+				<a href="javascript:void(0);" class="btn btn-info btn-xs" id="add-history">save</a>
+			</div>
+			
+			<div class="row history-content">
+				<ul class="history-list">
+					<?php
+					if ($this->data['memberHistory'])
+					{
+						foreach ($this->data['memberHistory'] as $history)
+						{
+						?>
+					<li>
+                    	<div class="header"><?php echo $history['name']; ?> | <?php echo Tools::formatMYSQLToFront($history['date']).'  '.Tools::formatHourMYSQLToFront($history['time']); ?></div>
+                        	<div>
+							<i class="glyphicon glyphicon-option-vertical"></i>
+							<div class="history-title">
+								<span class="task-title-sp">
+									<?php echo $history['history']; ?>
+								</span>
+							</div>
+						</div>
+					</li>
+					<?php
+						}
+					}
+					?>
+				</ul>
+			</div>
+		</div>
    		<?php
-   		$memberReservation = ob_get_contents();
+   		$historyPanel = ob_get_contents();
    		ob_end_clean();
-   		return $memberReservation;
+   		return $historyPanel;
    	}
+   	
+   	
+   	
+   	
+   	
+   	public function getTaskPanel()
+   	{
+   		ob_start();
+   		?>
+   		<div class="col-sm-12 task-member-panel">
+			<div class="row text-right">
+				<a href="javascript:void(0);" class="btn btn-info btn-xs display-add-task">add task</a>
+			</div>
+			
+			<div class="row task-member-box">
+				<div class="create-task-box" id="create-task-box">
+					<div class="top">
+						<?php 
+						if ($this->data['userInfo']['type'] == 1)
+						{
+						?>
+						<div class="to">
+							<label>To</label>
+							<select id="task_to">
+							<?php 
+							if ($this->data['usersActive'])
+							{
+								foreach ($this->data['usersActive'] as $user) 
+								{
+									?>
+								<option value="<?php echo $user['user_id']; ?>"><?php echo $user['name']; ?></option>
+									<?php
+								}
+							}
+							?>
+							</select>
+						</div>
+						<?php 
+						}
+						else
+						{
+							?>
+						<input type="hidden" id="task_to" value="<?php echo $this->data['userInfo']['user_id']; ?>">
+							<?php
+						}
+						?>
+						
+						<div class="date">
+							<label>Date</label>
+							<input type="text" id="task-date" />
+						</div>
+						
+						<div class="hour">
+							<label>Time</label>
+							<select id="task_hour">
+								<option value="8:00">8:00</option>
+								<option value="8:30">8:30</option>
+								<option value="9:00">9:00</option>
+								<option value="9:30">9:30</option>
+								<option value="10:00">10:00</option>
+								<option value="10:30">10:30</option>
+								<option value="11:00">11:00</option>
+								<option value="11:30">11:30</option>
+								<option value="12:00">12:00</option>
+								<option value="12:30">12:30</option>
+								<option value="13:00">13:00</option>
+								<option value="13:30">13:30</option>
+								<option value="14:00">14:00</option>
+								<option value="14:30">14:30</option>
+								<option value="15:00">15:00</option>
+								<option value="15:30">15:30</option>
+								<option value="16:00">16:00</option>
+								<option value="15:30">16:30</option>
+								<option value="17:00">17:00</option>
+								<option value="17:30">17:30</option>
+								<option value="18:00">18:00</option>
+								<option value="18:30">18:30</option>
+								<option value="19:00">19:00</option>
+								<option value="19:30">19:30</option>
+								<option value="20:00">20:00</option>
+								<option value="20:30">20:30</option>
+							</select>
+						</div>
+						<div class="clear"></div>
+					</div><!--  /top -->
+					<div class="middle">
+						<textarea rows="" cols="" id="task_content" class="form-control" placeholder="new task"></textarea>
+						<a href="javascript:void(0);" class="btn btn-info btn-xs" id="add-task">save</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row task-content">
+				<ul class="task-list">
+					<?php
+					echo $this->listTasks($this->data['memberTasks']);
+					?>
+				</ul>
+			</div>
+		</div>
+   		<?php
+   		$taskPanel = ob_get_contents();
+   		ob_end_clean();
+   		return $taskPanel;
+   	}
+
+	
+	
+	
+	
+	
+	public function getReservationsHead()
+	{
+		ob_start();
+		?>
+		<link rel="stylesheet" href="/css/jquery-ui.css">
+		<script src="/js/jquery-ui.js"></script>
+		<script src="/js/reservations.js"></script>
+		<script>
+		$(function() {
+			$( "#checkIn, #checkOut" ).datepicker({
+				altFormat: "d M, y"
+				});
+			});
+		</script>
+		<?php		
+	   	$signIn = ob_get_contents();
+		ob_end_clean();
+		return $signIn;
+	}
+	
+	public function getReservations()
+	{
+		ob_start();
+		?>
+	   	   	<?php echo $this->getReservationPanel(); ?>
+   	   	<?php
+   	   	$tasks = ob_get_contents();
+   	   	ob_end_clean();
+   	   	return $tasks; 
+   	}
+	
+   	
+   	
+   	
    	
    	public function getRoomsHead()
    	{
@@ -1801,358 +1509,421 @@ class Layout_View
    		return $roomsHead;
    	}
    		
+   	
    	public function getRooms()
    	{
    		ob_start();
    		$curMonth = date('M Y');
 		?>
 		<!-- <pre><?php echo print_r($this->data['rooms']);?></pre> -->
-   			<div class="row col-sm-12 rooms-calendar">
-   				<div class="col-sm-2">
-   					<div class="select-month">
-   						<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-   							<option value="/rooms/">Select a month</option>
-   							<?php 
-   							for ($i = 0; $i <= 12; $i ++)
-   							{
-   								$interval = '+'.$i.' month';
-   								?>
-   								<option value="/rooms/from/<?php echo date('Y-m-d', strtotime($interval, strtotime($curMonth))); ?>/">
-   									<?php echo date('M Y', strtotime($interval, strtotime($curMonth))); ?>
-   								</option>
-   								<?php 
-   							}
-   							?>
-   						</select>
-   					</div>
-   					<div class="empty-row row"></div>
-   					<div class="room-row-box">
-   						<?php 
-   						foreach ($this->data['rooms'] as $room)
-   						{
-   							?>
-   						<div>
-   							<p><?php echo $room['room'].' - '.$room['abbr']; ?></p>
-   						</div>
-   							<?php
-   							
-   						}
+		<div class="row col-sm-12 rooms-calendar">
+			<div class="col-sm-2">
+				<div class="select-month">
+					<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+						<option value="/rooms/">Select a month</option>
+						<?php 
+						for ($i = 0; $i <= 12; $i ++)
+						{
+							$interval = '+'.$i.' month';
+							?>
+							<option value="/rooms/from/<?php echo date('Y-m-d', strtotime($interval, strtotime($curMonth))); ?>/">
+								<?php echo date('M Y', strtotime($interval, strtotime($curMonth))); ?>
+							</option>
+							<?php 
+						}
+						?>
+					</select>
+				</div>
+   					
+				<div class="empty-row row"></div>
+   					
+				<div class="room-row-box">
+					<?php 
+					foreach ($this->data['rooms'] as $room)
+					{
+						?>
+					<div>
+						<p><?php echo $room['room'].' - '.$room['abbr']; ?></p>
+					</div>
+						<?php
+						
+					}
    						
-   						if (!$_GET['from'])
-   						{
-   							$from = date('Y-m-d', strtotime(' -1 day'));
-   							$day['prev'] = date('Y-m-d', strtotime(' -7 day', strtotime($from)));
-   							$day['next'] = date('Y-m-d', strtotime(' +7 day', strtotime($from)));
-   						}
-   						else 
-   						{
-   							$from = date('Y-m-d', strtotime($_GET['from']));
-   							$day['prev'] = date('Y-m-d', strtotime(' -7 day', strtotime($_GET['from'])));
-   							$day['next'] = date('Y-m-d', strtotime(' +7 day', strtotime($_GET['from'])));
-   						}
-   							
-   						$day[1]['full'] 	= date('Y-m-d', strtotime($from));
-   						$day[1]['dayName'] 	= date('l', strtotime($from));
-   						$day[1]['day'] 		= date('M d', strtotime($from));
+					if (!$_GET['from'])
+					{
+						$from = date('Y-m-d', strtotime(' -1 day'));
+						$day['prev'] = date('Y-m-d', strtotime(' -7 day', strtotime($from)));
+						$day['next'] = date('Y-m-d', strtotime(' +7 day', strtotime($from)));
+					}
+					else 
+					{
+						$from = date('Y-m-d', strtotime($_GET['from']));
+						$day['prev'] = date('Y-m-d', strtotime(' -7 day', strtotime($_GET['from'])));
+						$day['next'] = date('Y-m-d', strtotime(' +7 day', strtotime($_GET['from'])));
+					}
+						
+					$day[1]['full'] 	= date('Y-m-d', strtotime($from));
+					$day[1]['dayName'] 	= date('l', strtotime($from));
+					$day[1]['day'] 		= date('M d', strtotime($from));
+					
+					$day[2]['full'] 	= date('Y-m-d', strtotime(' +1 day', strtotime($from)));
+					$day[2]['dayName'] 	= date('l', strtotime(' +1 day', strtotime($from)));
+					$day[2]['day'] 		= date('M d', strtotime(' +1 day', strtotime($from)));
+					
+					$day[3]['full'] 	= date('Y-m-d', strtotime(' +2 day', strtotime($from)));
+					$day[3]['dayName'] 	= date('l', strtotime(' +2 day', strtotime($from)));
+					$day[3]['day'] 		= date('M d', strtotime(' +2 day', strtotime($from)));
+					
+					$day[4]['full'] 	= date('Y-m-d', strtotime(' +3 day', strtotime($from)));
+					$day[4]['dayName'] 	= date('l', strtotime(' +3 day', strtotime($from)));
+					$day[4]['day'] 		= date('M d', strtotime(' +3 day', strtotime($from)));
+					
+					$day[5]['full'] 	= date('Y-m-d', strtotime(' +4 day', strtotime($from)));
+					$day[5]['dayName'] 	= date('l', strtotime(' +4 day', strtotime($from)));
+					$day[5]['day'] 		= date('M d', strtotime(' +4 day', strtotime($from)));
+					
+					$day[6]['full'] 	= date('Y-m-d', strtotime(' +5 day', strtotime($from)));
+					$day[6]['dayName'] 	= date('l', strtotime(' +5 day', strtotime($from)));
+					$day[6]['day'] 		= date('M d', strtotime(' +5 day', strtotime($from)));
+					
+					$day[7]['full'] 	= date('Y-m-d', strtotime(' +6 day', strtotime($from)));
+					$day[7]['dayName'] 	= date('l', strtotime(' +6 day', strtotime($from)));
+					$day[7]['day'] 		= date('M d', strtotime(' +6 day', strtotime($from)));
    						
-   						$day[2]['full'] 	= date('Y-m-d', strtotime(' +1 day', strtotime($from)));
-   						$day[2]['dayName'] 	= date('l', strtotime(' +1 day', strtotime($from)));
-   						$day[2]['day'] 		= date('M d', strtotime(' +1 day', strtotime($from)));
-   						
-   						$day[3]['full'] 	= date('Y-m-d', strtotime(' +2 day', strtotime($from)));
-   						$day[3]['dayName'] 	= date('l', strtotime(' +2 day', strtotime($from)));
-   						$day[3]['day'] 		= date('M d', strtotime(' +2 day', strtotime($from)));
-   						
-   						$day[4]['full'] 	= date('Y-m-d', strtotime(' +3 day', strtotime($from)));
-   						$day[4]['dayName'] 	= date('l', strtotime(' +3 day', strtotime($from)));
-   						$day[4]['day'] 		= date('M d', strtotime(' +3 day', strtotime($from)));
-   						
-   						$day[5]['full'] 	= date('Y-m-d', strtotime(' +4 day', strtotime($from)));
-   						$day[5]['dayName'] 	= date('l', strtotime(' +4 day', strtotime($from)));
-   						$day[5]['day'] 		= date('M d', strtotime(' +4 day', strtotime($from)));
-   						
-   						$day[6]['full'] 	= date('Y-m-d', strtotime(' +5 day', strtotime($from)));
-   						$day[6]['dayName'] 	= date('l', strtotime(' +5 day', strtotime($from)));
-   						$day[6]['day'] 		= date('M d', strtotime(' +5 day', strtotime($from)));
-   						
-   						$day[7]['full'] 	= date('Y-m-d', strtotime(' +6 day', strtotime($from)));
-   						$day[7]['dayName'] 	= date('l', strtotime(' +6 day', strtotime($from)));
-   						$day[7]['day'] 		= date('M d', strtotime(' +6 day', strtotime($from)));
-   						
-   						?>
-   					</div>
-   				</div>
-   				<div class="col-sm-10">
-   					<div class="row">
-   						<div class="row status-bar ">
-   							<div class="row col-sm-9"></div>
-   							<div class="row col-sm-3">
-   								<a href="/rooms/from/<?php echo $day['prev']; ?>/">&laquo; Previus</a>
-   								<a href="/rooms/">Today</a>
-   								<a href="/rooms/from/<?php echo $day['next']; ?>/">Next &raquo;</a>
-   							</div>
-   						</div>
-   						<div class="row">
-   							<div class="days-box">
-   								<div class="row-week-day-header">
-   									<div class="week-day">
-   										<p class="text-center"><small><?php echo $day['1']['dayName']; ?></small></p> 
-   										<p class="text-center"><?php echo $day['1']['day']; ?></p>
-   									</div>
-   									<div class="week-day">
-   										<p class="text-center"><small><?php echo $day['2']['dayName']; ?></small></p> 
-   										<p class="text-center"><?php echo $day['2']['day']; ?></p>
-   									</div>
-   									<div class="week-day">
-   										<p class="text-center"><small><?php echo $day['3']['dayName']; ?></small></p> 
-   										<p class="text-center"><?php echo $day['3']['day']; ?></p>
-   									</div>
-   									<div class="week-day">
-   										<p class="text-center"><small><?php echo $day['4']['dayName']; ?></small></p> 
-   										<p class="text-center"><?php echo $day['4']['day']; ?></p>
-   									</div>
-   									<div class="week-day">
-   										<p class="text-center"><small><?php echo $day['5']['dayName']; ?></small></p> 
-   										<p class="text-center"><?php echo $day['5']['day']; ?></p>
-   									</div>
-   									<div class="week-day">
-   										<p class="text-center"><small><?php echo $day['6']['dayName']; ?></small></p> 
-   										<p class="text-center"><?php echo $day['6']['day']; ?></p>
-   									</div>
-   									<div class="week-day">
-   										<p class="text-center"><small><?php echo $day['7']['dayName']; ?></small></p> 
-   										<p class="text-center"><?php echo $day['7']['day']; ?></p>
-   									</div>
-   								</div>
-   								<div>
-   								<!-- <pre><?php  print_r($this->data['rooms']);;?></pre> -->
-   								<?php
-   								
-   								
-   								foreach ($this->data['rooms'] as $room)
-   								{
-   									
-   								?>
-   									<div class="row-week-day">
-   									<?php 
-   									for ($i = 1; $i <= 7; $i++)
-   									{
-   										?>
-   									
-	   									<div class="week-day full">
-	   									<?php 
-	   									switch ($i)
-	   									{
-	   										case 1:
-	   											if ($room['0']['reservations'])
-	   											{
-	   												foreach ($room['0']['reservations'] as $reservation)
-	   												{
-	   													if ($reservation['status'] == 1){$status = 'pending'; }
-	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
-	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
-	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
-	   													
-	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['1']['full']))
-	   													{	
-	   														?>
-	   														<span class="hasTooltip <?php echo $status; ?>"></span>
-	   														<div class="tooltipi"> 
-															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-															    <p><?php echo $reservation['agency']; ?></p>
-															</div>
-	   														<?php
-	   													}
-	   												}
-	   											}
-	   										break;
-	   										
-	   										case 2:
-	   											if ($room['0']['reservations'])
-	   											{
-	   												foreach ($room['0']['reservations'] as $reservation)
-	   												{
-	   													if ($reservation['status'] == 1){$status = 'pending'; }
-	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
-	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
-	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
-	   													
-	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['2']['full']))
-	   													{	?>
-	   														<span class="hasTooltip <?php echo $status; ?>"></span>
-	   														<div class="tooltipi"> 
-															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-															    <p><?php echo $reservation['agency']; ?></p>
-															</div>
-	   														<?php
-	   													}
-	   												}
-	   											}
-	   										break;
-	   										
-	   										case 3:
-	   											if ($room['0']['reservations'])
-	   											{
-	   												foreach ($room['0']['reservations'] as $reservation)
-	   												{
-	   													if ($reservation['status'] == 1){$status = 'pending'; }
-	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
-	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
-	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
-	   													
-	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['3']['full']))
-	   													{	?>
-	   														<span class="hasTooltip <?php echo $status; ?>"></span>
-	   														<div class="tooltipi"> 
-															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-															    <p><?php echo $reservation['agency']; ?></p>
-															</div>
-	   														<?php
-	   													}
-	   												}
-	   											}
-   											break;
-	   										
-	   										case 4:
-	   											if ($room['0']['reservations'])
-	   											{
-	   												foreach ($room['0']['reservations'] as $reservation)
-	   												{
-	   													if ($reservation['status'] == 1){$status = 'pending'; }
-	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
-	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
-	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
-	   													
-	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['4']['full']))
-	   													{	?>
-	   														<span class="hasTooltip <?php echo $status; ?>"></span>
-	   														<div class="tooltipi"> 
-															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-															    <p><?php echo $reservation['agency']; ?></p>
-															</div>
-	   														<?php
-	   													}
-	   												}
-	   											}
-   											break;
-	   											
-   											case 5:
-	   											if ($room['0']['reservations'])
-	   											{
-	   												foreach ($room['0']['reservations'] as $reservation)
-	   												{
-	   													if ($reservation['status'] == 1){$status = 'pending'; }
-	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
-	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
-	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
-	   													
-	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['5']['full']))
-	   													{	?>
-	   														<span class="hasTooltip <?php echo $status; ?>"></span>
-	   														<div class="tooltipi"> 
-															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-															    <p><?php echo $reservation['agency']; ?></p>
-															</div>
-	   														<?php
-	   													}
-	   												}
-	   											}
-   											break;
-	   											
-   											case 6:
-	   											if ($room['0']['reservations'])
-	   											{
-	   												foreach ($room['0']['reservations'] as $reservation)
-	   												{
-	   													if ($reservation['status'] == 1){$status = 'pending'; }
-	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
-	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
-	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
-	   													
-	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['6']['full']))
-	   													{	?>
-	   														<span class="hasTooltip <?php echo $status; ?>"></span>
-	   														<div class="tooltipi"> 
-															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-															    <p><?php echo $reservation['agency']; ?></p>
-															</div>
-	   														<?php
-	   													}
-	   												}
-	   											}
-   											break;
-   											
-   											case 7:
-	   											if ($room['0']['reservations'])
-	   											{
-	   												foreach ($room['0']['reservations'] as $reservation)
-	   												{
-	   													if ($reservation['status'] == 1){$status = 'pending'; }
-	   													if ($reservation['status'] == 2){$status = 'confirmed'; }
-	   													if ($reservation['status'] == 3){$status = 'checked-in'; }
-	   													if ($reservation['status'] == 4){$status = 'checked-out'; }
-	   													
-	   													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['7']['full']))
-	   													{	?>
-	   														<span class="hasTooltip <?php echo $status; ?>"></span>
-	   														<div class="tooltipi"> 
-															    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-															    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-															    </a>
-															    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-															    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-															    <p><?php echo $reservation['agency']; ?></p>
-															</div>
-	   														<?php
-	   													}
-	   												}
-	   											}
-   											break;
-	   									}
-	   									?>
-	   									</div>
-   										<?php
-   									}
-   									?>
-   									</div>
-   								<?php 
-   								}
-   								?>
-   								</div>
-   							</div>
-   						</div>
-   					</div>
-   				</div>
-   			</div>
+					?>
+				</div>
+			</div>
+			<div class="col-sm-10">
+				<div class="row">
+					<div class="row status-bar ">
+						<div class="row col-sm-9"></div>
+						<div class="row col-sm-3">
+							<a href="/rooms/from/<?php echo $day['prev']; ?>/">&laquo; Previus</a>
+							<a href="/rooms/">Today</a>
+							<a href="/rooms/from/<?php echo $day['next']; ?>/">Next &raquo;</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="days-box">
+							<div class="row-week-day-header">
+								<div class="week-day">
+									<p class="text-center"><small><?php echo $day['1']['dayName']; ?></small></p> 
+									<p class="text-center"><?php echo $day['1']['day']; ?></p>
+								</div>
+								<div class="week-day">
+									<p class="text-center"><small><?php echo $day['2']['dayName']; ?></small></p> 
+									<p class="text-center"><?php echo $day['2']['day']; ?></p>
+								</div>
+								<div class="week-day">
+									<p class="text-center"><small><?php echo $day['3']['dayName']; ?></small></p> 
+									<p class="text-center"><?php echo $day['3']['day']; ?></p>
+								</div>
+								<div class="week-day">
+									<p class="text-center"><small><?php echo $day['4']['dayName']; ?></small></p> 
+									<p class="text-center"><?php echo $day['4']['day']; ?></p>
+								</div>
+								<div class="week-day">
+									<p class="text-center"><small><?php echo $day['5']['dayName']; ?></small></p> 
+									<p class="text-center"><?php echo $day['5']['day']; ?></p>
+								</div>
+								<div class="week-day">
+									<p class="text-center"><small><?php echo $day['6']['dayName']; ?></small></p> 
+									<p class="text-center"><?php echo $day['6']['day']; ?></p>
+								</div>
+								<div class="week-day">
+									<p class="text-center"><small><?php echo $day['7']['dayName']; ?></small></p> 
+									<p class="text-center"><?php echo $day['7']['day']; ?></p>
+								</div>
+							</div>
+							<div>
+							<!-- <pre><?php  print_r($this->data['rooms']);;?></pre> -->
+							<?php
+							
+							
+							foreach ($this->data['rooms'] as $room)
+							{
+								
+							?>
+								<div class="row-week-day">
+								<?php 
+								for ($i = 1; $i <= 7; $i++)
+								{
+									?>
+								
+									<div class="week-day full">
+									<?php 
+									switch ($i)
+									{
+										case 1:
+											if ($room['0']['reservations'])
+											{
+												foreach ($room['0']['reservations'] as $reservation)
+												{
+													if ($reservation['status'] == 1){$status = 'pending'; }
+													if ($reservation['status'] == 2){$status = 'confirmed'; }
+													if ($reservation['status'] == 3){$status = 'checked-in'; }
+													if ($reservation['status'] == 4){$status = 'checked-out'; }
+													
+													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['1']['full']))
+													{	
+														?>
+														<span class="hasTooltip <?php echo $status; ?>"></span>
+														<div class="tooltipi"> 
+													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+													    </a>
+													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
+													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+													    <p><?php echo $reservation['agency']; ?></p>
+													</div>
+														<?php
+													}
+												}
+											}
+										break;
+										
+										case 2:
+											if ($room['0']['reservations'])
+											{
+												foreach ($room['0']['reservations'] as $reservation)
+												{
+													if ($reservation['status'] == 1){$status = 'pending'; }
+													if ($reservation['status'] == 2){$status = 'confirmed'; }
+													if ($reservation['status'] == 3){$status = 'checked-in'; }
+													if ($reservation['status'] == 4){$status = 'checked-out'; }
+													
+													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['2']['full']))
+													{	?>
+														<span class="hasTooltip <?php echo $status; ?>"></span>
+														<div class="tooltipi"> 
+													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+													    </a>
+													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
+													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+													    <p><?php echo $reservation['agency']; ?></p>
+													</div>
+														<?php
+													}
+												}
+											}
+										break;
+										
+										case 3:
+											if ($room['0']['reservations'])
+											{
+												foreach ($room['0']['reservations'] as $reservation)
+												{
+													if ($reservation['status'] == 1){$status = 'pending'; }
+													if ($reservation['status'] == 2){$status = 'confirmed'; }
+													if ($reservation['status'] == 3){$status = 'checked-in'; }
+													if ($reservation['status'] == 4){$status = 'checked-out'; }
+													
+													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['3']['full']))
+													{	?>
+														<span class="hasTooltip <?php echo $status; ?>"></span>
+														<div class="tooltipi"> 
+													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+													    </a>
+													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
+													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+													    <p><?php echo $reservation['agency']; ?></p>
+													</div>
+														<?php
+													}
+												}
+											}
+										break;
+										
+										case 4:
+											if ($room['0']['reservations'])
+											{
+												foreach ($room['0']['reservations'] as $reservation)
+												{
+													if ($reservation['status'] == 1){$status = 'pending'; }
+													if ($reservation['status'] == 2){$status = 'confirmed'; }
+													if ($reservation['status'] == 3){$status = 'checked-in'; }
+													if ($reservation['status'] == 4){$status = 'checked-out'; }
+													
+													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['4']['full']))
+													{	?>
+														<span class="hasTooltip <?php echo $status; ?>"></span>
+														<div class="tooltipi"> 
+													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+													    </a>
+													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
+													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+													    <p><?php echo $reservation['agency']; ?></p>
+													</div>
+														<?php
+													}
+												}
+											}
+										break;
+											
+										case 5:
+											if ($room['0']['reservations'])
+											{
+												foreach ($room['0']['reservations'] as $reservation)
+												{
+													if ($reservation['status'] == 1){$status = 'pending'; }
+													if ($reservation['status'] == 2){$status = 'confirmed'; }
+													if ($reservation['status'] == 3){$status = 'checked-in'; }
+													if ($reservation['status'] == 4){$status = 'checked-out'; }
+													
+													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['5']['full']))
+													{	?>
+														<span class="hasTooltip <?php echo $status; ?>"></span>
+														<div class="tooltipi"> 
+													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+													    </a>
+													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
+													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+													    <p><?php echo $reservation['agency']; ?></p>
+													</div>
+														<?php
+													}
+												}
+											}
+										break;
+											
+										case 6:
+											if ($room['0']['reservations'])
+											{
+												foreach ($room['0']['reservations'] as $reservation)
+												{
+													if ($reservation['status'] == 1){$status = 'pending'; }
+													if ($reservation['status'] == 2){$status = 'confirmed'; }
+													if ($reservation['status'] == 3){$status = 'checked-in'; }
+													if ($reservation['status'] == 4){$status = 'checked-out'; }
+													
+													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['6']['full']))
+													{	?>
+														<span class="hasTooltip <?php echo $status; ?>"></span>
+														<div class="tooltipi"> 
+													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+													    </a>
+													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
+													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+													    <p><?php echo $reservation['agency']; ?></p>
+													</div>
+														<?php
+													}
+												}
+											}
+										break;
+										
+										case 7:
+											if ($room['0']['reservations'])
+											{
+												foreach ($room['0']['reservations'] as $reservation)
+												{
+													if ($reservation['status'] == 1){$status = 'pending'; }
+													if ($reservation['status'] == 2){$status = 'confirmed'; }
+													if ($reservation['status'] == 3){$status = 'checked-in'; }
+													if ($reservation['status'] == 4){$status = 'checked-out'; }
+													
+													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['7']['full']))
+													{	?>
+														<span class="hasTooltip <?php echo $status; ?>"></span>
+														<div class="tooltipi"> 
+													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
+													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
+													    </a>
+													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
+													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+													    <p><?php echo $reservation['agency']; ?></p>
+													</div>
+														<?php
+													}
+												}
+											}
+										break;
+									}
+									?>
+									</div>
+									<?php
+								}
+								?>
+								</div>
+							<?php 
+							}
+							?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
    	   	<?php
    	   	$rooms = ob_get_contents();
    	   	ob_end_clean();
    	   	return $rooms; 
    	}
+
+
+   	public function getCalendarHead()
+   	{
+   		ob_start();
+   		?>
+   		<link href='/js/calendar/fullcalendar.css' rel='stylesheet' />
+   		<link href='/js/calendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+   		<script src='/js/calendar/lib/moment.min.js'></script>
+   		<script src='/js/calendar/fullcalendar.js'></script>
+   		<script>
+   			$(document).ready(function() {
+				$('#fullcalendar').fullCalendar({
+   					header: {
+   						left: 'prev,next today',
+   						center: 'title',
+   						right: 'month,agendaWeek,agendaDay'
+   					},
+  					editable: true,
+   					eventLimit: true, // allow "more" link when too many events
+   					events: [
+   		   				<?php
+   		   				$c = 0;
+   		   					
+   		   				foreach ($this->data['reservations'] as $reservation)
+   		   				{
+   		   					$c++;
+   		   					?>
+	   		   				{
+		   		   				id: <?php echo $reservation['reservation_id']?>,
+	   							title: '<?php echo $reservation['abbr'].' '.$reservation['room'].' '.$reservation['name'].' '.$reservation['last_name']; ?>',
+	   							start: '<?php echo $reservation['check_in']; ?>',
+	   							end: '<?php echo $reservation['check_out']; ?>'
+	   						}
+   		   					<?php
+   		   					if ($c < sizeof($this->data['reservations']))
+   		   						echo ',';
+   		   				}
+   		   				?>
+   					]
+   				});
+   					
+   			});
+		</script>
+		<?php		
+	   	$signIn = ob_get_contents();
+		ob_end_clean();
+		return $signIn;
+	}
+   	
+   	public function getCalendar()
+   	{
+   		ob_start();
+   		?>
+   	   	<div id='fullcalendar'></div>
+		<?php
+   	   	$tasks = ob_get_contents();
+		ob_end_clean();
+		return $tasks; 
+	}
    	   	
 	public function getAgenciesHead()
 	{
@@ -2224,6 +1995,137 @@ class Layout_View
 		ob_end_clean();
 		return $agencies;
 	}
+
+	
+
+	public function getTasksHead()
+    {
+    	ob_start();
+    	?>
+       	<script src="/js/tasks.js"></script>
+        <script>
+    	</script>
+        <?php
+        $signIn = ob_get_contents();
+        ob_end_clean();
+        return $signIn;
+    }
+
+    public static function listTasks($tasks)
+   	{
+   		ob_start();
+   		
+   		if ($tasks)
+   		{
+   			foreach ($tasks as $task)
+   			{
+   				$date = Tools::formatMYSQLToFront($task['date']);
+   				$time = Tools::formatHourMYSQLToFront($task['time']);
+   				?>
+				<li
+   				<?php 
+   				if( $task['status'] == 1)
+   					echo 'class="completed"';
+   				
+   				if( strtotime($date) == strtotime(@date('d-M-Y', strtotime('now'))))
+   					echo 'class="today"';
+   							
+   				if( strtotime($date) < strtotime('now'))
+   					echo 'class="pending"';
+   							
+   				if( strtotime($date) > strtotime('now'))
+   					echo 'class="future"';
+   				?>
+   				>
+   					<div class="header">
+   						<div class="info">
+   							<strong><?php echo $task['assigned_to']; ?> </strong>
+   							<span class="text-primary"><?php echo $date.' '.$time; ?></span>
+   							<span class="text-muted"><?php echo $task['assigned_by']; ?></span>
+   						</div>
+   						<?php 
+	                    if ($task['status'] == 0)
+	                    {
+	                    ?>
+	                    	<a href="javascript: void(0);" class="completeTask" tid="<?php echo $task['task_id']; ?>"><i class="glyphicon glyphicon-check icon" ></i></a>
+	                    <?php 
+	                    }
+	                    
+   						if ($task['member_id'])
+   						{
+   						?>
+   						<div class="member">
+   							<a href="/<?php echo $task['member_id']; ?>/<?php echo Tools::slugify($task['name'].' '.$task['last_name']); ?>/">
+   								<?php echo $task['name'].' '.$task['last_name']; ?>
+   							</a>
+   						</div>
+   						<?php
+   						}
+   						?>
+   						<div class="clear"></div>
+   					</div>
+   					<div class="clear"></div>
+   					<div>
+   						<i class="glyphicon glyphicon-option-vertical"></i>
+   						<div class="history-title">
+   							<span class="task-title-sp"><?php echo $task['content']; ?></span>
+   						</div>
+   					</div>
+   					<div class="clear"></div>
+   				</li>
+   				<?php
+   				}
+   			}
+   		$tasks = ob_get_contents();
+   		ob_end_clean();
+   		return $tasks;
+   	}
+
+   	public function getAllTasks()
+   	{
+   		ob_start();
+   		?>
+		<div class="col-sm-12 task-member-panel">
+			<div class="row main-menu-tasks text-center">
+				<ul class="nav nav-pills">
+					<li>
+						<a href="#" class="text-danger" id="get-pending-tasks">
+							Pending
+							<?php if ($this->data['taskInfo']['pending'] > 0) {?><span class="badge"><?php echo $this->data['taskInfo']['pending']; ?></span><?php } ?>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="text-primary" id="get-today-tasks">
+							Today 
+							<?php if ($this->data['taskInfo']['today'] > 0) {?><span class="badge"><?php echo $this->data['taskInfo']['today']; ?></span><?php } ?>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="text-warning" id="get-future-tasks">
+							Future 
+							<?php if ($this->data['taskInfo']['future'] > 0) {?><span class="badge"><?php echo $this->data['taskInfo']['future']; ?></span><?php } ?>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="text-success" id="get-completed-tasks">
+							Completed
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="row task-content">
+				<ul class="task-list">
+				<?php 
+				echo $this->listTasks($this->data['memberTasks']);
+				?>
+				</ul>
+			</div>
+		</div>
+   		<?php
+   		$tasks = ob_get_contents();
+   		ob_end_clean();
+   		return $tasks; 
+   	}
    	
     public function getFooter()
     {
