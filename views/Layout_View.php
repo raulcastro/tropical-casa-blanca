@@ -1,13 +1,54 @@
 <?php
+/**
+ * This file has the main view of the project
+ *
+ * @package    Reservation System
+ * @subpackage Tropical Casa Blanca Hotel
+ * @license    http://opensource.org/licenses/gpl-license.php  GNU Public License
+ * @author     Raul Castro <rd.castro.silva@gmail.com>
+ */
+
 $root = $_SERVER['DOCUMENT_ROOT'];
+/**
+ * Includes the file /Framework/Tools.php which contains a 
+ * serie of useful snippets used along the code
+ */
 require_once $root.'/Framework/Tools.php';
 
+/**
+ * 
+ * Is the main class, almost everything is printed from here
+ * 
+ * @package 	Reservation System
+ * @subpackage 	Tropical Casa Blanca Hotel
+ * @author 		Raul Castro <rd.castro.silva@gmail.com>
+ * 
+ */
 class Layout_View
 {
+	/**
+	 * @property string $data a big array cotaining info for especified sections
+	 */
 	private $data;
+	
+	/**
+	 * @property string $title title that will be printed in <title></title>
+	 */
 	private $title;
+	
+	/**
+	 * @property string $section the section of the application, 
+	 * it can be 'dashboard', 'members, ... 
+	 * 
+	 */
 	private $section;
 	
+	/**
+	 * get's the data *ARRAY* and the title of the document
+	 * 
+	 * @param array $data Is a big array with the whole info of the document 
+	 * @param string $title The title that will be printed in <title></title>
+	 */
 	public function __construct($data, $title)
 	{
 		$this->data = $data;
@@ -19,10 +60,7 @@ class Layout_View
 	 * 
 	 * Prints the content of the whole website
 	 * 
-	 * @param head 		(string) Is the head of the HTML structure
-	 * @param header 	(string) Is the menu and logo section
-	 * @param bodyType	(string) Is for CSS purposes
-	 * @param body		(string) Content of the website
+	 * @param int $section the section that define what will be printed
 	 * 
 	 */
 	
@@ -78,7 +116,7 @@ class Layout_View
 				break;
 				
 				case 'agencies':
-					echo self::getAgenciesHead();
+					echo self :: getAgenciesHead();
 				break;
 
 				case 'tasks':
@@ -165,11 +203,9 @@ class Layout_View
     }
     
     /**
-     * getCommonDocuments
-     * 
      * returns the common css and js that are in all the web documents
      * 
-     * @return string
+     * @return string $documents css & js files used in all the files
      */
     public function getCommonDocuments()
     {
@@ -195,11 +231,13 @@ class Layout_View
     }
     
     /**
-     * getHeader
+     * The main menu
      *
      * it's the top and main navigation menu
+     * if is logged shows a sign-in | sign-up links
+     * but if is logged it shows other menus included the sign-out
      *
-     * @return string
+     * @return string HTML Code of the main menu 
      */
     public function getHeader()
     {
@@ -239,11 +277,14 @@ class Layout_View
     	return $header;
     }
     
+    
     /**
-     * getSignInHead 
-     * 
      * it is the head that works for the sign in section, aparently isn't getting 
      * any parameter, I just left it here for future cases
+     *
+     * @package 	Reservation System
+     * @subpackage 	Sign-in
+     * @todo 		Delete it?
      * 
      * @return string
      */
@@ -259,12 +300,13 @@ class Layout_View
     	return $signIn;
     }
     
-    
-    
     /**
      * getSignInContent
      * 
      * the sign-in box
+     * 
+     * @package Reservation System
+     * @subpackage Sign-in
      * 
      * @return string
      */
@@ -315,6 +357,16 @@ class Layout_View
         return $wideBody;
     }
     
+    /**
+     * getSignOutContent
+     *
+     * It finish the session
+     *
+     * @package 	Reservation System
+     * @subpackage 	Sign-in
+     *
+     * @return string
+     */
     public function getSignOutContent()
     {
     	ob_start();
@@ -336,6 +388,13 @@ class Layout_View
 		return $wideBody;
     }
    	
+    /**
+     * The side bar of the apliccation
+     * 
+     * Is the side-bar of the application where the main sections are as links
+     * 
+     * @return string
+     */
    	public function getSidebar()
    	{
    		ob_start();
@@ -345,8 +404,6 @@ class Layout_View
 			<ul class="nav nav-sidebar">
 				<li <?php if ($_GET['section'] == 1) echo $active; ?>><a href="/dashboard/">Dashboard</a></li>
 				<li <?php if ($_GET['section'] == 12) echo $active; ?>><a href="/reservations/">Reservations</a></li>
-				<!-- <li <?php if ($_GET['section'] == 2) echo $active; ?>><a href="/add-guest/">Add Guest</a></li> -->
-				<!-- <li <?php if ($_GET['section'] == 9) echo $active; ?>><a href="/add-broker/">Add Broker</a></li> -->
 			</ul>
 			
 			<ul class="nav nav-sidebar">
@@ -361,6 +418,11 @@ class Layout_View
    		return $sideBar;
    	}
    	
+   	/**
+   	 * the big icons that appear on the top of every section
+   	 * 
+   	 * @return string
+   	 */
    	public function getDashboardIcons() 
    	{
    		ob_start();
@@ -391,35 +453,20 @@ class Layout_View
 					</span>
 				</a>
 			</div>
-			<!-- <div class="col-xs-6 col-sm-3 placeholder">
-				<a href="/email/">
-					<i class="glyphicon glyphicon-envelope"></i>
-					<h4>E-Mail</h4>
-					<span class="text-muted"><?php echo $this->data['userInfo']['inbox']; ?> inbox</span>
-				</a>
-			</div> 
-			<div class="col-xs-6 col-sm-3 placeholder">
-				<a href="/brokers/">
-					<i class="glyphicon glyphicon-road"></i>
-					<h4>Brokers</h4>
-					<span class="text-muted">
-					<?php 
-					if ($this->data['recentBrokers'] > 0)
-						echo $this->data['recentBrokers'];
-					else 
-						echo 'No';
-					?> 
-					recent brokers
-					</span>
-				</a>
-			</div>
-			-->
 		</div>
    		<?php
    		$dashboardIcons = ob_get_contents();
    		ob_end_clean();
    		return $dashboardIcons;
    	}
+   	
+   	/**
+   	 * Last n members
+   	 * 
+   	 * Is like a preview, it is printed onthe dashboard
+   	 * 
+   	 * @return string
+   	 */
    	
    	public function getRecentMembers()
    	{
@@ -509,7 +556,12 @@ class Layout_View
    		ob_end_clean();
    		return $membersRecent;
    	}
-   
+	
+   	/**
+   	 * The whole list of members
+   	 * 
+   	 * @return string
+   	 */
    	public function getAllMembers()
    	{
    		ob_start();
@@ -595,11 +647,15 @@ class Layout_View
    	   	ob_end_clean();
    	   	return $membersRecent;
    	}
-   	
-   	
-   	
-   	
-   	
+
+   	/**
+   	 * The head element of Members
+   	 * 
+   	 * It contains the <strong>extra</strong> files needed
+   	 * such jquery-ui.css, tasks.js, ...
+   	 * 
+   	 * @return string
+   	 */
    	public function getMembersHead()
    	{
    		ob_start();
@@ -620,6 +676,17 @@ class Layout_View
 		ob_end_clean();
 		return $signIn;
 	}
+	
+	/**
+	 * Show the member profiles
+	 * 
+	 * <s>In this section you had the abilitie of add a new member</s>
+	 * It is the main interface where to show the member profile
+	 * 
+	 * @todo rename this method with better descriptive name
+	 * 
+	 * @return string
+	 */
    	
    	public function getAddMember()
    	{
@@ -867,6 +934,11 @@ class Layout_View
 		return $membersRecent;
 	}
    	
+	
+	/**
+	 * The box of the reservation search engine that is displayed under the member profile
+	 * @return string
+	 */
 	public function getMemberReservations()
    	{
    		ob_start();
@@ -876,13 +948,13 @@ class Layout_View
    		</div>
    		
    		<div class="row memberReservations" id="memberReservations">
-   			<?php
-   			if ($this->data['memberReservations'])
-   				foreach ($this->data['memberReservations'] as $reservation)
-   				{
-   					echo $this->getMemberReservationItem($reservation);
-   				}
-   			?>
+   		<?php
+   		if ($this->data['memberReservations'])
+   			foreach ($this->data['memberReservations'] as $reservation)
+   			{
+   				echo $this->getMemberReservationItem($reservation);
+   			}
+   		?>
    		</div>
    		<?php
    		$memberReservation = ob_get_contents();
@@ -891,19 +963,21 @@ class Layout_View
    	}
 
    	/**
-   	used in an ajax
-	*/
-
+   	 * Display a list of available rooms
+   	 * 
+   	 * This is called via <strong>AJAX</strong>, is a list of available rooms, depending on the check-in check-out date
+   	 *  
+   	 * @param array $rooms list of rooms in an array 
+   	 * @return string
+   	 */
+   	
    	public static function getRoomsList($rooms)
 	{
 		ob_start();
-		?>
-		<?php 
 		if ($rooms)
 		{
 			?>
 			<ul class="roomTypeList">
-				
 			<?php
 			$roomType = 0;
 			$c = 0;
@@ -945,14 +1019,20 @@ class Layout_View
 			</ul>
 			<?php
 		}
-		?>
-		
-		<?php 
 		$roomList = ob_get_contents();
 		ob_end_clean();
 		return $roomList;
 	}
 
+	/**
+	 * The controls for check a room availability
+	 * 
+	 * Is where we choose check-in, check-out, number of people and so
+	 * 
+	 * @todo work a bit more with the datepicker
+	 * 
+	 * @return string
+	 */
    	public function getReservationPanel()
 	{
 		ob_start();
@@ -1016,6 +1096,14 @@ class Layout_View
 		return $reservationPanel;
 	}
 	
+	/**
+	 * extra info after choose a room
+	 * 
+	 * Extra info for the reservation
+	 * <strong>This can create a new member</strong>
+	 * 
+	 * @return string
+	 */
 	public function getRightSideReservations()
 	{
 		ob_start();
@@ -1226,6 +1314,12 @@ class Layout_View
    		return $item;
    	}
    	
+   	/**
+   	 * display a single payment item
+   	 * 
+   	 * @param array $payments list of payments
+   	 * @return string
+   	 */
    	public function getPaymentItems($payments)
    	{
    		ob_start();
@@ -1285,6 +1379,10 @@ class Layout_View
    		return $paymentItems;
    	}
 
+   	/**
+   	 * The box of the history items
+   	 * @return string
+   	 */
 	public function getHistoryPanel()
    	{
    		ob_start();
@@ -1331,10 +1429,10 @@ class Layout_View
    		return $historyPanel;
    	}
    	
-   	
-   	
-   	
-   	
+   	/**
+   	 * the task tab, displayed under the member profile
+   	 * @return string
+   	 */
    	public function getTaskPanel()
    	{
    		ob_start();
@@ -1436,11 +1534,10 @@ class Layout_View
    		return $taskPanel;
    	}
 
-	
-	
-	
-	
-	
+   	/**
+   	 * extra files for the reservation section
+   	 * @return string
+   	 */
 	public function getReservationsHead()
 	{
 		ob_start();
@@ -1461,6 +1558,14 @@ class Layout_View
 		return $signIn;
 	}
 	
+	/**
+	 * This method show the reservation panel
+	 * 
+	 * which is actually the same showed under the member profile
+	 * this method is a bit <s>stupid</s> ... well it doesn't makes sense
+	 * 
+	 * @return string
+	 */
 	public function getReservations()
 	{
 		ob_start();
@@ -1472,10 +1577,10 @@ class Layout_View
    	   	return $tasks; 
    	}
 	
-   	
-   	
-   	
-   	
+   	/**
+   	 * Extra files for the view of rooms
+   	 * @return string
+   	 */
    	public function getRoomsHead()
    	{
    		ob_start();
@@ -1508,8 +1613,15 @@ class Layout_View
    		ob_end_clean();
    		return $roomsHead;
    	}
-   		
    	
+   	/**
+   	 * Show a view per week of the rooms
+   	 * 
+   	 * Room occupancy for 7 days, it shows in diferent color which room is available or busy, a very long but very
+   	 * <strong>smart</strong> code.
+   	 * 
+   	 * @return string
+   	 */
    	public function getRooms()
    	{
    		ob_start();
@@ -1865,7 +1977,13 @@ class Layout_View
    	   	return $rooms; 
    	}
 
-
+	/**
+	 * extra files for the calendar section
+	 * 
+	 * also it iniatialize the script for the calendar
+	 * 
+	 * @return string
+	 */
    	public function getCalendarHead()
    	{
    		ob_start();
@@ -1914,6 +2032,13 @@ class Layout_View
 		return $signIn;
 	}
    	
+	/**
+	 * the calendar body
+	 * 
+	 * it display the reservations in a calendar
+	 * 
+	 * @return string
+	 */
    	public function getCalendar()
    	{
    		ob_start();
@@ -1924,7 +2049,11 @@ class Layout_View
 		ob_end_clean();
 		return $tasks; 
 	}
-   	   	
+   	
+	/**
+	 * extra files for the agencies section
+	 * @return string
+	 */
 	public function getAgenciesHead()
 	{
 		ob_start();
@@ -1935,6 +2064,12 @@ class Layout_View
 		ob_end_clean();
 		return $agenciesHead;
 	}
+	
+	/**
+	 * add and display the agencies
+	 * 
+	 * @return string
+	 */
    		
 	public function getAgencies()
 	{
@@ -1969,6 +2104,13 @@ class Layout_View
 		return $agencies; 
 	}
 	
+	/**
+	 * display a single agency item
+	 * 
+	 * @param array $agencies list of agencies
+	 * @return string
+	 */
+	
 	public static function listAgencies($agencies)
 	{
 		ob_start();
@@ -1990,13 +2132,16 @@ class Layout_View
 				<?php
 			}	
 		}
-		
 		$agencies = ob_get_contents();
 		ob_end_clean();
 		return $agencies;
 	}
 
-	
+	/**
+	 * extra files for the task section
+	 * 
+	 * @return string
+	 */
 
 	public function getTasksHead()
     {
@@ -2011,6 +2156,12 @@ class Layout_View
         return $signIn;
     }
 
+    /**
+     * Display the tasks
+     * 
+     * @param array $tasks all the tasks
+     * @return string
+     */
     public static function listTasks($tasks)
    	{
    		ob_start();
@@ -2081,6 +2232,11 @@ class Layout_View
    		return $tasks;
    	}
 
+   	/**
+   	 * The boix and tabs for the tasks
+   	 * 
+   	 * @return string
+   	 */
    	public function getAllTasks()
    	{
    		ob_start();
@@ -2127,6 +2283,13 @@ class Layout_View
    		return $tasks; 
    	}
    	
+   	/**
+   	 * The very awesome footer!
+   	 * 
+   	 * <s>useless</s>
+   	 * 
+   	 * @return string
+   	 */
     public function getFooter()
     {
     	ob_start();

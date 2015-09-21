@@ -1,7 +1,6 @@
 <?php
 $root = $_SERVER['DOCUMENT_ROOT'].'/';
 require_once $root.'models/back/Layout_Model.php';
-require_once $root.'/models/back/Email_Model.php';
 
 class generalBackend
 {
@@ -10,7 +9,6 @@ class generalBackend
 	public function __construct()
 	{
 		$this->model = new Layout_Model();
-		$this->email = new Email_Model();
 	}
 	
 	public function loadBackend($section = '')

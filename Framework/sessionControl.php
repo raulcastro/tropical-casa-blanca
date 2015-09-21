@@ -1,8 +1,10 @@
 <?php
 	require_once("Tools.php");
 
-	/*
+	/**
 	 * Access control for restricted sections
+	 * 
+	 * @author raulcastro
 	 * 
 	 * @database object
 	 * @table string table where it's storaged the system users
@@ -13,13 +15,7 @@
 	 * @noSessionPage string expired document
 	 * @currentType int type of user than can access to the current document
 	 */
-	
-	/**
-	 * Access control for restricted sections
-	 * 
-	 * @author raulcastro
-	 *
-	 */
+
 	class sessionControl
 	{
 		private $table;

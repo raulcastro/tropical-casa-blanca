@@ -1,8 +1,13 @@
 <?php
 /**
- * Created on Jun 30, 2014
+ * This file has the main view of the project
+ * 
+ * All these little tiny shitty functions we use around the code
  *
- *All these little tiny shitty functions we use around the code
+ * @package    Reservation System
+ * @subpackage Tropical Casa Blanca Hotel
+ * @license    http://opensource.org/licenses/gpl-license.php  GNU Public License
+ * @author     Raul Castro <rd.castro.silva@gmail.com>
  */
  
 class Tools
@@ -184,6 +189,13 @@ class Tools
 		return true;
 	}
 	
+	/**
+	 * Encode the Unicode values to be used in the URI.
+	 * 
+	 * @param string $utf8_string
+	 * @param integer $length
+	 * @return string String with Unicode encoded for URI.
+	 */
 	public static function utf8_uri_encode($utf8_string, $length = 0)
 	{
 		$unicode 			= '';
@@ -278,7 +290,11 @@ class Tools
 	}
 	
 	/**
-	 * This shitty thing returns a random string with the length of @param size
+	 * Returns a random string of $size length
+	 * 
+	 * @param integer $size the lenght of the random string
+	 * 
+	 * @return $rand random string
 	 */
 	
 	public static function getRandom($size = '')
@@ -302,7 +318,7 @@ class Tools
 	/**
 	 * Clean the string for security reasons
 	 * 
-	 * @param unknown $string
+	 * @param string $string
 	 * @return mixed
 	 */     
 	public static function cleanString($string)
@@ -311,8 +327,8 @@ class Tools
 	}
      
 	/**
-	 * Return a date ready for use on an mysql query
-	 * @param unknown $date
+	 * Return a date formated for use on an mysql query
+	 * @param string $date
 	 * @return string
 	 */
     public static function formatToMYSQL($date)
@@ -326,8 +342,9 @@ class Tools
     }
     
     /**
-     * Format a date from mysql ready for the front end
-     * @param unknown $date
+     * Format a date from mysql ready for use on the front end
+     * 
+     * @param string $date
      */
     public static function formatMYSQLToFront($date)
     {
@@ -336,13 +353,19 @@ class Tools
     
     /**
      * Format a hour from mysql ready for the front end
-     * @param unknown $hour
+     * @param string $hour
      */
     public static  function formatHourMYSQLToFront($hour)
     {
     		return @date('h:i A', strtotime($hour));
     }
     
+    /**
+     * delete stripslashes 
+     * 
+     * @param string $string
+     * @return string
+     */
     public static function clean($string)
     {
 		while(strchr($string,'\\')) 
@@ -354,10 +377,11 @@ class Tools
     }
 	
     /**
-     * Chars, numbers and midle sings
+     * Validate chars, numbers and midle sings
+     * 
      * @param string $string
-     * @param number $max
-     * @param number $min
+     * @param integer $max
+     * @param integer $min
      * @return boolean
      */
     public static function validateUserName($string, $max = 250, $min = 0)
@@ -374,10 +398,11 @@ class Tools
     }
     
     /**
-     * Just chars and spaces
+     * Validate just chars and spaces
+     * 
      * @param string $string
-     * @param number $max
-     * @param number $min
+     * @param integer $max
+     * @param integer $min
      * @return boolean
      */
     public static function validateAlpha($string, $max = 250, $min = 0)
@@ -396,8 +421,8 @@ class Tools
     /**
      * Just digits and decimal points
      * @param string $string
-     * @param number $max
-     * @param number $min
+     * @param integer $max
+     * @param integer $min
      * @return boolean
      */
     public static function validateNumber($string, $max = 250, $min = 0)
@@ -416,8 +441,8 @@ class Tools
     /**
      * Just digits
      * @param string $string
-     * @param number $max
-     * @param number $min
+     * @param integer $max
+     * @param integer $min
      * @return boolean
      */
     public static function validateDigits($string, $max = 250, $min = 0)
@@ -455,8 +480,8 @@ class Tools
     /**
      * Chars without tags
      * @param string $string
-     * @param number $max
-     * @param number $min
+     * @param integer $max
+     * @param integer $min
      * @return boolean
      */
     public static function validateText($string, $max = 2000, $min = 0)
@@ -472,6 +497,15 @@ class Tools
     	}
     }
     
+    /**
+     * returns a string in a short version
+     * 
+     * @example This line is too long will converted as "This li... "
+     * 
+     * @param string $string
+     * @param int $length
+     * @return string
+     */
     public static function shortString($string, $length)
     {
     	if (strlen($string) > $length)
@@ -484,19 +518,16 @@ class Tools
     	}
     }
     
-	public static function getMemberId($memberId)
-	{
-		$memberId = (int) $memberId;
-		$memberId = ($memberId * 3) + 17;
-	}
-    
 	/**
 	 * Verifica que una fecha esté dentro del rango de fechas establecidas
+	 * 
 	 * @author http://ecapy.com/verificar-si-una-fecha-esta-dentro-de-un-rango-en-php/
+	 * 
 	 * @param $start_date fecha de inicio
 	 * @param $end_date fecha final
 	 * @param $evaluame fecha a comparar
-	 * @return true si esta en el rango, false si no lo está
+	 * 
+	 * @return mixed  True si esta en el rango, false si no lo está
 	 */
 	public static function check_in_range($start_date, $end_date, $evaluame) 
 	{
