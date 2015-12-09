@@ -1227,8 +1227,11 @@ class Layout_View
    	public function getMemberReservationItem($data)
    	{
    		ob_start();
+   		$class = '';
+   		if ($data['status'] == '5')
+   			$class = 'canceled-reservation';
    		?>
-   		<div class="col-sm-12 reservation-item">
+   		<div class="col-sm-12 reservation-item <?php echo $class; ?>">
    			
    			<div class="row bg-primary title">
    				<div class="col-sm-2">Date</div>
@@ -1264,6 +1267,7 @@ class Layout_View
    				
    				<div class="reservation-options">
    					<div class="option pending <?php if ($data['status'] == '1') echo 'checked'; ?>" opt-res="1" single-res="<?php echo $data['reservation_id']; ?>">Pending</div>
+   					<div class="option canceled <?php if ($data['status'] == '5') echo 'checked'; ?>" opt-res="5" single-res="<?php echo $data['reservation_id']; ?>">Canceled</div>
    					<div class="option confirmed <?php if ($data['status'] == '2') echo 'checked'; ?>" opt-res="2" single-res="<?php echo $data['reservation_id']; ?>">Confirmed</div>
    					<div class="option checked-in <?php if ($data['status'] == '3') echo 'checked'; ?>" opt-res="3" single-res="<?php echo $data['reservation_id']; ?>">Checked-In</div>
    					<div class="option checked-out <?php if ($data['status'] == '4') echo 'checked'; ?>" opt-res="4" single-res="<?php echo $data['reservation_id']; ?>">Checked-Out</div>
@@ -1548,7 +1552,9 @@ class Layout_View
 		<script>
 		$(function() {
 			$( "#checkIn, #checkOut" ).datepicker({
-				altFormat: "d M, y"
+				altFormat: "d M, y",
+				changeMonth: true,
+			      changeYear: true
 				});
 			});
 		</script>

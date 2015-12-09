@@ -333,7 +333,7 @@ function searchReservation()
 				checkOut: 				checkOut,
 				reservationAdults: 		reservationAdults,
 				reservationChildren: 	reservationChildren,
-	            opt: 			1
+	            opt: 					1
 	             },
 	        success:
 	        function(xml)
@@ -363,6 +363,7 @@ function processReservation(node)
 	var checkIn 	= $('#checkIn').val();
 	var checkOut	= $('#checkOut').val();
 	var totalNights = 0;
+	
 	$('.rightSideReservations').show();
 	$('#roomName').html(roomName);
 	$('#roomId').val(roomId);
@@ -539,8 +540,8 @@ function updateMemberReservation(reservationId)
 	        type:   'POST',
 	        url:    '/ajax/reservations.php',
 	        data:{  
-	        	reservationId: reservationId,
-	        	optRes : optRes,
+	        	reservationId: 	reservationId,
+	        	optRes : 		optRes,
 	            opt: 			5
 	             },
 	        success:
@@ -548,7 +549,7 @@ function updateMemberReservation(reservationId)
 	        {
 	            if (0 != xml)
 	            {
-//	            	$('#memberReservations').html(xml);
+	            	alert('The reservation status has been successfully changed.');
 	            }
 	        }
 	    });

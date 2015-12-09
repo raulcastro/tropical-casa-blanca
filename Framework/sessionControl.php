@@ -3,17 +3,11 @@
 
 	/**
 	 * Access control for restricted sections
-	 * 
-	 * @author raulcastro
-	 * 
-	 * @database object
-	 * @table string table where it's storaged the system users
-	 * @userField string name of the field on the table
-	 * @passwordField string name of the field of the password on the table
-	 * @returnField string, field where we storage the type of the user
-	 * @loginPage array like this array(n=>"document n.html", n+1=>"document n+1.html");
-	 * @noSessionPage string expired document
-	 * @currentType int type of user than can access to the current document
+	 *
+	 * @package    Reservation System
+	 * @subpackage Tropical Casa Blanca Hotel
+	 * @license    http://opensource.org/licenses/gpl-license.php  GNU Public License
+	 * @author     Raul Castro <rd.castro.silva@gmail.com>
 	 */
 
 	class sessionControl
@@ -84,6 +78,7 @@
 
 		/**
 		 * It validates the form actually...
+		 * 
 		 * @return string, false in case of success or fail
 		 */
 		private function validateLogin()
@@ -102,7 +97,6 @@
 						&& ".$this->password." = SHA1('".$_POST["loginPassword"]."')";
 				
 				$type = $this->db->getRow($query);
-// 				var_dump($type);
 				
 				if($type)
 				{
@@ -110,7 +104,6 @@
 					$_SESSION["userId"] = $type["user_id"];
 					$_SESSION['name'] 	= $type['name'];
 					return $type[$this->returnField];
-// 					echo 'here';
 				}
 				else
 				{

@@ -1,7 +1,6 @@
 <?php
 
-/*
- *	Mysqli.php
+/**
  *	Extension of php's mysqli
  *
  * 	PHP version 5
@@ -14,13 +13,13 @@
 
 class Mysqli_Tool extends mysqli
 {
-	/*	__construct
+	/**	__construct
 	 *	Starts a mysqli connection
 	 *
-	 *	@param	string	Host
-	 *	@param	string	User
-	 *	@param	string	Password
-	 *	@param	string	Database
+	 *	@param	string	$host Host
+	 *	@param	string	$user User
+	 *	@param	string	$pass Password
+	 *	@param	string	$database Database
 	 *
      * 	@return void
      */
@@ -34,10 +33,10 @@ class Mysqli_Tool extends mysqli
 		}
 	}
 
-	/*	run
+	/**	
 	 *	Runs a query that returns no results (INSERT, UPDATE, etc...)
 	 *
-	 *	@param	string	Query to be executed
+	 *	@param	string	$query Query to be executed
 	 *
      * 	@return	boolean	True on success, false on failure
      */
@@ -51,10 +50,10 @@ class Mysqli_Tool extends mysqli
 		return $result;
 	}
 
-	/*	getArray
+	/**	
 	 *	Runs a query and returns the result as an array
 	 *
-	 *	@param	string	Query to be executed.
+	 *	@param	string	$query Query to be executed.
 	 *
      * 	@return	array	Array with the results (Empty if no results).
      */
@@ -77,10 +76,10 @@ class Mysqli_Tool extends mysqli
 		return $result;
 	}
 
-	/*	getRow
+	/**	
 	 *	Runs a query and returns the first result row
 	 *
-	 *	@param	string	Query to be executed.
+	 *	@param	string $query	Query to be executed.
 	 *
      * 	@return	array	Row with the results (Empty if no results).
      */
@@ -100,10 +99,10 @@ class Mysqli_Tool extends mysqli
 		return $result;
 	}
 	
-	/*	getValue
+	/**	
 	 *	Runs a query and returns the first result row
 	 *
-	 *	@param	string	Query to be executed.
+	 *	@param	string $query Query to be executed.
 	 *
      * 	@return	string	First value of the result query (Empty if no result).
      */

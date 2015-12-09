@@ -85,13 +85,27 @@ switch ($_POST['opt'])
 	break;
 	
 	case 5:
-		if ($model->uptadeSingleReservation($_POST)) 
+		if ($_POST['optRes'] != 5)
 		{
-			echo '1';
-		}
+			if ($model->uptadeSingleReservation($_POST))
+			{
+				echo '1';
+			}
+			else
+			{
+				echo '0';
+			}	
+		} 
 		else 
 		{
-			echo '0';
+			if ($model->addCancelation($_POST))
+			{
+				echo '1';
+			}
+			else
+			{
+				echo '0';
+			}
 		}
 	break;
 	

@@ -2,10 +2,21 @@
 $root = $_SERVER['DOCUMENT_ROOT'];
 require_once $root.'/Framework/Back_Default_Header.php';
 
+/**
+ * Contains the methods for interact with the databases
+ *
+ * @package    Reservation System
+ * @subpackage Tropical Casa Blanca Hotel
+ * @license    http://opensource.org/licenses/gpl-license.php  GNU Public License
+ * @author     Raul Castro <rd.castro.silva@gmail.com>
+ */
 class Layout_Model
 {
     private $db; 
 	
+    /**
+     * Initialize the MySQL Link
+     */
 	public function __construct()
 	{
 		$this->db = new Mysqli_Tool(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -32,11 +43,22 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * Get the user info
+	 * 
+	 * Get's the user detail {user_id, name, ...}
+	 * 
+	 * @return mixed|bool An array of info or false
+	 */
 	public function getUserInfo()
 	{
 		try {
-			$query = "SELECT u.user_id, d.name, u.type, 
-					ue.email as user_email, ue.inbox
+			$query = "SELECT 
+					u.user_id, 
+					d.name, 
+					u.type, 
+					ue.email as user_email, 
+					ue.inbox
 					FROM users u 
 					LEFT JOIN user_detail d ON u.user_id = d.user_id 
 					LEFT JOIN user_emails ue ON u.user_id = ue.user_id
@@ -48,10 +70,17 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * Get only the active users
+	 * 
+	 * @return mixed|bool An array of info or false
+	 */
 	public function getActiveUsers()
 	{
 		try {
-			$query = 'SELECT ud.user_id, ud.name 
+			$query = 'SELECT 
+					ud.user_id, 
+					ud.name 
 					FROM users u 
 					LEFT JOIN user_detail ud ON ud.user_id = u.user_id
 					WHERE u.active = 1  
@@ -63,6 +92,14 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * Get the last 10 members added
+	 * 
+	 * If the user is an admin then all the members will show
+	 * If not, only the user that belongs to the user will be show
+	 * 
+	 * @return mixed|bool An array of info or false
+	 */
 	public function getLastMembers()
 	{
 		try {
@@ -73,8 +110,16 @@ class Layout_Model
 				$filter = 'WHERE m.user_id = '.$_SESSION['userId'];
 			}
 			
-			$query = 'SELECT lpad(m.member_id, 4, 0) AS member_id, m.user_id, m.name, m.last_name, 
-					m.address, m.city, m.state, m.country, m.active,
+			$query = 'SELECT 
+					lpad(m.member_id, 4, 0) AS member_id, 
+					m.user_id, 
+					m.name, 
+					m.last_name, 
+					m.address, 
+					m.city, 
+					m.state, 
+					m.country, 
+					m.active,
 					d.name AS user_name
 					FROM members m
 					LEFT JOIN user_detail d ON m.user_id = d.user_id
@@ -90,6 +135,13 @@ class Layout_Model
 		}
 	}
 
+	/**
+	 * Get all the members 
+	 * 
+	 * With all the details
+	 * 
+	 * @return mixed|bool An array of info or false
+	 */
 	public function getAllMembers()
 	{
 		try {
@@ -100,8 +152,15 @@ class Layout_Model
 				$filter = 'WHERE m.user_id = '.$_SESSION['userId'];
 			}
 				
-			$query = 'SELECT lpad(m.member_id, 4, 0) AS member_id, m.user_id, m.name, 
-					m.last_name, m.address, m.city, m.state, m.country, m.active,
+			$query = 'SELECT lpad(m.member_id, 4, 0) AS member_id, 
+					m.user_id, 
+					m.name, 
+					m.last_name, 
+					m.address, 
+					m.city, 
+					m.state, 
+					m.country, 
+					m.active,
 					d.name AS user_name
 					FROM members m
 					LEFT JOIN user_detail d ON m.user_id = d.user_id
@@ -715,6 +774,7 @@ class Layout_Model
 			$prep->bind_param('ss',
 					$data['memberName'],
 					$data['memberLastName']);
+			
 			if ($prep->execute())
 			{
 				return $prep->insert_id;
@@ -734,10 +794,10 @@ class Layout_Model
 	 */
 	public function addReservation($data)
 	{
-		$checkIn 	= Tools::formatToMYSQL($data['checkIn']);
-		$checkOut 	= Tools::formatToMYSQL($data['checkOut']);
-		$checkOutDate = date($checkOut);
-		$checkOutDate = date('Y-m-d', strtotime('-1 day', strtotime($checkOutDate)));
+		$checkIn 		= Tools::formatToMYSQL($data['checkIn']);
+		$checkOut 		= Tools::formatToMYSQL($data['checkOut']);
+		$checkOutDate 	= date($checkOut);
+		$checkOutDate 	= date('Y-m-d', strtotime('-1 day', strtotime($checkOutDate)));
 		
 		try {
 			$query = 'INSERT INTO
@@ -785,6 +845,8 @@ class Layout_Model
 		}
 	}
 	
+	
+	
 	/**
 	 * getMemberReservationByMemberId
 	 * 
@@ -821,6 +883,40 @@ class Layout_Model
 					LEFT JOIN agencies a ON s.agency = a.agency_id
 					WHERE s.member_id = '.$memberId.' ORDER BY s.reservation_id DESC';
 				
+			return $this->db->getArray($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function getMemberCancelationsByMemberId($memberId)
+	{
+		$memberId = (int) $memberId;
+		try {
+			$query = 'SELECT s.reservation_id,
+					s.check_in,
+					s.check_out,
+					DATE_ADD(s.check_out, INTERVAL 1 DAY) AS check_mask,
+					s.date,
+					s.price,
+					s.adults,
+					s.children,
+					s.status,
+					s.external_id,
+					s.room_id,
+					rt.room_type,
+					rt.abbr,
+					r.room,
+					m.name,
+					m.last_name,
+					a.agency
+					FROM cancelations s
+					LEFT JOIN rooms r ON s.room_id = r.room_id
+					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
+					LEFT JOIN members m ON m.member_id = s.member_id
+					LEFT JOIN agencies a ON s.agency = a.agency_id
+					WHERE s.member_id = '.$memberId.' ORDER BY s.reservation_id DESC';
+	
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
 			return false;
@@ -1030,20 +1126,54 @@ class Layout_Model
 	public function uptadeSingleReservation($data)
 	{
 		try {
-			$query = 'UPDATE reservations SET status = ?
+			$query = 'UPDATE reservations 
+					SET status = ?
 					WHERE reservation_id = '.$data['reservationId'];
 				
 			$prep = $this->db->prepare($query);
 				
 			$prep->bind_param('i',
 					$data['optRes']);
-			$prep->execute();
+			return $prep->execute();
 		} catch (Exception $e) {
 			return false;
 		}
 	}
 	
-
+	public function addCancelation($data)
+	{
+		try {
+			$reservation_id = (int) $data['reservationId'];
+				
+			$query = 'INSERT INTO cancelations
+					SELECT * FROM reservations
+					WHERE reservation_id = '.$reservation_id;
+				
+			if ($this->db->run($query))
+			{
+				return $this->deleteReservation($reservation_id);
+			}
+			
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function deleteReservation($reservationId)
+	{
+		try {
+			$reservationId = (int) $reservationId;
+			
+			$query = 'DELETE 
+					FROM reservations 
+					WHERE reservation_id = '.$reservationId;
+			
+			return $this->db->run($query);
+			
+		} catch (Exception $e) {
+			return false;
+		}
+	}
 }
 
 

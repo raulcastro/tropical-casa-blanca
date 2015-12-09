@@ -1,16 +1,39 @@
 <?php
 $root = $_SERVER['DOCUMENT_ROOT'].'/';
+
+/**
+ * Includes the file /models/front/Layout_Model.php
+ * in order to interact with the database
+ */
 require_once $root.'models/back/Layout_Model.php';
 
+/**
+ * Contains the classes for access to the basic app after log-in
+ *
+ * @package    Reservation System
+ * @subpackage Tropical Casa Blanca Hotel
+ * @license    http://opensource.org/licenses/gpl-license.php  GNU Public License
+ * @author     Raul Castro <rd.castro.silva@gmail.com>
+ */
 class generalBackend
 {
 	protected  $model;
+	
+	/**
+	 * Initialize a class, the model one
+	 */
 	
 	public function __construct()
 	{
 		$this->model = new Layout_Model();
 	}
 	
+	/**
+	 * Based on the section it returns the right info that could be propagated along the application
+	 *
+	 * @param string $section
+	 * @return array Array with the asked info of the application
+	 */
 	public function loadBackend($section = '')
 	{
 		$data 		= array();
@@ -44,16 +67,16 @@ class generalBackend
 		$data['appInfo'] = $appInfo;
 
 		// Active Users
-		$usersActiceArray 		= $this->model->getActiveUsers();
-		$data['usersActive'] 	= $usersActiceArray;
+		$usersActiceArray 			= $this->model->getActiveUsers();
+		$data['usersActive'] 		= $usersActiceArray;
 		
 		// User Info
-		$userInfoRow 		= $this->model->getUserInfo();
-		$data['userInfo'] 	= $userInfoRow;
+		$userInfoRow 				= $this->model->getUserInfo();
+		$data['userInfo'] 			= $userInfoRow;
 		
 		// Last 20 members
-		$lastMembersArray 		= $this->model->getLastMembers();
-		$data['lastMembers'] 	= $lastMembersArray;
+		$lastMembersArray 			= $this->model->getLastMembers();
+		$data['lastMembers'] 		= $lastMembersArray;
 		
 		// Task Info
 		$data['taskInfo']['today'] 		= $this->model->getTotalTodayTasksByMemberId();
@@ -70,14 +93,7 @@ class generalBackend
 				$data['companies'] 	= $companiesArray;
 			break;
 			
-			
 			case 'add-member':
-				// 		get all countries
-				$countriesArray 	= $this->model->getAllCountries();
-				$data['countries'] 	= $countriesArray;
-			break;
-			
-			case 'add-broker':
 				// 		get all countries
 				$countriesArray 	= $this->model->getAllCountries();
 				$data['countries'] 	= $countriesArray;
@@ -113,7 +129,6 @@ class generalBackend
 				
 // 				Reservations
 				$memberReservationsArray 	= $this->model->getMemberReservationsByMemberId($memberId);
-// 				$data['memberReservations'] = $memberReservationsArray;
 				
 				$data['memberReservations'] = array();
 				
@@ -147,31 +162,52 @@ class generalBackend
 					array_push($data['memberReservations'], $reservationInfo);
 				}
 				
+				// 				Cancelations
+				$memberReservationsArray 	= $this->model->getMemberCancelationsByMemberId($memberId);
+				
+				foreach ($memberReservationsArray as $reservation)
+				{
+					$grandTotal = $this->model->getReservationGrandTotalByReservationId($reservation['reservation_id']);
+					$paid 		= $this->model->getReservationPaidByReservationId($reservation['reservation_id']);
+					$unpaid 	= $this->model->getReservationUnpaidByReservationId($reservation['reservation_id']);
+						
+					$reservationInfo = array(
+							'reservation_id'	=> $reservation['reservation_id'],
+							'room_id' 		=> $reservation['room_id'],
+							'date'			=> $reservation['date'],
+							'check_in' 		=> $reservation['check_in'],
+							'check_out' 	=> $reservation['check_out'],
+							'check_mask'	=> $reservation['check_mask'],
+							'room' 			=> $reservation['room'],
+							'room_type' 	=> $reservation['room_type'],
+							'adults' 		=> $reservation['adults'],
+							'children' 		=> $reservation['children'],
+							'agency' 		=> $reservation['agency'],
+							'external_id' 	=> $reservation['external_id'],
+							'status' 		=> 5,
+							'grandTotal' 	=> $grandTotal,
+							'paid' 			=> $paid,
+							'unpaid' 		=> $unpaid
+					);
+						
+					$payments['payments'] = $this->model->getPaymentsByReservationId($reservation['reservation_id']);
+					array_push($reservationInfo, $payments);
+					array_push($data['memberReservations'], $reservationInfo);
+				}
+				
 // 				Agencies
 				$agenciesArray 		= $this->model->getAgencies();
 				$data['agencies'] 	= $agenciesArray;
 				
 			break;
 			
-			case 'tasks':
-				if ($data['userInfo']['type'] == 1)
-					$memberTasksArray	= $this->model->getAllMemberTasks();
-				else
-					$memberTasksArray	= $this->model->getAllTasksByUser();
-				
-				$data['memberTasks'] 	= $memberTasksArray;
+// 			Reservations
+			case 'reservations':
+				$agenciesArray 		= $this->model->getAgencies();
+				$data['agencies'] 	= $agenciesArray;
 			break;
 			
-			case 'email':
-				$inbox = $this->email->getMessagesByAccount($data['userInfo']['user_email']);
-				$data['email']['inbox'] = $inbox;
-			break;
-			
-			case 'calendar':
-				$calendarArray 			= $this->model->getAllReservations();
-				$data['reservations'] 	= $calendarArray;
-			break;
-			
+// 			Rooms
 			case 'rooms':
 				$roomsArray 	= $this->model->getAllRooms();
 				$data['rooms'] 	= array();
@@ -182,21 +218,33 @@ class generalBackend
 							'room' 		=> $room['room'],
 							'abbr' 		=> $room['abbr']
 					);
-					
+						
 					$reservations['reservations'] = $this->model->getReservationsByRoomId($room['room_id']);
 					array_push($roomInfo, $reservations);
 					array_push($data['rooms'], $roomInfo);
 				}
 			break;
 			
+// 			Calendar
+			case 'calendar':
+				$calendarArray 			= $this->model->getAllReservations();
+				$data['reservations'] 	= $calendarArray;
+			break;
+					
+// 			Agencias
 			case 'agencies':
 				$agenciesArray 		= $this->model->getAgencies();
-				$data['agencies'] 	= $agenciesArray;		
-			break; 
-						
-			case 'reservations':
-				$agenciesArray 		= $this->model->getAgencies();
 				$data['agencies'] 	= $agenciesArray;
+			break;
+			
+// 			Tasks
+			case 'tasks':
+				if ($data['userInfo']['type'] == 1)
+					$memberTasksArray	= $this->model->getAllMemberTasks();
+				else
+					$memberTasksArray	= $this->model->getAllTasksByUser();
+				
+				$data['memberTasks'] 	= $memberTasksArray;
 			break;
 			
 			default:

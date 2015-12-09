@@ -273,7 +273,7 @@ body {
 
 .task-list li {
 	padding: 10px !important;
-	background: #f5f6f8;
+	background: #f5f6f8!important;
 	margin-bottom: 2px;
 	border-bottom: none !important;
 	
@@ -1053,6 +1053,11 @@ ul.inbox-pagination li {
 	background: #FF9900!important;	
 }
 
+.canceled {
+	/**background: #d6543f!important;**/
+	background: #f56260!important;	
+}
+
 .confirmed {
 	background: #17CCF9!important;	
 }
@@ -1065,6 +1070,9 @@ ul.inbox-pagination li {
 	background: #2097D8!important;	
 }
  
+.canceled-reservation div a, .canceled-reservation div, .canceled-reservation button, .canceled-reservation input {
+	text-decoration: line-through;
+}
 
  
  
