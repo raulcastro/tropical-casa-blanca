@@ -138,6 +138,9 @@ class generalBackend
 					$paid 		= $this->model->getReservationPaidByReservationId($reservation['reservation_id']);
 					$unpaid 	= $this->model->getReservationUnpaidByReservationId($reservation['reservation_id']);
 					
+					$reservationDate 	= array('checkIn' => $reservation['check_in'], 'checkOut' => $reservation['check_out']);
+					$availableRooms 	= $this->model->searchRooms($reservationDate);
+					
 					$reservationInfo = array(
 							'reservation_id'	=> $reservation['reservation_id'],
 							'room_id' 		=> $reservation['room_id'],
@@ -154,8 +157,11 @@ class generalBackend
 							'status' 		=> $reservation['status'],
 							'grandTotal' 	=> $grandTotal,
 							'paid' 			=> $paid,
-							'unpaid' 		=> $unpaid
+							'unpaid' 		=> $unpaid,
+							'availableRooms'=>$availableRooms
 					);
+					
+					
 					
 					$payments['payments'] = $this->model->getPaymentsByReservationId($reservation['reservation_id']);
 					array_push($reservationInfo, $payments);
@@ -189,11 +195,17 @@ class generalBackend
 							'paid' 			=> $paid,
 							'unpaid' 		=> $unpaid
 					);
-						
+					$reservationDate = array('checkIn' => $reservation['check_in'], 'checkOut' => $reservation['check_out']);
+					$availableRooms['availableRooms'] = $this->model->searchRooms($reservationDate);
+					array_push($data['memberReservations'], $availableRooms);
+					
 					$payments['payments'] = $this->model->getPaymentsByReservationId($reservation['reservation_id']);
 					array_push($reservationInfo, $payments);
+					
 					array_push($data['memberReservations'], $reservationInfo);
 				}
+				
+// 				/Cancelations
 				
 // 				Agencies
 				$agenciesArray 		= $this->model->getAgencies();

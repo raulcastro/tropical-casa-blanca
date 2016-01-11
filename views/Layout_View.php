@@ -675,12 +675,13 @@ class Layout_View
 	if ($this->data['memberReservations'])
 		foreach ($this->data['memberReservations'] as $reservation)
 		{
+			if ($reservation['status'] != 5)
+			{
 	?>
-			$( "#dateBoxCheckIn-<?php echo $reservation['reservation_id']; ?>").datepicker({defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_in']); ?>")});
-			
+				$( "#dateBoxCheckIn-<?php echo $reservation['reservation_id']; ?>").datepicker({defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_in']); ?>")});
+				$( "#dateBoxCheckOut-<?php echo $reservation['reservation_id']; ?>").datepicker({defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_mask']); ?>")});
 	<?php 
-	
-//			 				echo $this->getMemberReservationItem($reservation);
+   			}
 		}
 	?>
 			});
@@ -1254,6 +1255,7 @@ class Layout_View
    				<div class="col-sm-2">Check-Out</div>
    				<div class="col-sm-2">Room</div>
    				<div class="col-sm-2">Room Type</div>
+   				<div class="col-sm-2">Reservation ID</div>
    			</div>
    				
    			<div class="row info">
@@ -1261,24 +1263,24 @@ class Layout_View
    				<!-- <div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_in']); ?></strong></div>
    				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_mask']); ?></strong></div> -->
    				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_in']); ?>"> </strong></div>
-   				<div class="col-sm-2"><strong><input type="text" value="<?php echo Tools::formatMYSQLToFront($data['check_mask']); ?>"> </strong></div>
+   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_mask']); ?>"> </strong></div>
    				<!-- <div class="col-sm-2"><strong><?php echo $data['room']; ?></strong></div> -->
    				<div class="col-sm-2">
    					<select>
+   						<option selected><?php echo $data['room']; ?></option>
    						<?php 
-   						foreach ($this->data['rooms'] as $room)
+   						foreach ($data['availableRooms'] as $room)
    						{
-   							$selected = '';
    							if ($room['room'] == $data['room'])
-   								$selected = 'selected';
    							?>
-   							<option <?php echo $selected; ?>><?php echo $room['room']; ?></option>
+   							<option><?php echo $room['room']; ?></option>
    							<?php
    						}
    						?>
    					</select>
    				</div>
    				<div class="col-sm-2"><strong><?php echo $data['room_type']; ?></strong></div>
+   				<div class="col-sm-2"><strong><?php echo $data['reservation_id']; ?></strong></div>
    			</div>
    				
    			<div class="row extra">

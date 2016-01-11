@@ -335,8 +335,13 @@ class Tools
     {
         if ($date)
         {
-            $date = explode('/', $date);
-            $date = $date[2].'-'.$date[0].'-'.$date[1];
+			if (sizeof(explode('/', $date)) > 1)
+			{
+				$date = explode('/', $date);
+				echo "here";
+           		$date = $date[2].'-'.$date[0].'-'.$date[1];
+			}   
+			
             return $date;
         }
     }

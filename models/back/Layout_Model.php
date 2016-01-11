@@ -733,7 +733,7 @@ class Layout_Model
 	/**
 	 * searchRooms
 	 * 
-	 * Execute a search for available rooms
+	 * Execute a search for available rooms depending on check-in & check-out
 	 * 
 	 * @param array $data
 	 * @return multitype:a list of available rooms | false on fail
@@ -755,7 +755,7 @@ class Layout_Model
 			OR (check_in >= "'.$checkIn.'" AND check_out <= "'.$checkOut.'"))
 			ORDER BY r.room_order ASC		
 			;';
-			
+// 			echo $query;
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -889,6 +889,14 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * getMemberCancelationsByMemberId
+	 *
+	 * it gets all the reservation canceled related to a member
+	 *
+	 * @param int $memberId
+	 * @return array on success | false on fail
+	 */
 	public function getMemberCancelationsByMemberId($memberId)
 	{
 		$memberId = (int) $memberId;
