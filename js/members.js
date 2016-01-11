@@ -123,12 +123,13 @@ function saveMember()
         	{
         		$('#member-id').val(info);
         		saveMemberEmails();
-        		saveMemberPhones();
+        		
     			$('.alert-autocloseable-success').show();
 
     			$('.alert-autocloseable-success').delay(3000).fadeOut( "slow", function() {
     				// Animation complete.
     			});
+    			saveMemberPhones();
         		
         	}else
 			{

@@ -519,6 +519,9 @@ function addReservationMemberPanel()
 	            if (0 != xml)
 	            {
 	            	$('#memberReservations').html(xml);
+	            	alert('Reservation successfully added.');
+	            	$('#reservationResults').hide();
+	            	$('#rightSideReservations').hide();
 //	            	$('#memberId').val(xml);
 //	            	addReservation();
 //	            	$('#completeProfileBtn').show();

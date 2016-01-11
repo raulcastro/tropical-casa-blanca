@@ -403,12 +403,12 @@ class Layout_View
    		<div class="col-sm-2 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
 				<li <?php if ($_GET['section'] == 1) echo $active; ?>><a href="/dashboard/">Dashboard</a></li>
-				<li <?php if ($_GET['section'] == 12) echo $active; ?>><a href="/reservations/">Reservations</a></li>
+				<li <?php if ($_GET['section'] == 12) echo $active; ?>><a href="/reservations/">Add Reservation</a></li>
 			</ul>
 			
 			<ul class="nav nav-sidebar">
 				<li <?php if ($_GET['section'] == 13) echo $active; ?>><a href="/rooms/">Rooms</a></li>
-				<li <?php if ($_GET['section'] == 11) echo $active; ?>><a href="/calendar/">Calendar</a></li>
+				<!-- <li <?php if ($_GET['section'] == 11) echo $active; ?>><a href="/calendar/">Calendar</a></li> -->
 				<li <?php if ($_GET['section'] == 5) echo $active; ?>><a href="/agencies/">Agencies</a></li>
 			</ul>
 		</div>
@@ -669,8 +669,23 @@ class Layout_View
 		<script>
 		$(function() {
 			$( "#task-date, #checkIn, #checkOut" ).datepicker();
+
+	<?php 
+					
+	if ($this->data['memberReservations'])
+		foreach ($this->data['memberReservations'] as $reservation)
+		{
+	?>
+			$( "#dateBoxCheckIn-<?php echo $reservation['reservation_id']; ?>").datepicker({defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_in']); ?>")});
+			
+	<?php 
+	
+//			 				echo $this->getMemberReservationItem($reservation);
+		}
+	?>
 			});
 		</script>
+		
 		<?php
 		$signIn = ob_get_contents();
 		ob_end_clean();
@@ -893,7 +908,7 @@ class Layout_View
 
 		<div class="row">
 			<div class="alert alert-success alert-autocloseable-success">
-        		<i class="glyphicon glyphicon-ok"></i> Guest saved
+        		<i class="glyphicon glyphicon-ok"></i> The info was sucessfully updated
 			</div>
 		</div>
 
@@ -1243,9 +1258,26 @@ class Layout_View
    				
    			<div class="row info">
    				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['date']); ?></div>
-   				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_in']); ?></strong></div>
-   				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_mask']); ?></strong></div>
-   				<div class="col-sm-2"><strong><?php echo $data['room']; ?></strong></div>
+   				<!-- <div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_in']); ?></strong></div>
+   				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_mask']); ?></strong></div> -->
+   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_in']); ?>"> </strong></div>
+   				<div class="col-sm-2"><strong><input type="text" value="<?php echo Tools::formatMYSQLToFront($data['check_mask']); ?>"> </strong></div>
+   				<!-- <div class="col-sm-2"><strong><?php echo $data['room']; ?></strong></div> -->
+   				<div class="col-sm-2">
+   					<select>
+   						<?php 
+   						foreach ($this->data['rooms'] as $room)
+   						{
+   							$selected = '';
+   							if ($room['room'] == $data['room'])
+   								$selected = 'selected';
+   							?>
+   							<option <?php echo $selected; ?>><?php echo $room['room']; ?></option>
+   							<?php
+   						}
+   						?>
+   					</select>
+   				</div>
    				<div class="col-sm-2"><strong><?php echo $data['room_type']; ?></strong></div>
    			</div>
    				
@@ -1282,7 +1314,7 @@ class Layout_View
    			
    			<div class="row-extra">
    				<div class="col-sm-3">Paid: <strong id="payment-paid-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['paid']; ?></strong></div>
-   				<div class="col-sm-3">Pending: <strong id="payment-pending-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['unpaid']; ?></strong></div>
+   				<div class="col-sm-3 pending-highlight">Pending: <strong id="payment-pending-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['unpaid']; ?></strong></div>
    			</div>
    			
    			<div class="clearfix"></div>
@@ -1373,7 +1405,6 @@ class Layout_View
    				<?php
 	   			} 
    				?>
-	   			
 	   		</div>
    		</div>
  		<?php
@@ -1664,7 +1695,6 @@ class Layout_View
 						<p><?php echo $room['room'].' - '.$room['abbr']; ?></p>
 					</div>
 						<?php
-						
 					}
    						
 					if (!$_GET['from'])
@@ -1714,7 +1744,10 @@ class Layout_View
 			<div class="col-sm-10">
 				<div class="row">
 					<div class="row status-bar ">
-						<div class="row col-sm-9"></div>
+						<div class="row col-sm-9">
+							<a href="javascript: void(0);">Week</a>
+							<a href="javascript: void(0);">Month</a>
+						</div>
 						<div class="row col-sm-3">
 							<a href="/rooms/from/<?php echo $day['prev']; ?>/">&laquo; Previus</a>
 							<a href="/rooms/">Today</a>
@@ -2076,7 +2109,6 @@ class Layout_View
 	 * 
 	 * @return string
 	 */
-   		
 	public function getAgencies()
 	{
 		ob_start();

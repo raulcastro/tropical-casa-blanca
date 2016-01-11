@@ -199,6 +199,20 @@ class generalBackend
 				$agenciesArray 		= $this->model->getAgencies();
 				$data['agencies'] 	= $agenciesArray;
 				
+// 				Rooms
+				$roomsArray 	= $this->model->getAllRooms();
+				$data['rooms'] 	= array();
+				foreach ($roomsArray as $room)
+				{
+					$roomInfo = array(
+							'room_id'	=> $room['room_id'],
+							'room' 		=> $room['room'],
+							'abbr' 		=> $room['abbr']
+					);
+				
+					array_push($data['rooms'], $roomInfo);
+				}
+				
 			break;
 			
 // 			Reservations

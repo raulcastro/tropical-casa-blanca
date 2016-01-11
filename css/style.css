@@ -1074,7 +1074,10 @@ ul.inbox-pagination li {
 	text-decoration: line-through;
 }
 
- 
+.pending-highlight {
+	color: #f56260!important;
+	text-transform: uppercase;
+} 
  
  
  
