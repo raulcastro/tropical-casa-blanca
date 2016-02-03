@@ -743,7 +743,6 @@ class Layout_Model
 		$checkIn 	= Tools::formatToMYSQL($data['checkIn']);
 		$checkOut 	= Tools::formatToMYSQL($data['checkOut']);
 	
-		$member_id = (int) $data['memberId'];
 		try {
 			$query = 'SELECT r.*, rt.room_type_id, rt.room_type
 			FROM rooms r
@@ -756,6 +755,40 @@ class Layout_Model
 			ORDER BY r.room_order ASC		
 			;';
 // 			echo $query;
+			return $this->db->getArray($query);
+		} catch (Exception $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+	
+	/**
+	 * searchRooms
+	 *
+	 * Execute a search for the availability of a singles specific room, according to check in and check out date
+	 *
+	 * @param array $data
+	 * @return multitype:a list of available rooms | false on fail
+	 */
+	public function searchSingleRoom($data)
+	{
+		$checkIn 	= Tools::formatToMYSQL($data['checkIn']);
+		$checkOut 	= Tools::formatToMYSQL($data['checkOut']);
+	
+		$room_id = (int) $data['roomId'];
+		try {
+			$query = 'SELECT r.*, rt.room_type_id, rt.room_type
+			FROM rooms r
+			LEFT JOIN room_types rt ON r.room_type_id = rt.room_type_id
+			WHERE r.room_id NOT IN (SELECT room_id
+			FROM reservations
+			WHERE (check_in <= "'.$checkIn.'" AND check_out >="'.$checkIn.'")
+			OR (check_in <= "'.$checkOut.'" AND check_out >="'.$checkOut.'")
+			OR (check_in >= "'.$checkIn.'" AND check_out <= "'.$checkOut.'"))
+			AND r.room_id = '.$data['roomId'].'
+			ORDER BY r.room_order ASC
+			;';
+			echo $query;
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -949,6 +982,29 @@ class Layout_Model
 					ORDER BY r.room_order ASC
 					';
 			return $this->db->getArray($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * getSingleRoomById
+	 *
+	 * Return the info a single room by a given room id
+	 *
+	 * @return multitype:unknown |boolean
+	 */
+	
+	public function getSingleRoomById($roomId)
+	{
+		try {
+			$roomId = (int) $roomId;
+			$query = 'SELECT r.*, rt.room_type, rt.abbr
+					FROM rooms r
+					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
+					WHERE r.room_id = '.$roomId.'
+					';
+			return $this->db->getRow($query);
 		} catch (Exception $e) {
 			return false;
 		}

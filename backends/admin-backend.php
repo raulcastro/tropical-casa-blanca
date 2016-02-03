@@ -67,8 +67,8 @@ class generalBackend
 		$data['appInfo'] = $appInfo;
 
 		// Active Users
-		$usersActiceArray 			= $this->model->getActiveUsers();
-		$data['usersActive'] 		= $usersActiceArray;
+		$usersActiveArray 			= $this->model->getActiveUsers();
+		$data['usersActive'] 		= $usersActiveArray;
 		
 		// User Info
 		$userInfoRow 				= $this->model->getUserInfo();
@@ -106,10 +106,14 @@ class generalBackend
 			break;
 			
 			case 'member-info':
-				$memberId = (int) $_GET['memberId'];
+				$memberId 				= (int) $_GET['memberId'];
 				
-				$memberInfoRow 		= $this->model->getMemberByMemberId($memberId);
-				$data['memberInfo'] = $memberInfoRow;
+				// 		get all countries
+				$countriesArray 		= $this->model->getAllCountries();
+				$data['countries'] 		= $countriesArray;
+				
+				$memberInfoRow 			= $this->model->getMemberByMemberId($memberId);
+				$data['memberInfo'] 	= $memberInfoRow;
 				
 // 				Emails
 				$memberEmailsArray  	= $this->model->getMemberEmailsById($memberId);

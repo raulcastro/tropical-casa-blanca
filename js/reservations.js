@@ -558,3 +558,48 @@ function updateMemberReservation(reservationId)
 	    });
 	}
 }
+
+function updateAvailableRooms(resId)
+{
+	var checkInDate 	= $('#dateBoxCheckIn-'+resId).datepicker("getDate");
+	var checkIn			= $.datepicker.formatDate('mm/dd/yy', checkInDate);
+	
+	var checkOutDate	= $('#dateBoxCheckOut-'+resId).datepicker("getDate");
+	var checkOut		= $.datepicker.formatDate('mm/dd/yy', checkOutDate); 
+	
+	$('#availableRoomsSelect-'+resId+' option').remove();
+	var loadingOption  = '<option selected>Loading Rooms ... </option>';
+	$('#availableRoomsSelect-'+resId).append(loadingOption);
+	
+	var roomId 			= $('#currentRoomId-'+resId).val();
+	var currentCheckIn 	= $('#currentCheckIn-'+resId).val();
+	var currentCheckOut = $('#currentCheckOut-'+resId).val();
+	
+//	alert(checkIn);
+	if (checkIn && checkOut )
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{
+	        	roomId: 			roomId,
+	        	currentCheckIn: 	currentCheckIn,
+	        	currentCheckOut: 	currentCheckOut,
+	        	checkIn: 			checkIn,
+				checkOut: 			checkOut,
+	            opt: 				14
+	             },
+	        success:
+	        function(roomsAvailableList)
+	        {
+	            if (0 != roomsAvailableList)
+	            {
+	            	//alert(roomsAvailableList);
+	            	$('#availableRoomsSelect-'+resId+' option').remove();
+	            	$('#availableRoomsSelect-'+resId).append(roomsAvailableList);
+	            }
+	        }
+	    });
+	}
+	
+}

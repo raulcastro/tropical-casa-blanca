@@ -121,10 +121,12 @@ switch ($_POST['opt'])
 		
 	break;
 	
+	// Reservation grand total
 	case 7:
 		if ($grandTotal = $model->getReservationGrandTotalByReservationId($_POST['reservationId']))
 			echo $grandTotal;
 	break;
+	
 	
 	case 8:
 		if ($grandTotal = $model->getReservationPaidByReservationId($_POST['reservationId']))
@@ -168,6 +170,70 @@ switch ($_POST['opt'])
 			echo '0';
 	break;
 	
+	case 14: // Get the available rooms according to a date-range and returns an html <options> elements
+		$roomId 			= $_POST['roomId'];
+		$currentCheckIn 	= Tools::formatToMYSQL($_POST['currentCheckIn']);
+		$currentCheckOut 	= Tools::formatToMYSQL($_POST['currentCheckOut']);
+		$checkIn 			= Tools::formatToMYSQL($_POST['checkIn']);
+		$checkOut 			= Tools::formatToMYSQL($_POST['checkOut']);
+		
+		$current 	= array($currentCheckIn, $currentCheckOut);
+		$needed 	= array($checkIn, $checkOut);
+		
+		$currentMin = new DateTime(min($current));
+		$currentMax = new DateTime(max($current));
+		
+		$neededMin = new DateTime(min($needed));
+		$neededMax = new DateTime(max($needed));
+		
+// 		into the current date, they want a minumun range than current
+// 		---------
+// 		 -------
+		if ($neededMin >= $currentMin && $neededMax <= $currentMax)
+		{
+			$currentRoom = $model->getSingleRoomById($roomId);
+			?>
+			<option selected><?php echo $currentRoom['room']; ?></option>
+			<?php 
+		}
+		
+// 		if the needed check-out is bigger than the current check out but the needed check in is in the current range
+// 		--------
+// 			-------
+
+		if ($neededMax > $currentMax)
+		{
+			if ($neededMin >= $currentMin && $neededMin <= $currentMax)
+			{
+				$info = array('roomId' => $roomId, 'checkIn'=>$_POST['currentCheckOut'], 'checkOut'=>$checkOut);
+				var_dump($info);
+				$currentRoom;
+			}
+		}
+		
+		if ($rooms = $model->searchRooms($_POST))
+		{
+			foreach ($rooms as $room)
+   			{
+	   			?>
+	   			<option><?php echo $room['room']; ?></option>
+	   			<?php
+	   		}
+		}
+		
+
+	break;
+	// 		var_dump($_POST);
+	
+	// 		if ($rooms = $model->searchRooms($_POST))
+		// 		{
+		// 			foreach ($rooms as $room)
+			//    			{
+	//    			?>
+	   				<option><?php echo $room['room']; ?></option>
+	   			<?php
+	//    			}
+	// 		}
 	default:
 	break;
 }

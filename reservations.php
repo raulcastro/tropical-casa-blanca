@@ -12,6 +12,6 @@
 
 	$data 	= $backend->loadBackend($section);
 	
-	$view 	= new Layout_View($data, 'Reservations');
+	$view 	= new Layout_View($data, 'New reservation');
 	
 	echo $view->printHTMLPage('reservations');

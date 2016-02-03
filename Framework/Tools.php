@@ -333,15 +333,15 @@ class Tools
 	 */
     public static function formatToMYSQL($date)
     {
+//     	echo "from ".$date;
         if ($date)
         {
 			if (sizeof(explode('/', $date)) > 1)
 			{
 				$date = explode('/', $date);
-				echo "here";
            		$date = $date[2].'-'.$date[0].'-'.$date[1];
 			}   
-			
+// 			echo " to ".$date.' <br>';
             return $date;
         }
     }
@@ -363,6 +363,22 @@ class Tools
     public static  function formatHourMYSQLToFront($hour)
     {
     		return @date('h:i A', strtotime($hour));
+    }
+    
+    public static function formatMySQLtoJS($date)
+    {
+    	//     	echo "from ".$date;
+//     	2016-01-10
+    	if ($date)
+    	{
+    		if (sizeof(explode('-', $date)) > 1)
+    		{
+    			$date = explode('-', $date);
+    			$date = $date[1].'/'.$date[2].'/'.$date[0];
+    		}
+    		// 			echo " to ".$date.' <br>';
+    		return $date;
+    	}   	
     }
     
     /**

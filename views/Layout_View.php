@@ -86,7 +86,8 @@ class Layout_View
 			<link rel='canonical' href="<?php echo $this->data['appInfo']['url']; ?>" />
 			<?php echo self::getCommonDocuments(); ?>			
 			<?php 
-			switch ($section) {
+			switch ($section) 
+			{
 				case 'sign-in':
  					echo self :: getSignInHead();
 				break;
@@ -403,7 +404,7 @@ class Layout_View
    		<div class="col-sm-2 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
 				<li <?php if ($_GET['section'] == 1) echo $active; ?>><a href="/dashboard/">Dashboard</a></li>
-				<li <?php if ($_GET['section'] == 12) echo $active; ?>><a href="/reservations/">Add Reservation</a></li>
+				<li <?php if ($_GET['section'] == 12) echo $active; ?>><a href="/reservations/">New Reservation</a></li>
 			</ul>
 			
 			<ul class="nav nav-sidebar">
@@ -578,11 +579,11 @@ class Layout_View
    							?>
    							<th>Added by</th>
    							<?php 
-   							} else {
+   						} else {
    							?>
    							<th>Address</th>
    							 <?php 
-   							}
+   						}
    						?>
    						<th>City</th>
    						<th>State</th>
@@ -678,8 +679,24 @@ class Layout_View
 			if ($reservation['status'] != 5)
 			{
 	?>
-				$( "#dateBoxCheckIn-<?php echo $reservation['reservation_id']; ?>").datepicker({defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_in']); ?>")});
-				$( "#dateBoxCheckOut-<?php echo $reservation['reservation_id']; ?>").datepicker({defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_mask']); ?>")});
+				$( "#dateBoxCheckIn-<?php echo $reservation['reservation_id']; ?>").datepicker(
+					{
+						defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_in']); ?>"),
+						onSelect: function()
+						{
+							updateAvailableRooms("<?php echo $reservation['reservation_id']; ?>");
+						}
+					}
+				);
+				$( "#dateBoxCheckOut-<?php echo $reservation['reservation_id']; ?>").datepicker(
+					{
+						defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_mask']); ?>"),
+						onSelect: function()
+						{
+							updateAvailableRooms("<?php echo $reservation['reservation_id']; ?>");
+						}
+					}
+				);
 	<?php 
    			}
 		}
@@ -1259,19 +1276,20 @@ class Layout_View
    			</div>
    				
    			<div class="row info">
+<!--    				Current info about rooms -->
+   				<input type="hidden" id="currentRoomId-<?php echo $data['reservation_id']; ?>" value="<?php echo $data['room_id']; ?>" />
+   				<input type="hidden" id="currentCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMySQLtoJS($data['check_in']); ?>" />
+   				<input type="hidden" id="currentCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMySQLtoJS($data['check_mask']); ?>" />
+   				
    				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['date']); ?></div>
-   				<!-- <div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_in']); ?></strong></div>
-   				<div class="col-sm-2"><strong><?php echo Tools::formatMYSQLToFront($data['check_mask']); ?></strong></div> -->
-   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_in']); ?>"> </strong></div>
+   				<div class="col-sm-2"><strong><input type="text" resId="you mama" id="dateBoxCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_in']); ?>"> </strong></div>
    				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_mask']); ?>"> </strong></div>
-   				<!-- <div class="col-sm-2"><strong><?php echo $data['room']; ?></strong></div> -->
    				<div class="col-sm-2">
-   					<select>
+   					<select id="availableRoomsSelect-<?php echo $data['reservation_id']; ?>">
    						<option selected><?php echo $data['room']; ?></option>
    						<?php 
    						foreach ($data['availableRooms'] as $room)
    						{
-   							if ($room['room'] == $data['room'])
    							?>
    							<option><?php echo $room['room']; ?></option>
    							<?php
