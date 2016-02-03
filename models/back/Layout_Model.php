@@ -222,36 +222,17 @@ class Layout_Model
 		}
 	}
 	
-	public function addMember($data)
-	{
-		try {
-			$query = 'INSERT INTO members(name, user_id, last_name, address, city, state, country, notes, active, date)
-						VALUES(?, '.$_SESSION["userId"].', ?, ?, ?, ?, ?, ?, 1, CURDATE());';
-			
-			$prep = $this->db->prepare($query);
-			
-			$prep->bind_param('sssssss',
-					$data['memberName'],
-					$data['memberLastName'],
-					$data['memberAddress'],
-					$data['city'],
-					$data['mState'],
-					$data['country'],
-					$data['notes']);
-			
-			if ($prep->execute())
-			{
-				return $prep->insert_id;
-			}
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-	
 	public function updateMember($data)
 	{
 		try {
-			$query = 'UPDATE members SET name = ?, last_name = ?, address = ?, city = ?, state = ?, country = ?, notes = ?
+			$query = 'UPDATE members 
+					SET name 	= ?, 
+					last_name 	= ?, 
+					address 	= ?, 
+					city 		= ?, 
+					state 		= ?, 
+					country 	= ?, 
+					notes 		= ?
 					WHERE member_id = ?';
 			
 			$prep = $this->db->prepare($query);
@@ -300,6 +281,24 @@ class Layout_Model
 		}
 	}
 	
+	public function updateMemberEmail($data)
+	{
+		try {
+			$query = 'UPDATE member_emails 
+					SET email = ? 
+					WHERE email_id = ?';
+			
+			$prep = $this->db->prepare($query);
+			
+			$prep->bind_param('si', $data['emailVal'], $data['emailId']);
+			
+			return $prep->execute();
+			
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	public function addMemberPhone($data)
 	{
 		try
@@ -321,6 +320,25 @@ class Layout_Model
 		}
 	}
 	
+	public function updateMemberPhone($data)
+	{
+		try {
+			$query = 'UPDATE member_phones 
+					SET phone = ? 
+					WHERE phone_id = ?';
+			
+			$prep = $this->db->prepare($query);
+			$prep->bind_param('si', 
+					$data['phoneVal'], 
+					$data['phoneId']);
+			
+			return $prep->execute();
+			
+		} catch (Exception $e) {
+			printf("Errormessage: %s\n", $prep->error);
+		}
+	}
+	
 	public function getMemberByMemberId($memberId)
 	{
 		try {
@@ -338,7 +356,10 @@ class Layout_Model
 	public function getMemberEmailsById($memberId)
 	{
 		try {
-			$query = 'SELECT * FROM member_emails WHERE member_id = '.$memberId;
+			$query = 'SELECT * 
+					FROM member_emails 
+					WHERE member_id = '.$memberId;
+			
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
 			return false;
@@ -644,16 +665,6 @@ class Layout_Model
 		}
 	}
 	
-	public function getRecentBrokers()
-	{
-		try {
-			$query = 'SELECT COUNT(*) FROM brokers WHERE date = CURDATE() AND user_id = '.$_SESSION['userId'];
-			return $this->db->getValue($query);
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-	
 	public function completeTask($task_id)
 	{
 		try {
@@ -877,8 +888,6 @@ class Layout_Model
 			return false;
 		}
 	}
-	
-	
 	
 	/**
 	 * getMemberReservationByMemberId

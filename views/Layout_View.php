@@ -799,7 +799,6 @@ class Layout_View
 							</div>
 						</div>
 						<input type="hidden" id="city" value="<?php echo $this->data['memberInfo']['city']; ?>" />
-					
 					</fieldset>
 				</form>
 			</div><!-- /.col-lg-12 -->
@@ -827,7 +826,7 @@ class Layout_View
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="textinput">Email</label>
 								<div class="col-sm-9">
-									<input type="text" placeholder="Email" class="form-control memberEmail" eid="0" value="<?php echo $email['email']; ?>">
+									<input type="text" placeholder="Email" class="form-control memberEmail" eid="<?php echo $email['email_id']; ?>" value="<?php echo $email['email']; ?>">
 								</div>
 							</div>	
 								<?php
@@ -856,7 +855,7 @@ class Layout_View
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="textinput">Phone</label>
 								<div class="col-sm-9">
-									<input type="text" placeholder="Phone" class="form-control memberPhone" pid="0" value="<?php echo $phone['phone']; ?>">
+									<input type="text" placeholder="Phone" class="form-control memberPhone" pid="<?php echo $phone['phone_id']; ?>" value="<?php echo $phone['phone']; ?>">
 								</div>
 							</div>	
 								<?php
@@ -2000,78 +1999,6 @@ class Layout_View
    	   	return $rooms; 
    	}
 
-	/**
-	 * extra files for the calendar section
-	 * 
-	 * also it iniatialize the script for the calendar
-	 * 
-	 * @return string
-	 */
-   	public function getCalendarHead()
-   	{
-   		ob_start();
-   		?>
-   		<link href='/js/calendar/fullcalendar.css' rel='stylesheet' />
-   		<link href='/js/calendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-   		<script src='/js/calendar/lib/moment.min.js'></script>
-   		<script src='/js/calendar/fullcalendar.js'></script>
-   		<script>
-   			$(document).ready(function() {
-				$('#fullcalendar').fullCalendar({
-   					header: {
-   						left: 'prev,next today',
-   						center: 'title',
-   						right: 'month,agendaWeek,agendaDay'
-   					},
-  					editable: true,
-   					eventLimit: true, // allow "more" link when too many events
-   					events: [
-   		   				<?php
-   		   				$c = 0;
-   		   					
-   		   				foreach ($this->data['reservations'] as $reservation)
-   		   				{
-   		   					$c++;
-   		   					?>
-	   		   				{
-		   		   				id: <?php echo $reservation['reservation_id']?>,
-	   							title: '<?php echo $reservation['abbr'].' '.$reservation['room'].' '.$reservation['name'].' '.$reservation['last_name']; ?>',
-	   							start: '<?php echo $reservation['check_in']; ?>',
-	   							end: '<?php echo $reservation['check_out']; ?>'
-	   						}
-   		   					<?php
-   		   					if ($c < sizeof($this->data['reservations']))
-   		   						echo ',';
-   		   				}
-   		   				?>
-   					]
-   				});
-   					
-   			});
-		</script>
-		<?php		
-	   	$signIn = ob_get_contents();
-		ob_end_clean();
-		return $signIn;
-	}
-   	
-	/**
-	 * the calendar body
-	 * 
-	 * it display the reservations in a calendar
-	 * 
-	 * @return string
-	 */
-   	public function getCalendar()
-   	{
-   		ob_start();
-   		?>
-   	   	<div id='fullcalendar'></div>
-		<?php
-   	   	$tasks = ob_get_contents();
-		ob_end_clean();
-		return $tasks; 
-	}
    	
 	/**
 	 * extra files for the agencies section

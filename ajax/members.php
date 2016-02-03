@@ -33,7 +33,14 @@ switch ($_POST['opt'])
 	case 2:
 		if ($_POST['memberId'] && $_POST['emailVal'])
 		{
-			$model->addMemberEmail($_POST);
+			if ($_POST['emailId'] > 0)
+			{
+				$model->updateMemberEmail($_POST);
+			}
+			else 
+			{
+				$model->addMemberEmail($_POST);
+			}
 		}
 	break;
 	
@@ -41,7 +48,14 @@ switch ($_POST['opt'])
 	case 3:
 		if ($_POST['memberId'] && $_POST['phoneVal'])
 		{
-			$model->addMemberPhone($_POST);
+			if ($_POST['phoneId'] > 0)
+			{
+				$model->updateMemberPhone($_POST);
+			}
+			else 
+			{
+				$model->addMemberPhone($_POST);
+			}
 		}
 	break;
 	

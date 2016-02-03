@@ -123,15 +123,14 @@ function saveMember()
         	{
         		$('#member-id').val(info);
         		saveMemberEmails();
+        		saveMemberPhones();
         		
     			$('.alert-autocloseable-success').show();
-
     			$('.alert-autocloseable-success').delay(3000).fadeOut( "slow", function() {
     				// Animation complete.
     			});
-    			saveMemberPhones();
-        		
-        	}else
+        	}
+        	else
 			{
 				alert('Errr..');
 			}
@@ -145,7 +144,8 @@ function saveMemberEmails()
 	emailVal 	= '';
 	memberId 	= $('#member-id').val();
 	
-	$('.memberEmail').each(function(){
+	$('.memberEmail').each(function()
+	{
 		emailId 	= 0;
 		if ($(this).attr('eid') && $(this).val())
 		{
@@ -158,7 +158,7 @@ function saveMemberEmails()
 		        data:{  memberId: 	memberId,
 		        	emailId: 		emailId,
 		        	emailVal: 		emailVal,
-		            opt: 		2
+		            opt: 			2
 		             },
 		        success:
 		        function(xml)
@@ -178,15 +178,17 @@ function saveMemberPhones()
 	phoneVal 	= '';
 	memberId 	= $('#member-id').val();
 	
-	if ($(this).val())
+	
+	$('.memberPhone').each(function()
 	{
-		$('.memberPhone').each(function(){
-			phoneId		= $(this).attr('pid');
-			phoneVal	= $(this).val();
-			
+		phoneId		= $(this).attr('pid');
+		phoneVal	= $(this).val();
+	
+		if ($(this).val())
+		{
 			$.ajax({
-		        type:   'POST',
-		        url:    '/ajax/members.php',
+				type:   'POST',
+				url:    '/ajax/members.php',
 		        data:{  memberId: 	memberId,
 		        	phoneId: 		phoneId,
 		        	phoneVal: 		phoneVal,
@@ -201,6 +203,6 @@ function saveMemberPhones()
 		            }
 		        }
 		    });
-		});
-	}
+		}
+	});
 }
