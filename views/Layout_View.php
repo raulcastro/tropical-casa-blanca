@@ -575,7 +575,6 @@ class Layout_View
    						<th>City</th>
    						<th>State</th>
    						<th>Country</th>
-   						<th>Active</th>
    					</tr>
    				</thead>
    				<tbody>
@@ -609,20 +608,6 @@ class Layout_View
    						<td><?php echo $member['city']; ?></td>
    						<td><?php echo $member['state']; ?></td>
    						<td><?php echo $member['country']; ?></td>
-   						<td>
-   							<?php 
-   							if ($member['active'] == 1)
-   							{
-   								?>
-   							<i class="glyphicon glyphicon-ok"></i>
-   								<?php 
-   							} else {
-   								?>
-   							<i class="glyphicon glyphicon-remove"></i>
-   								<?php 
-   							}
-   							?>
-   						</td>
    					</tr>
    						<?php
    					}
@@ -716,10 +701,6 @@ class Layout_View
    			$memberId = $this->data['memberInfo']['member_id'];
    			$memberId = str_pad($memberId, 4, '0', STR_PAD_LEFT);
    		}
-   		else
-   		{
-   			$memberId = '0000';
-   		}
    		?>
 		<div class="row">
 			<div class="col-md-6">
@@ -763,27 +744,23 @@ class Layout_View
 							<div class="col-sm-10">
 								<select id="country_list" onchange="selCountry(this);" class="form-control">
 									<option value="0">Select Country</option>
-									<?php 
-									if ($this->data['memberInfo']['country'])
+									<?php
+									
+									foreach ($this->data['countries'] as $cl)
 									{
+										$selected = '';
+										
+										if ($cl['Code'] == $this->data['memberInfo']['country_code'])
+											$selected = 'selected';
 										?>
-									<option value="<?php echo $this->data['memberInfo']['country_code']; ?>" selected><?php echo $this->data['memberInfo']['country']; ?></option>
-										<?php
-									}
-									else 
-									{
-										foreach ($this->data['countries'] as $cl)
-										{
-											?>
-									<option value="<?php echo $cl['Code']; ?>"><?php echo $cl['Name']; ?></option>
-											<?php	
-										}
+									<option value="<?php echo $cl['Code']; ?>" <?php echo $selected; ?>><?php echo $cl['Name']; ?></option>
+										<?php	
 									}
 									?>
 								</select>
 							</div>
 						</div>
-						<input type="hidden" id="country" value="" />
+						<input type="hidden" id="country" value="<?php echo $this->data['memberInfo']['country_code']; ?>" />
 						
 						<!-- Text input-->
 						<div class="form-group">
@@ -802,7 +779,7 @@ class Layout_View
 								</select>
 							</div>
 						</div>
-						<input type="hidden" id="mState" value="" />
+						<input type="hidden" id="mState" value="<?php echo $this->data['memberInfo']['state']; ?>" />
 						
 						<!-- Text input-->
 						<div class="form-group">
@@ -821,7 +798,7 @@ class Layout_View
 								</select>
 							</div>
 						</div>
-						<input type="hidden" id="city" value="" />
+						<input type="hidden" id="city" value="<?php echo $this->data['memberInfo']['city']; ?>" />
 					
 					</fieldset>
 				</form>
