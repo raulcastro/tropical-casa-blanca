@@ -483,19 +483,20 @@ class Layout_View
 						<?php 
 						if ($_SESSION['loginType'] == 1)
 						{
-							?>
+						?>
 							<th>Added by</th>
-							<?php 
-							} else {
-							?>
+						<?php 
+						} 
+						else 
+						{
+						?>
 							<th>Address</th>
-							 <?php 
-							}
+						<?php 
+						}
 						?>
 						<th>City</th>
 						<th>State</th>
 						<th>Country</th>
-						<th>Active</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -531,20 +532,6 @@ class Layout_View
 						<td><?php echo $member['city']; ?></td>
 						<td><?php echo $member['state']; ?></td>
 						<td><?php echo $member['country']; ?></td>
-						<td>
-							<?php 
-							if ($member['active'] == 1)
-							{
-								?>
-							<i class="glyphicon glyphicon-ok"></i>
-								<?php 
-							} else {
-								?>
-							<i class="glyphicon glyphicon-remove"></i>
-								<?php 
-							}
-							?>
-						</td>
 					</tr>
 						<?php
 					}
