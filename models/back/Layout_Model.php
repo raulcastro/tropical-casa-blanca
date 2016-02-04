@@ -1210,13 +1210,15 @@ class Layout_Model
 	{
 		try {
 			$query = 'UPDATE reservations 
-					SET status = ?
+					SET status = ?, 
+					agency = ?
 					WHERE reservation_id = '.$data['reservationId'];
 				
 			$prep = $this->db->prepare($query);
 				
-			$prep->bind_param('i',
-					$data['optRes']);
+			$prep->bind_param('ii',
+					$data['optRes'],
+					$data['agencyId']);
 			return $prep->execute();
 		} catch (Exception $e) {
 			return false;

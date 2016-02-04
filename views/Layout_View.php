@@ -1275,7 +1275,7 @@ class Layout_View
    					if ($this->data['userInfo']['type'] == 1)
    					{
    						?>
-   					<select id="agencyListReservation">
+   					<select id="agencyListReservation-<?php echo $data['reservation_id']; ?>">
 						<?php
 						foreach ($this->data['agencies'] as $agency)
 						{
@@ -1294,6 +1294,7 @@ class Layout_View
    					{
    						?>
    					<strong><?php echo $data['agency']; ?></strong>
+   					<input type="hidden" id="agencyListReservation-<?php echo $data['reservation_id']; ?>" value="<?php echo $data['agency_id']; ?>">
    						<?php 
    					}
    					?>

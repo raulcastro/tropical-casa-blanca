@@ -535,7 +535,8 @@ function addReservationMemberPanel()
 
 function updateMemberReservation(reservationId)
 {
-	var optRes = $('#res-option-'+reservationId).val();
+	var optRes 		= $('#res-option-'+reservationId).val();
+	var agencyId 	= $('#agencyListReservation-'+reservationId).val();
 	
 	if (reservationId )
 	{
@@ -545,6 +546,7 @@ function updateMemberReservation(reservationId)
 	        data:{  
 	        	reservationId: 	reservationId,
 	        	optRes : 		optRes,
+	        	agencyId:		agencyId,
 	            opt: 			5
 	             },
 	        success:
@@ -552,7 +554,7 @@ function updateMemberReservation(reservationId)
 	        {
 	            if (0 != xml)
 	            {
-	            	alert('The reservation status has been successfully changed.');
+	            	alert('The reservation been successfully updated.');
 	            }
 	        }
 	    });
