@@ -54,7 +54,8 @@ class Layout_Model
 	{
 		try {
 			$query = "SELECT 
-					u.user_id, 
+					u.user_id,
+					u.type,
 					d.name, 
 					u.type, 
 					ue.email as user_email, 
@@ -917,7 +918,8 @@ class Layout_Model
 					r.room,
 					m.name,
 					m.last_name,
-					a.agency
+					a.agency,
+					a.agency_id
 					FROM reservations s
 					LEFT JOIN rooms r ON s.room_id = r.room_id
 					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
@@ -1196,6 +1198,14 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * uptadeSingleReservation
+	 * 
+	 * change the status of the reservation to pending, confirmed, checked-in, checked-out. BUT NOT TO CANCELED
+	 * 
+	 * @param array of data
+	 * @return true on success, false on failed
+	 */
 	public function uptadeSingleReservation($data)
 	{
 		try {
@@ -1213,6 +1223,15 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * addCancelation
+	 * 
+	 * Place a cancelation, creates a copy of the interested row on the cancelation table, 
+	 * then the reservation is deleted
+	 * 
+	 * @param array $data array of data
+	 * @return Ambigous <boolean, mixed>|boolean
+	 */
 	public function addCancelation($data)
 	{
 		try {
@@ -1232,6 +1251,14 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * deleteReservation
+	 * 
+	 * 
+	 * 
+	 * @param unknown $reservationId
+	 * @return Ambigous <boolean, mixed>|boolean
+	 */
 	public function deleteReservation($reservationId)
 	{
 		try {

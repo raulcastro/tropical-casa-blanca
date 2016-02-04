@@ -92,12 +92,6 @@ class generalBackend
 				$data['companies'] 	= $companiesArray;
 			break;
 			
-			case 'add-member':
-				// 		get all countries
-				$countriesArray 	= $this->model->getAllCountries();
-				$data['countries'] 	= $countriesArray;
-			break;
-			
 			case 'members':
 				// 		get all members
 				$membersArray 		= $this->model->getAllMembers();
@@ -141,6 +135,7 @@ class generalBackend
 					$paid 		= $this->model->getReservationPaidByReservationId($reservation['reservation_id']);
 					$unpaid 	= $this->model->getReservationUnpaidByReservationId($reservation['reservation_id']);
 					
+					// List of available rooms of for the current range of date
 					$reservationDate 	= array('checkIn' => $reservation['check_in'], 'checkOut' => $reservation['check_out']);
 					$availableRooms 	= $this->model->searchRooms($reservationDate);
 					
@@ -156,14 +151,14 @@ class generalBackend
 							'adults' 			=> $reservation['adults'],
 							'children' 			=> $reservation['children'],
 							'agency' 			=> $reservation['agency'],
+							'agency_id'			=> $reservation['agency_id'],
 							'external_id' 		=> $reservation['external_id'],
 							'status' 			=> $reservation['status'],
 							'grandTotal' 		=> $grandTotal,
 							'paid' 				=> $paid,
 							'unpaid' 			=> $unpaid,
-							'availableRooms'	=>$availableRooms
+							'availableRooms'	=> $availableRooms
 					);
-					
 					
 					$payments['payments'] = $this->model->getPaymentsByReservationId($reservation['reservation_id']);
 					array_push($reservationInfo, $payments);
@@ -179,7 +174,7 @@ class generalBackend
 					$paid 		= $this->model->getReservationPaidByReservationId($reservation['reservation_id']);
 					$unpaid 	= $this->model->getReservationUnpaidByReservationId($reservation['reservation_id']);
 						
-					$reservationInfo = array(
+					$cancelationInfo = array(
 							'reservation_id'	=> $reservation['reservation_id'],
 							'room_id' 		=> $reservation['room_id'],
 							'date'			=> $reservation['date'],
@@ -197,14 +192,11 @@ class generalBackend
 							'paid' 			=> $paid,
 							'unpaid' 		=> $unpaid
 					);
-					$reservationDate = array('checkIn' => $reservation['check_in'], 'checkOut' => $reservation['check_out']);
-					$availableRooms['availableRooms'] = $this->model->searchRooms($reservationDate);
-					array_push($data['memberReservations'], $availableRooms);
 					
 					$payments['payments'] = $this->model->getPaymentsByReservationId($reservation['reservation_id']);
-					array_push($reservationInfo, $payments);
+					array_push($cancelationInfo, $payments);
 					
-					array_push($data['memberReservations'], $reservationInfo);
+					array_push($data['memberReservations'], $cancelationInfo);
 				}
 				
 // 				/Cancelations

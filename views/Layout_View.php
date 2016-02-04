@@ -942,7 +942,6 @@ class Layout_View
    		<div class="row">
    			<?php echo $this->getReservationPanel(); ?>
    		</div>
-   		
    		<div class="row memberReservations" id="memberReservations">
    		<?php
    		if ($this->data['memberReservations'])
@@ -1270,7 +1269,37 @@ class Layout_View
    			</div>
    			
    			<div class="row extra">
-   				<div class="col-sm-4">Agency: <strong><?php echo $data['agency']; ?></strong></div>
+   				<div class="col-sm-4">
+   					Agency: 
+   					<?php 
+   					if ($this->data['userInfo']['type'] == 1)
+   					{
+   						?>
+   					<select id="agencyListReservation">
+						<?php
+						foreach ($this->data['agencies'] as $agency)
+						{
+							$selected = '';
+							if ($agency['agency'] == $data['agency'])
+								$selected = 'selected';
+							?>
+						<option value="<?php echo $agency['agency_id']; ?>" <?php echo $selected; ?>><?php echo $agency['agency']; ?></option>
+							<?php
+						}
+						?>
+					</select>
+   						<?php
+   					}
+   					else
+   					{
+   						?>
+   					<strong><?php echo $data['agency']; ?></strong>
+   						<?php 
+   					}
+   					?>
+   					
+   					
+   				</div>
    				<div class="col-sm-4">External Id: <strong><?php echo $data['external_id']; ?></strong></div>
    			</div>
    			
@@ -1308,7 +1337,10 @@ class Layout_View
    				echo Layout_View::getPaymentItems($data[0]['payments']);
    			?>
    			</div>
-   			
+   			<?php 
+   			if ($data['status'] != '5')
+   			{
+   			?>
    			<div class="row-extra payment-extra" id="">
    				<div class="row">
 	   				<div class="col-sm-3">
@@ -1326,6 +1358,10 @@ class Layout_View
    					class="btn btn-info btn-xs save-single-res-a" 
    					single-res="<?php echo $data['reservation_id']; ?>">save</a>
    			</div>
+   			<?php 
+   			}
+   			?>
+   			
    		</div>
    		<?php
    		$item = ob_get_contents();

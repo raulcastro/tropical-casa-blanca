@@ -10,7 +10,7 @@ $memberId = (int) $_POST['memberId'];
 
 switch ($_POST['opt'])
 {
-	
+	// Returns a list of available rooms depending on check-in & check-out
 	case 1:	 
 		if ($rooms = $model->searchRooms($_POST))
 		{
@@ -18,27 +18,21 @@ switch ($_POST['opt'])
 		}
 	break;
 	
+	// Add a new member when a reservation take place
 	case 2:
-		if ($memberId = $model->addMemberFromReservation($_POST) )
+		if ($memberId = $model->addMemberFromReservation($_POST))
 		{
 			echo $memberId;
 		}
-		else
-		{
-			?>
-			<div class="alert alert-dismissible alert-info">
-				<button type="button" class="close" data-dismiss="alert">×</button>
-				<strong>Great! </strong>  There are no tasks for today!
-			</div>
-			<?php
-		}
 	break;
 	
-	case 3: // Add the reservation at the same time that the member is added
+	// Add the reservation at the same time that the member is added
+	case 3: 
 		$model->addReservation($_POST);
 	break;
 	
-	case 4: // Add the reservation when the member is already created
+	// Add the reservation when the member is already created
+	case 4: 
 		if ($model->addReservation($_POST))
 		{
 			$memberReservationsArray 	= $model->getMemberReservationsByMemberId($_POST['memberId']);
@@ -84,28 +78,21 @@ switch ($_POST['opt'])
 		}
 	break;
 	
+	// Update the status of the reservation, or cancel the reservation (which is a kind of status too)
 	case 5:
 		if ($_POST['optRes'] != 5)
 		{
 			if ($model->uptadeSingleReservation($_POST))
-			{
 				echo '1';
-			}
 			else
-			{
 				echo '0';
-			}	
 		} 
 		else 
 		{
 			if ($model->addCancelation($_POST))
-			{
 				echo '1';
-			}
 			else
-			{
 				echo '0';
-			}
 		}
 	break;
 	
@@ -220,20 +207,8 @@ switch ($_POST['opt'])
 	   			<?php
 	   		}
 		}
-		
-
 	break;
-	// 		var_dump($_POST);
-	
-	// 		if ($rooms = $model->searchRooms($_POST))
-		// 		{
-		// 			foreach ($rooms as $room)
-			//    			{
-	//    			?>
-	   				<option><?php echo $room['room']; ?></option>
-	   			<?php
-	//    			}
-	// 		}
+
 	default:
 	break;
 }
