@@ -31,3 +31,5 @@ RewriteRule ^calendar/$ 					/calendar.php?section=11
 RewriteRule ^reservations/$ 				/reservations.php?section=12
 RewriteRule ^rooms/$ 						/rooms.php?section=13
 RewriteRule ^rooms/from/([A-Za-z0-9-]+)/$ 	/rooms.php?from=$1&section=13
+RewriteRule ^rooms/month/$ 					/rooms-month.php?section=13
+RewriteRule ^rooms/month/from/([A-Za-z0-9-]+)/$ 	/rooms-month.php?from=$1&section=13

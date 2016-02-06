@@ -775,7 +775,7 @@ class Layout_Model
 	}
 	
 	/**
-	 * searchRooms
+	 * searchSingleRoom
 	 *
 	 * Execute a search for the availability of a singles specific room, according to check in and check out date
 	 *
@@ -800,8 +800,7 @@ class Layout_Model
 			AND r.room_id = '.$data['roomId'].'
 			ORDER BY r.room_order ASC
 			;';
-			echo $query;
-			return $this->db->getArray($query);
+			return $this->db->getRow($query);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			return false;

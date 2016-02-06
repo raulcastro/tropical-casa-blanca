@@ -190,11 +190,17 @@ switch ($_POST['opt'])
 
 		if ($neededMax > $currentMax)
 		{
+			
 			if ($neededMin >= $currentMin && $neededMin <= $currentMax)
 			{
-				$info = array('roomId' => $roomId, 'checkIn'=>$_POST['currentCheckOut'], 'checkOut'=>$checkOut);
-				var_dump($info);
-				$currentRoom;
+				$info = array('roomId' => $roomId, 'checkIn'=>$currentCheckOut, 'checkOut'=>$checkOut);
+				if ($currentRoom = $model->searchSingleRoom($info))
+				{
+				?>
+				<option selected><?php echo $currentRoom['room']; ?></option>
+				<?php 					
+				}
+				
 			}
 		}
 		

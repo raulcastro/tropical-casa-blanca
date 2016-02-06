@@ -968,7 +968,7 @@ ul.inbox-pagination li {
  	min-height: 20px;
  }
  
- /*****************  Rooms Calendar *************/
+ /*****************  Rooms Calendar week *************/
  
  
 .rooms-calendar {
@@ -990,12 +990,6 @@ ul.inbox-pagination li {
  	background-color: #f5f5f5;
  }
  
-.rooms-calendar .days-box {
-}
- 
-.rooms-calendar .days-box .row-week-day-header {
-	
-}
 
 .rooms-calendar .days-box .row-week-day-header .week-day {
  	width: 14.285714%;
@@ -1003,6 +997,7 @@ ul.inbox-pagination li {
  	display: block;
  	position: relative;
  	border: 1px solid #E4E4E4;
+ 	
 }
  
 .rooms-calendar .days-box .row-week-day-header .week-day p {
@@ -1021,10 +1016,42 @@ ul.inbox-pagination li {
 .rooms-calendar .days-box .row-week-day .week-day span {
 	min-width: 100%;
 	float: left;
-	margin-top: 10px;
-	min-height: 6px;
+	margin-top: 4px;
+	min-height: 14px;
 	background: #C1E1AB;
 	cursor: pointer;
+}
+
+.rooms-calendar .days-box .row-week-day .week-day span.half-in {
+	min-width: 48%;
+	float: right;
+	-webkit-border-radius: 20px 0 0 20px!important;
+	-moz-border-radius: 20px 0 0 20px!important;
+	border-radius: 20px 0 0 20px!important;
+}
+
+.rooms-calendar .days-box .row-week-day .week-day span.half-out {
+	min-width: 48%;
+	float: left;
+	-webkit-border-radius: 0 20px 20px 0;
+	-moz-border-radius: 0 20px 20px 0;
+	border-radius: 0 20px 20px 0;
+}
+
+.rooms-calendar .days-box .row-week-day .month-day span.half-in {
+	min-width: 48%;
+	float: right;
+	-webkit-border-radius: 20px 0 0 20px!important;
+	-moz-border-radius: 20px 0 0 20px!important;
+	border-radius: 20px 0 0 20px!important;
+}
+
+.rooms-calendar .days-box .row-week-day .month-day span.half-out {
+	min-width: 48%;
+	float: left;
+	-webkit-border-radius: 0 20px 20px 0;
+	-moz-border-radius: 0 20px 20px 0;
+	border-radius: 0 20px 20px 0;
 }
 
 .rooms-calendar .empty-row {
@@ -1036,6 +1063,12 @@ ul.inbox-pagination li {
 	border: 1px solid #E4E4E4;
 }
 
+
+
+.rooms-calendar .room-row-box .rooms-month-name p{
+	font-size: 10px;
+}
+
 .rooms-calendar .room-row-box div p {
 	margin: 3.5px;
 }
@@ -1043,6 +1076,76 @@ ul.inbox-pagination li {
  .tooltipi {
  	display: none;
  }
+ 
+ 
+ /* Rooms monthly */
+ 
+ .rooms-calendar .room-row-box .rooms-month-name
+{
+	border: 0;
+	border-left: 1px  solid #ECECEC;
+	border-right: 1px  solid #ECECEC;
+	border-top: 1px  solid #888;
+	min-height: 21.5px!important;
+	font-weight: bold;
+}
+ 
+ .rooms-calendar .days-box .row-week-day-header .month-day {
+ 	width: 3.22580645%;
+ 	float: left;
+ 	display: block;
+ 	position: relative;
+ 	border-left: 1px  solid #ECECEC;
+ 	border-bottom: 1px  solid #ECECEC;
+ 	
+}
+
+.rooms-calendar .days-box .row-week-day-header .month-day .month-bottom{
+	font-size: 10px;
+	margin: 0;
+	margin-bottom: 1px;
+}
+
+.rooms-calendar .days-box .row-week-day-header .month-day p {
+	margin: 1px;
+	margin-bottom: 2px;
+	color: black;
+	font-weight: bold;
+}
+
+.rooms-calendar .days-box .row-week-day-header .week-day p {
+ 	margin: 0;
+}
+ 
+.rooms-calendar .days-box .row-week-day .month-day {
+ 	width: 3.22580645%;
+ 	float: left;
+ 	display: block;
+ 	position: relative;
+ 	border-right: 1px  solid #ECECEC;
+ 	border-bottom: 1px  solid #888888;
+ 	min-height: 25px;
+}
+
+.rooms-calendar .days-box .row-week-day .month-day span {
+	min-width: 100%;
+	float: left;
+	margin-top: 4px;
+	min-height: 14px;
+	background: #C1E1AB;
+	cursor: pointer;
+	padding-left: 1px;
+}
+
+.rooms-calendar .days-box .row-week-day .month-day span.half-in {
+	min-width: 48%;
+	float: right;
+}
+
+.rooms-calendar .days-box .row-week-day .month-day span.half-out {
+	min-width: 48%;
+	float: left;
+}
  
 .agencyForm {
 	margin-bottom: 40px;

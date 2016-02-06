@@ -111,6 +111,10 @@ class Layout_View
 				case 'rooms':
 					echo self :: getRoomsHead();
 				break;
+				
+				case 'rooms-month':
+					echo self :: getRoomsMonthHead();
+				break;
 
 				case 'calendar':
 					echo self :: getCalendarHead();
@@ -136,7 +140,7 @@ class Layout_View
 			<div class="container-fluid">
 				<div class="row">
 					<?php echo self::getSidebar(); ?>
-					<div class="col-sm-10 col-sm-offset-2 main">
+					<div class="col-sm-11 col-sm-offset-1 main">
 						<h1 class="page-header"><?php echo $this->title; ?></h1>
 						<?php 
 						echo self :: getDashboardIcons();
@@ -160,6 +164,10 @@ class Layout_View
 							
 							case 'rooms':
 								echo self :: getRooms();
+							break;
+							
+							case 'rooms-month':
+								echo self :: getRoomsMonth();
 							break;
 
 							case 'calendar':
@@ -401,7 +409,7 @@ class Layout_View
    		ob_start();
    		$active = 'class="active"';
    		?>
-   		<div class="col-sm-2 col-md-2 sidebar">
+   		<div class="col-sm-1 col-md-1 sidebar">
 			<ul class="nav nav-sidebar">
 				<li <?php if ($_GET['section'] == 1) echo $active; ?>><a href="/dashboard/">Dashboard</a></li>
 				<li <?php if ($_GET['section'] == 12) echo $active; ?>><a href="/reservations/">New Reservation</a></li>
@@ -1077,7 +1085,6 @@ class Layout_View
 				</div>
 				<div class="row">
 					<div class="reservationResults row col-sm-6" id="reservationResults">
-						<?php //echo $this->getRoomsList($rooms); ?>
 					</div>
 					<div class="row col-sm-6">
 						<?php echo $this->getRightSideReservations(); ?>
@@ -1298,8 +1305,6 @@ class Layout_View
    						<?php 
    					}
    					?>
-   					
-   					
    				</div>
    				<div class="col-sm-4">External Id: <strong><?php echo $data['external_id']; ?></strong></div>
    			</div>
@@ -1711,12 +1716,13 @@ class Layout_View
 					foreach ($this->data['rooms'] as $room)
 					{
 						?>
-					<div>
+					<div class="rooms-name-column">
 						<p><?php echo $room['room'].' - '.$room['abbr']; ?></p>
 					</div>
 						<?php
 					}
-   						
+   					
+// 					it calculates the url for the lins next and prev
 					if (!$_GET['from'])
 					{
 						$from = date('Y-m-d', strtotime(' -1 day'));
@@ -1729,35 +1735,24 @@ class Layout_View
 						$day['prev'] = date('Y-m-d', strtotime(' -7 day', strtotime($_GET['from'])));
 						$day['next'] = date('Y-m-d', strtotime(' +7 day', strtotime($_GET['from'])));
 					}
-						
-					$day[1]['full'] 	= date('Y-m-d', strtotime($from));
-					$day[1]['dayName'] 	= date('l', strtotime($from));
-					$day[1]['day'] 		= date('M d', strtotime($from));
 					
-					$day[2]['full'] 	= date('Y-m-d', strtotime(' +1 day', strtotime($from)));
-					$day[2]['dayName'] 	= date('l', strtotime(' +1 day', strtotime($from)));
-					$day[2]['day'] 		= date('M d', strtotime(' +1 day', strtotime($from)));
+// 					$those are for the head of the day columns
+					for ($i = 1; $i <= 7; $i++)
+					{
+						if ($i == 1)
+						{
+							$day[$i]['full'] 	= date('Y-m-d', strtotime($from));
+							$day[$i]['dayName'] = date('l', strtotime($from));
+							$day[$i]['day'] 	= date('M d', strtotime($from));
+						}
+						else
+						{
+							$day[$i]['full'] 	= date('Y-m-d', strtotime(' +'.($i-1).' day', strtotime($from)));
+							$day[$i]['dayName']	= date('l', strtotime(' +'.($i-1).' day', strtotime($from)));
+							$day[$i]['day'] 	= date('M d', strtotime(' +'.($i-1).' day', strtotime($from)));
+						}
+					}
 					
-					$day[3]['full'] 	= date('Y-m-d', strtotime(' +2 day', strtotime($from)));
-					$day[3]['dayName'] 	= date('l', strtotime(' +2 day', strtotime($from)));
-					$day[3]['day'] 		= date('M d', strtotime(' +2 day', strtotime($from)));
-					
-					$day[4]['full'] 	= date('Y-m-d', strtotime(' +3 day', strtotime($from)));
-					$day[4]['dayName'] 	= date('l', strtotime(' +3 day', strtotime($from)));
-					$day[4]['day'] 		= date('M d', strtotime(' +3 day', strtotime($from)));
-					
-					$day[5]['full'] 	= date('Y-m-d', strtotime(' +4 day', strtotime($from)));
-					$day[5]['dayName'] 	= date('l', strtotime(' +4 day', strtotime($from)));
-					$day[5]['day'] 		= date('M d', strtotime(' +4 day', strtotime($from)));
-					
-					$day[6]['full'] 	= date('Y-m-d', strtotime(' +5 day', strtotime($from)));
-					$day[6]['dayName'] 	= date('l', strtotime(' +5 day', strtotime($from)));
-					$day[6]['day'] 		= date('M d', strtotime(' +5 day', strtotime($from)));
-					
-					$day[7]['full'] 	= date('Y-m-d', strtotime(' +6 day', strtotime($from)));
-					$day[7]['dayName'] 	= date('l', strtotime(' +6 day', strtotime($from)));
-					$day[7]['day'] 		= date('M d', strtotime(' +6 day', strtotime($from)));
-   						
 					?>
 				</div>
 			</div>
@@ -1765,8 +1760,8 @@ class Layout_View
 				<div class="row">
 					<div class="row status-bar ">
 						<div class="row col-sm-9">
-							<a href="javascript: void(0);">Week</a>
-							<a href="javascript: void(0);">Month</a>
+							<a href="/rooms/">Week</a>
+							<a href="/rooms/month/">Month</a>
 						</div>
 						<div class="row col-sm-3">
 							<a href="/rooms/from/<?php echo $day['prev']; ?>/">&laquo; Previus</a>
@@ -1777,40 +1772,21 @@ class Layout_View
 					<div class="row">
 						<div class="days-box">
 							<div class="row-week-day-header">
+								<?php 
+								for ($i = 1; $i <= 7; $i++)
+								{
+								?>
 								<div class="week-day">
-									<p class="text-center"><small><?php echo $day['1']['dayName']; ?></small></p> 
-									<p class="text-center"><?php echo $day['1']['day']; ?></p>
+									<p class="text-center"><small><?php echo $day[$i]['dayName']; ?></small></p> 
+									<p class="text-center"><?php echo $day[$i]['day']; ?></p>
 								</div>
-								<div class="week-day">
-									<p class="text-center"><small><?php echo $day['2']['dayName']; ?></small></p> 
-									<p class="text-center"><?php echo $day['2']['day']; ?></p>
-								</div>
-								<div class="week-day">
-									<p class="text-center"><small><?php echo $day['3']['dayName']; ?></small></p> 
-									<p class="text-center"><?php echo $day['3']['day']; ?></p>
-								</div>
-								<div class="week-day">
-									<p class="text-center"><small><?php echo $day['4']['dayName']; ?></small></p> 
-									<p class="text-center"><?php echo $day['4']['day']; ?></p>
-								</div>
-								<div class="week-day">
-									<p class="text-center"><small><?php echo $day['5']['dayName']; ?></small></p> 
-									<p class="text-center"><?php echo $day['5']['day']; ?></p>
-								</div>
-								<div class="week-day">
-									<p class="text-center"><small><?php echo $day['6']['dayName']; ?></small></p> 
-									<p class="text-center"><?php echo $day['6']['day']; ?></p>
-								</div>
-								<div class="week-day">
-									<p class="text-center"><small><?php echo $day['7']['dayName']; ?></small></p> 
-									<p class="text-center"><?php echo $day['7']['day']; ?></p>
-								</div>
+								<?php	
+								}
+								?>
 							</div>
 							<div>
 							<!-- <pre><?php  print_r($this->data['rooms']);;?></pre> -->
 							<?php
-							
-							
 							foreach ($this->data['rooms'] as $room)
 							{
 								
@@ -1820,201 +1796,236 @@ class Layout_View
 								for ($i = 1; $i <= 7; $i++)
 								{
 									?>
-								
 									<div class="week-day full">
 									<?php 
-									switch ($i)
-									{
-										case 1:
-											if ($room['0']['reservations'])
+										if ($room['0']['reservations'])
+										{
+											foreach ($room['0']['reservations'] as $reservation)
 											{
-												foreach ($room['0']['reservations'] as $reservation)
+												if ($reservation['status'] == 1){$status = 'pending'; }
+												if ($reservation['status'] == 2){$status = 'confirmed'; }
+												if ($reservation['status'] == 3){$status = 'checked-in'; }
+												if ($reservation['status'] == 4){$status = 'checked-out'; }
+												if (Tools::check_in_range($reservation['check_in'], $reservation['check_mask'], $day[$i]['full']))
 												{
-													if ($reservation['status'] == 1){$status = 'pending'; }
-													if ($reservation['status'] == 2){$status = 'confirmed'; }
-													if ($reservation['status'] == 3){$status = 'checked-in'; }
-													if ($reservation['status'] == 4){$status = 'checked-out'; }
-													
-													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['1']['full']))
-													{	
-														?>
-														<span class="hasTooltip <?php echo $status; ?>"></span>
-														<div class="tooltipi"> 
+												?>
+												<span class="hasTooltip <?php echo $status; if ($reservation['check_in'] == $day[$i]['full']){echo ' half-in';} if ($reservation['check_mask'] == $day[$i]['full']){echo ' half-out';}?>"></span>
+												<div class="tooltipi"> 
 													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 													    </a>
 													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
 													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
 													    <p><?php echo $reservation['agency']; ?></p>
-													</div>
-														<?php
-													}
+												</div>
+												<?php
 												}
 											}
-										break;
-										
-										case 2:
-											if ($room['0']['reservations'])
+										}
+									?>
+									</div>
+									<?php
+								}
+								?>
+								</div>
+							<?php 
+							}
+							?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+   	   	<?php
+   	   	$rooms = ob_get_contents();
+   	   	ob_end_clean();
+   	   	return $rooms; 
+   	}
+   	
+   	/**
+   	 * Extra files for the view of rooms
+   	 * @return string
+   	 */
+   	public function getRoomsMonthHead()
+   	{
+   		ob_start();
+   		?>
+   			<link rel="stylesheet" href="/css/jquery-ui.css">
+   			<!-- CSS file -->
+			<link type="text/css" rel="stylesheet" href="/js/qtip/jquery.qtip.css" />
+			<!-- Include either the minifed or production version, NOT both!! -->
+			<script type="text/javascript" src="/js/qtip/jquery.qtip.js"></script>
+			<!-- Optional: imagesLoaded script to better support images inside your tooltips -->
+			<script type="text/javascript" src="/js/qtip/jquery.imagesloaded.pkg.min.js"></script>
+			<script>
+			// Grab all elements with the class "hasTooltip"
+			$(document).ready(function() {
+			$('.hasTooltip').each(function() { // Notice the .each() loop, discussed below
+			    $(this).qtip({
+			        content: {
+			            text: $(this).next('div') // Use the "div" element next to this for the content
+			        },
+			        hide: {
+						fixed: true,
+						delay: 300
+					}
+			    });
+			});
+			});
+			</script>
+   		<?php		
+   		$roomsHead = ob_get_contents();
+   		ob_end_clean();
+   		return $roomsHead;
+   	}
+   	
+   	/**
+   	 * Show a view per week of the rooms
+   	 * 
+   	 * Room occupancy for 31 days, it shows in diferent color which room is available or busy, a very long but very
+   	 * <strong>smart</strong> code.
+   	 * 
+   	 * @return string
+   	 */
+   	public function getRoomsMonth()
+   	{
+   		ob_start();
+   		$curMonth = date('M Y');
+		?>
+		<!-- <pre><?php echo print_r($this->data['rooms']);?></pre> -->
+		<div class="row col-sm-12 rooms-calendar">
+			<div class="col-sm-1">
+				<div class="select-month">
+					<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+						<option value="/rooms/">Month</option>
+						<?php 
+						for ($i = 0; $i <= 12; $i ++)
+						{
+							$interval = '+'.$i.' month';
+							?>
+							<option value="/rooms/month/from/<?php echo date('Y-m-d', strtotime($interval, strtotime($curMonth))); ?>/">
+								<?php echo date('M Y', strtotime($interval, strtotime($curMonth))); ?>
+							</option>
+							<?php 
+						}
+						?>
+					</select>
+				</div>
+   					
+				<div class="empty-row row"></div>
+   					
+				<div class="room-row-box">
+					<?php 
+					foreach ($this->data['rooms'] as $room)
+					{
+						?>
+					<div class="rooms-month-name">
+						<p><?php echo $room['room']; ?></p>
+					</div>
+						<?php
+					}
+   					
+// 					it calculates the url for the lins next and prev
+					if (!$_GET['from'])
+					{
+						$from = date('Y-m-d', strtotime(' -1 day'));
+						$day['prev'] = date('Y-m-d', strtotime(' -31 day', strtotime($from)));
+						$day['next'] = date('Y-m-d', strtotime(' +31 day', strtotime($from)));
+					}
+					else 
+					{
+						$from = date('Y-m-d', strtotime($_GET['from']));
+						$day['prev'] = date('Y-m-d', strtotime(' -31 day', strtotime($_GET['from'])));
+						$day['next'] = date('Y-m-d', strtotime(' +31 day', strtotime($_GET['from'])));
+					}
+					
+// 					$those are for the head of the day columns
+					for ($i = 1; $i <= 31; $i++)
+					{
+						if ($i == 1)
+						{
+							$day[$i]['full'] 	= date('Y-m-d', strtotime($from));
+							$day[$i]['dayName'] = date('D', strtotime($from));
+							$day[$i]['day'] 	= date('M d', strtotime($from));
+						}
+						else
+						{
+							$day[$i]['full'] 	= date('Y-m-d', strtotime(' +'.($i-1).' day', strtotime($from)));
+							$day[$i]['dayName']	= date('D', strtotime(' +'.($i-1).' day', strtotime($from)));
+							$day[$i]['day'] 	= date('M d', strtotime(' +'.($i-1).' day', strtotime($from)));
+						}
+					}
+					
+					?>
+				</div>
+			</div>
+			<div class="col-sm-11">
+				<div class="row">
+					<div class="row status-bar ">
+						<div class="row col-sm-10">
+							<a href="/rooms/">Week</a>
+							<a href="/rooms/month/">Month</a>
+						</div>
+						<div class="row col-sm-2 text-center">
+							<a href="/rooms/month/from/<?php echo $day['prev']; ?>/">&laquo; Previus</a>
+							<a href="/rooms/month/">Today</a>
+							<a href="/rooms/month/from/<?php echo $day['next']; ?>/">Next &raquo;</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="days-box">
+							<div class="row-week-day-header">
+								<?php 
+								for ($i = 1; $i <= 31; $i++)
+								{
+								?>
+								<div class="month-day">
+									<p class="text-center"><small><?php echo $day[$i]['dayName']; ?></small></p> 
+									<p class="text-center month-bottom"><?php echo $day[$i]['day']; ?></p>
+								</div>
+								<?php	
+								}
+								?>
+							</div>
+							<div>
+							<!-- <pre><?php  print_r($this->data['rooms']);;?></pre> -->
+							<?php
+							foreach ($this->data['rooms'] as $room)
+							{
+								
+							?>
+								<div class="row-week-day">
+								<?php 
+								for ($i = 1; $i <= 31; $i++)
+								{
+									?>
+									<div class="month-day full">
+									<?php 
+										if ($room['0']['reservations'])
+										{
+											foreach ($room['0']['reservations'] as $reservation)
 											{
-												foreach ($room['0']['reservations'] as $reservation)
+												if ($reservation['status'] == 1){$status = 'pending'; }
+												if ($reservation['status'] == 2){$status = 'confirmed'; }
+												if ($reservation['status'] == 3){$status = 'checked-in'; }
+												if ($reservation['status'] == 4){$status = 'checked-out'; }
+												if (Tools::check_in_range($reservation['check_in'], $reservation['check_mask'], $day[$i]['full']))
 												{
-													if ($reservation['status'] == 1){$status = 'pending'; }
-													if ($reservation['status'] == 2){$status = 'confirmed'; }
-													if ($reservation['status'] == 3){$status = 'checked-in'; }
-													if ($reservation['status'] == 4){$status = 'checked-out'; }
-													
-													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['2']['full']))
-													{	?>
-														<span class="hasTooltip <?php echo $status; ?>"></span>
-														<div class="tooltipi"> 
+												?>
+												<span class="hasTooltip <?php echo $status; if ($reservation['check_in'] == $day[$i]['full']){echo ' half-in';} if ($reservation['check_mask'] == $day[$i]['full']){echo ' half-out';}?>"></span>
+												<div class="tooltipi"> 
 													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 													    </a>
 													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
 													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
 													    <p><?php echo $reservation['agency']; ?></p>
-													</div>
-														<?php
-													}
+												</div>
+												<?php
 												}
 											}
-										break;
-										
-										case 3:
-											if ($room['0']['reservations'])
-											{
-												foreach ($room['0']['reservations'] as $reservation)
-												{
-													if ($reservation['status'] == 1){$status = 'pending'; }
-													if ($reservation['status'] == 2){$status = 'confirmed'; }
-													if ($reservation['status'] == 3){$status = 'checked-in'; }
-													if ($reservation['status'] == 4){$status = 'checked-out'; }
-													
-													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['3']['full']))
-													{	?>
-														<span class="hasTooltip <?php echo $status; ?>"></span>
-														<div class="tooltipi"> 
-													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-													    </a>
-													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-													    <p><?php echo $reservation['agency']; ?></p>
-													</div>
-														<?php
-													}
-												}
-											}
-										break;
-										
-										case 4:
-											if ($room['0']['reservations'])
-											{
-												foreach ($room['0']['reservations'] as $reservation)
-												{
-													if ($reservation['status'] == 1){$status = 'pending'; }
-													if ($reservation['status'] == 2){$status = 'confirmed'; }
-													if ($reservation['status'] == 3){$status = 'checked-in'; }
-													if ($reservation['status'] == 4){$status = 'checked-out'; }
-													
-													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['4']['full']))
-													{	?>
-														<span class="hasTooltip <?php echo $status; ?>"></span>
-														<div class="tooltipi"> 
-													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-													    </a>
-													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-													    <p><?php echo $reservation['agency']; ?></p>
-													</div>
-														<?php
-													}
-												}
-											}
-										break;
-											
-										case 5:
-											if ($room['0']['reservations'])
-											{
-												foreach ($room['0']['reservations'] as $reservation)
-												{
-													if ($reservation['status'] == 1){$status = 'pending'; }
-													if ($reservation['status'] == 2){$status = 'confirmed'; }
-													if ($reservation['status'] == 3){$status = 'checked-in'; }
-													if ($reservation['status'] == 4){$status = 'checked-out'; }
-													
-													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['5']['full']))
-													{	?>
-														<span class="hasTooltip <?php echo $status; ?>"></span>
-														<div class="tooltipi"> 
-													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-													    </a>
-													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-													    <p><?php echo $reservation['agency']; ?></p>
-													</div>
-														<?php
-													}
-												}
-											}
-										break;
-											
-										case 6:
-											if ($room['0']['reservations'])
-											{
-												foreach ($room['0']['reservations'] as $reservation)
-												{
-													if ($reservation['status'] == 1){$status = 'pending'; }
-													if ($reservation['status'] == 2){$status = 'confirmed'; }
-													if ($reservation['status'] == 3){$status = 'checked-in'; }
-													if ($reservation['status'] == 4){$status = 'checked-out'; }
-													
-													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['6']['full']))
-													{	?>
-														<span class="hasTooltip <?php echo $status; ?>"></span>
-														<div class="tooltipi"> 
-													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-													    </a>
-													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-													    <p><?php echo $reservation['agency']; ?></p>
-													</div>
-														<?php
-													}
-												}
-											}
-										break;
-										
-										case 7:
-											if ($room['0']['reservations'])
-											{
-												foreach ($room['0']['reservations'] as $reservation)
-												{
-													if ($reservation['status'] == 1){$status = 'pending'; }
-													if ($reservation['status'] == 2){$status = 'confirmed'; }
-													if ($reservation['status'] == 3){$status = 'checked-in'; }
-													if ($reservation['status'] == 4){$status = 'checked-out'; }
-													
-													if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day['7']['full']))
-													{	?>
-														<span class="hasTooltip <?php echo $status; ?>"></span>
-														<div class="tooltipi"> 
-													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
-													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
-													    </a>
-													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-													    <p><?php echo $reservation['agency']; ?></p>
-													</div>
-														<?php
-													}
-												}
-											}
-										break;
-									}
+										}
 									?>
 									</div>
 									<?php
