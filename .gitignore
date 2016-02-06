@@ -2,6 +2,8 @@
 .buildpath
 .project
 .settings/
+databases/
+deploy/
 
 # Object files
 *.o
