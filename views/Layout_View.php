@@ -901,7 +901,7 @@ class Layout_View
 			</div>
 		</div>
 
-		<div class="row utilities">
+		<div class="row utilities" id="utilitiesBox">
 			<div class="col-md-12">
 	
 				<div class="tabbable-panel">
@@ -1233,7 +1233,7 @@ class Layout_View
    		if ($data['status'] == '5')
    			$class = 'canceled-reservation';
    		?>
-   		<div class="col-sm-12 reservation-item <?php echo $class; ?>">
+   		<div class="col-sm-12 reservation-item <?php echo $class; ?>" id="reservation-item-<?php echo $data['reservation_id']; ?>">
    			
    			<div class="row bg-primary title">
    				<div class="col-sm-2">Date</div>
@@ -1689,7 +1689,6 @@ class Layout_View
    		ob_start();
    		$curMonth = date('M Y');
 		?>
-		<!-- <pre><?php echo print_r($this->data['rooms']);?></pre> -->
 		<div class="row col-sm-12 rooms-calendar">
 			<div class="col-sm-2">
 				<div class="select-month">
@@ -1784,8 +1783,8 @@ class Layout_View
 								}
 								?>
 							</div>
+							<div class="clearfix"></div>
 							<div>
-							<!-- <pre><?php  print_r($this->data['rooms']);;?></pre> -->
 							<?php
 							foreach ($this->data['rooms'] as $room)
 							{
@@ -1806,17 +1805,18 @@ class Layout_View
 												if ($reservation['status'] == 2){$status = 'confirmed'; }
 												if ($reservation['status'] == 3){$status = 'checked-in'; }
 												if ($reservation['status'] == 4){$status = 'checked-out'; }
-												if (Tools::check_in_range($reservation['check_in'], $reservation['check_mask'], $day[$i]['full']))
+												if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day[$i]['full']))
 												{
 												?>
-												<span class="hasTooltip <?php echo $status; if ($reservation['check_in'] == $day[$i]['full']){echo ' half-in';} if ($reservation['check_mask'] == $day[$i]['full']){echo ' half-out';}?>"></span>
+												<span class="hasTooltip <?php echo $status; if ($reservation['check_in'] == $day[$i]['full']){echo ' half-in';} if ($reservation['check_out'] == $day[$i]['full']){echo ' half-out';}?>"></span>
 												<div class="tooltipi"> 
 													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 													    </a>
-													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
-													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-													    <p><?php echo $reservation['agency']; ?></p>
+													    <p>Reservation ID: <strong><?php echo $reservation['reservation_id']; ?></strong></p>
+													    <p><strong>From <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></strong></p>
+													    <p>Room: <?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
+													    <p>Agency: <?php echo $reservation['agency']; ?></p>
 												</div>
 												<?php
 												}
@@ -1827,6 +1827,7 @@ class Layout_View
 									<?php
 								}
 								?>
+								<div class="clearfix"></div>
 								</div>
 							<?php 
 							}
@@ -1854,9 +1855,7 @@ class Layout_View
    			<link rel="stylesheet" href="/css/jquery-ui.css">
    			<!-- CSS file -->
 			<link type="text/css" rel="stylesheet" href="/js/qtip/jquery.qtip.css" />
-			<!-- Include either the minifed or production version, NOT both!! -->
 			<script type="text/javascript" src="/js/qtip/jquery.qtip.js"></script>
-			<!-- Optional: imagesLoaded script to better support images inside your tooltips -->
 			<script type="text/javascript" src="/js/qtip/jquery.imagesloaded.pkg.min.js"></script>
 			<script>
 			// Grab all elements with the class "hasTooltip"
@@ -1893,7 +1892,6 @@ class Layout_View
    		ob_start();
    		$curMonth = date('M Y');
 		?>
-		<!-- <pre><?php echo print_r($this->data['rooms']);?></pre> -->
 		<div class="row col-sm-12 rooms-calendar">
 			<div class="col-sm-1">
 				<div class="select-month">
@@ -1989,7 +1987,7 @@ class Layout_View
 								?>
 							</div>
 							<div>
-							<!-- <pre><?php  print_r($this->data['rooms']);;?></pre> -->
+							<div class="clearfix"></div>
 							<?php
 							foreach ($this->data['rooms'] as $room)
 							{
@@ -2010,17 +2008,18 @@ class Layout_View
 												if ($reservation['status'] == 2){$status = 'confirmed'; }
 												if ($reservation['status'] == 3){$status = 'checked-in'; }
 												if ($reservation['status'] == 4){$status = 'checked-out'; }
-												if (Tools::check_in_range($reservation['check_in'], $reservation['check_mask'], $day[$i]['full']))
+												if (Tools::check_in_range($reservation['check_in'], $reservation['check_out'], $day[$i]['full']))
 												{
 												?>
-												<span class="hasTooltip <?php echo $status; if ($reservation['check_in'] == $day[$i]['full']){echo ' half-in';} if ($reservation['check_mask'] == $day[$i]['full']){echo ' half-out';}?>"></span>
+												<span class="hasTooltip <?php echo $status; if ($reservation['check_in'] == $day[$i]['full']){echo ' half-in';} if ($reservation['check_out'] == $day[$i]['full']){echo ' half-out';}?>"></span>
 												<div class="tooltipi"> 
 													    <a href="/<?php echo $reservation['member_id'].'/member/'; ?>">
 													    	<strong><?php echo $reservation['name'].' '.$reservation['last_name'];?></strong>
 													    </a>
-													    <p>from <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_mask']));?></p>
+													    <p>Reservation ID: <strong><?php echo $reservation['reservation_id']; ?></strong></p>
+													    <p><strong>From <?php echo date('M d', strtotime($reservation['check_in'])).' to '.date('M d', strtotime($reservation['check_out']));?></strong></p>
 													    <p><?php echo $reservation['room_type'].' '.$reservation['room']; ?></p>
-													    <p><?php echo $reservation['agency']; ?></p>
+													    <p>Agency: <?php echo $reservation['agency']; ?></p>
 												</div>
 												<?php
 												}
@@ -2031,6 +2030,7 @@ class Layout_View
 									<?php
 								}
 								?>
+								<div class="clearfix"></div>
 								</div>
 							<?php 
 							}

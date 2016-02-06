@@ -116,7 +116,6 @@ function setPaymentStatus(resId, payId)
 	            	getGrandTotal(resId);
 	            	getPaid(resId);
 	            	getPending(resId);
-	            	
 	            }
 	        }
 	    });
@@ -518,15 +517,10 @@ function addReservationMemberPanel()
 	        {
 	            if (0 != xml)
 	            {
-	            	$('#memberReservations').html(xml);
-	            	alert('Reservation successfully added.');
-	            	$('#reservationResults').hide();
-	            	$('#rightSideReservations').hide();
-//	            	$('#memberId').val(xml);
-//	            	addReservation();
-//	            	$('#completeProfileBtn').show();
-//	            	$('#bookRoom').hide();
-//	            	$('#completeProfileBtn').attr('href','/'+xml+'/new-reservation/');
+	            	pathArray = $(location).attr('href').split( '/' );
+	            	
+	            	newURL = pathArray[0]+'//'+pathArray[2]+'/'+pathArray[3]+'/add-reservation-'+Math.floor((Math.random() * 100) + 1)+'/#utilitiesBox';
+	            	window.location = newURL;
 	            }
 	        }
 	    });
@@ -554,7 +548,17 @@ function updateMemberReservation(reservationId)
 	        {
 	            if (0 != xml)
 	            {
-	            	alert('The reservation been successfully updated.');
+	            	if (optRes == 5)// if it was a cancelation
+	            	{
+	            		pathArray = $(location).attr('href').split( '/' );
+		            	
+		            	newURL = pathArray[0]+'//'+pathArray[2]+'/'+pathArray[3]+'/process-cancelation'+reservationId+'/#utilitiesBox';
+		            	window.location = newURL;
+	            	}
+	            	else
+	            	{
+	            		alert('The reservation been successfully updated.');
+	            	}
 	            }
 	        }
 	    });

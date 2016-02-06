@@ -1003,7 +1003,11 @@ ul.inbox-pagination li {
 .rooms-calendar .days-box .row-week-day-header .week-day p {
  	margin: 0;
 }
- 
+
+.rooms-calendar .days-box .row-week-day:hover {
+	background-color: #ECECEC;
+}
+
 .rooms-calendar .days-box .row-week-day .week-day {
  	width: 14.285714%;
  	float: left;
@@ -1096,7 +1100,7 @@ ul.inbox-pagination li {
  	display: block;
  	position: relative;
  	border-left: 1px  solid #ECECEC;
- 	border-bottom: 1px  solid #ECECEC;
+ 	border-bottom: 1px  solid #888;
  	
 }
 

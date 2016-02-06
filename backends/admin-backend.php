@@ -34,7 +34,7 @@ class generalBackend
 	 * @param string $section
 	 * @return array Array with the asked info of the application
 	 */
-	public function loadBackend($section = '')
+	public function loadBackend($section = '', $memberId = '')
 	{
 		$data 		= array();
 		
@@ -99,8 +99,6 @@ class generalBackend
 			break;
 			
 			case 'member-info':
-				$memberId 				= (int) $_GET['memberId'];
-				
 				// 		get all countries
 				$countriesArray 		= $this->model->getAllCountries();
 				$data['countries'] 		= $countriesArray;
@@ -144,8 +142,9 @@ class generalBackend
 							'room_id' 			=> $reservation['room_id'],
 							'date'				=> $reservation['date'],
 							'check_in' 			=> $reservation['check_in'],
+							'check_in_mask'		=> $reservation['check_in_mask'],
 							'check_out' 		=> $reservation['check_out'],
-							'check_mask'		=> $reservation['check_mask'],
+							'check_out_mask'	=> $reservation['check_out_mask'],
 							'room' 				=> $reservation['room'],
 							'room_type' 		=> $reservation['room_type'],
 							'adults' 			=> $reservation['adults'],
@@ -179,8 +178,9 @@ class generalBackend
 							'room_id' 		=> $reservation['room_id'],
 							'date'			=> $reservation['date'],
 							'check_in' 		=> $reservation['check_in'],
+							'check_in_mask'	=> $reservation['check_in_mask'],
 							'check_out' 	=> $reservation['check_out'],
-							'check_mask'	=> $reservation['check_mask'],
+							'check_out_mask'=> $reservation['check_out_mask'],
 							'room' 			=> $reservation['room'],
 							'room_type' 	=> $reservation['room_type'],
 							'adults' 		=> $reservation['adults'],

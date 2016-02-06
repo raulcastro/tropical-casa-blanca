@@ -753,16 +753,19 @@ class Layout_Model
 	public function searchRooms($data)
 	{
 		$checkIn 	= Tools::formatToMYSQL($data['checkIn']);
+		$checkIn	= date($checkIn);
+		
 		$checkOut 	= Tools::formatToMYSQL($data['checkOut']);
-	
+		$checkOut 	= date($checkOut);
+		
 		try {
 			$query = 'SELECT r.*, rt.room_type_id, rt.room_type
 			FROM rooms r
 			LEFT JOIN room_types rt ON r.room_type_id = rt.room_type_id
 			WHERE r.room_id NOT IN (SELECT room_id
 			FROM reservations 
-			WHERE (check_in <= "'.$checkIn.'" AND check_out >="'.$checkIn.'")
-			OR (check_in <= "'.$checkOut.'" AND check_out >="'.$checkOut.'")
+			WHERE (check_in < "'.$checkOut.'" AND check_out >="'.$checkOut.'")
+			OR (check_in <= "'.$checkIn.'" AND check_out >"'.$checkIn.'")
 			OR (check_in >= "'.$checkIn.'" AND check_out <= "'.$checkOut.'"))
 			ORDER BY r.room_order ASC		
 			;';
@@ -839,6 +842,9 @@ class Layout_Model
 	public function addReservation($data)
 	{
 		$checkIn 		= Tools::formatToMYSQL($data['checkIn']);
+		$checkInDate	= date($checkIn);
+		$checkInDate	= date('Y-m-d', strtotime('+1 day', strtotime($checkInDate)));
+		
 		$checkOut 		= Tools::formatToMYSQL($data['checkOut']);
 		$checkOutDate 	= date($checkOut);
 		$checkOutDate 	= date('Y-m-d', strtotime('-1 day', strtotime($checkOutDate)));
@@ -866,7 +872,7 @@ class Layout_Model
 					$data['memberId'],
 					$data['roomId'],
 					$checkIn,
-					$checkOutDate,
+					$checkOut,
 					$data['price'],
 					$data['reservationAdults'],
 					$data['reservationChildren'],
@@ -903,8 +909,9 @@ class Layout_Model
 		try {
 			$query = 'SELECT s.reservation_id,
 					s.check_in,
+					DATE_ADD(s.check_in, INTERVAL -1 DAY) AS check_in_mask,
 					s.check_out,
-					DATE_ADD(s.check_out, INTERVAL 1 DAY) AS check_mask,
+					DATE_ADD(s.check_out, INTERVAL 1 DAY) AS check_out_mask,
 					s.date,
 					s.price,
 					s.adults,
@@ -946,8 +953,9 @@ class Layout_Model
 		try {
 			$query = 'SELECT s.reservation_id,
 					s.check_in,
+					DATE_ADD(s.check_in, INTERVAL -1 DAY) AS check_in_mask,
 					s.check_out,
-					DATE_ADD(s.check_out, INTERVAL 1 DAY) AS check_mask,
+					DATE_ADD(s.check_out, INTERVAL 1 DAY) AS check_out_mask,
 					s.date,
 					s.price,
 					s.adults,
@@ -1034,9 +1042,11 @@ class Layout_Model
 			$room_id = (int) $room_id;
 			$query = 'SELECT s.reservation_id, 
 					s.check_in,
+					DATE_ADD(s.check_in, INTERVAL -1 DAY) AS check_in_mask,
 					s.check_out,
-					DATE_ADD(s.check_out, INTERVAL 1 DAY) AS check_mask,
+					DATE_ADD(s.check_out, INTERVAL 1 DAY) AS check_out_mask,
 					s.status,
+					s.reservation_id,
 					rt.room_type,
 					rt.abbr,
 					r.room,

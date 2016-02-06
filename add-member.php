@@ -8,8 +8,9 @@
 	require_once $root.'/'.'views/Layout_View.php';
 
 	$section 	= 'member-info';
+	$memberId 	= (int) $_GET['memberId'];
 	
-	$data 	= $backend->loadBackend($section);
+	$data 	= $backend->loadBackend($section, $memberId);
 	$title 	.= $data['memberInfo']['name'].' '.$data['memberInfo']['last_name'];
 	
 	$view 	= new Layout_View($data, $title);
