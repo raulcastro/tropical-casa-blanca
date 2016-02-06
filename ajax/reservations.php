@@ -151,7 +151,6 @@ switch ($_POST['opt'])
 
 		if ($neededMax > $currentMax)
 		{
-			
 			if ($neededMin >= $currentMin && $neededMin < $currentMax)
 			{
 				$info = array('roomId' => $roomId, 'checkIn'=>$currentCheckOut, 'checkOut'=>$checkOut);
@@ -164,7 +163,7 @@ switch ($_POST['opt'])
 			}
 		}
 		
-		if ($neededmin < $currentMin && $neededMax != $currentMin)
+		if ($neededmin < $currentMin && $neededMax <= $currentMin)
 		{
 			if ($neededMin <= $currentMin && $neededMax < $currentMax)
 			{
@@ -177,6 +176,22 @@ switch ($_POST['opt'])
 				}
 			}
 		}
+		
+		if ($neededmin < $currentMin && $neededMax <= $currentMax)
+		{
+			if ($neededMin <= $currentMin && $neededMax <= $currentMax)
+			{
+				$info = array('roomId' => $roomId, 'checkIn'=>$checkIn, 'checkOut'=>$currentCheckIn);
+				if ($currentRoom = $model->searchSingleRoom($info))
+				{
+				?>
+				<option selected value="<?php echo $currentRoom['room_id']; ?>"><?php echo $currentRoom['room']; ?></option>
+				<?php 					
+				}
+			}
+		}
+		
+		
 		
 		if ($neededmin < $currentMin && $neededMax > $currentMin)
 		{

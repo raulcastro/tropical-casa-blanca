@@ -598,7 +598,6 @@ function updateReservation(reservationId)
 	        }
 	    });
 	}
-
 }
 
 function updateAvailableRooms(resId)

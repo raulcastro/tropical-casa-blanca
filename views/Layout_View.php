@@ -661,7 +661,7 @@ class Layout_View
 	?>
 				$( "#dateBoxCheckIn-<?php echo $reservation['reservation_id']; ?>").datepicker(
 					{
-						defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_in']); ?>"),
+						defaultDate:new Date("<?php echo Tools::formatMYSQLToJS($reservation['check_in']); ?>"),
 						onSelect: function()
 						{
 							$('#availableRoomsSelect-'+<?php echo $reservation['reservation_id']; ?>).attr('disabled', false);
@@ -671,7 +671,7 @@ class Layout_View
 				);
 				$( "#dateBoxCheckOut-<?php echo $reservation['reservation_id']; ?>").datepicker(
 					{
-						defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_out']); ?>"),
+						defaultDate:new Date("<?php echo Tools::formatMYSQLToJS($reservation['check_out']); ?>"),
 						onSelect: function()
 						{
 							$('#availableRoomsSelect-'+<?php echo $reservation['reservation_id']; ?>).attr('disabled', false);
@@ -1256,8 +1256,8 @@ class Layout_View
    				
    				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['date']); ?></div>
    				<div class="col-sm-1"><strong><?php echo $data['room']; ?></strong></div>
-   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_in']); ?>"> </strong></div>
-   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_out']); ?>"> </strong></div>
+   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToJS($data['check_in']); ?>"> </strong></div>
+   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToJS($data['check_out']); ?>"> </strong></div>
    				<div class="col-sm-1">
    					<select id="availableRoomsSelect-<?php echo $data['reservation_id']; ?>"  disabled="true">
    						<option selected><?php echo $data['room']; ?></option>

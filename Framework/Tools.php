@@ -367,7 +367,7 @@ class Tools
     
     public static function formatMySQLtoJS($date)
     {
-    	//     	echo "from ".$date;
+//     	    	echo "from ".$date;
 //     	2016-01-10
     	if ($date)
     	{
