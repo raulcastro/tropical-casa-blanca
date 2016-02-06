@@ -18,6 +18,11 @@ $(function(){
 		});
 	}
 	
+	$('.updateRoom').click(function(){
+		var resId = $(this).attr('res-id');
+		updateReservation(resId);
+	});
+	
 	$('#pricePerNight').change(function(){
 		totalDays = $('#totalDays').html();
 		pricePerNight = $('#pricePerNight').val();
@@ -565,6 +570,37 @@ function updateMemberReservation(reservationId)
 	}
 }
 
+function updateReservation(reservationId)
+{
+	var roomId 		= $('#availableRoomsSelect-'+reservationId).val();
+	var checkIn 	= $('#dateBoxCheckIn-'+reservationId).val();
+	var checkOut 	= $('#dateBoxCheckOut-'+reservationId).val();
+	
+	if (roomId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{
+	        	reservationId:		reservationId,
+	        	roomId: 			roomId,
+	        	checkIn: 			checkIn,
+				checkOut: 			checkOut,
+	            opt: 				15
+	             },
+	        success:
+	        function(roomsAvailableList)
+	        {
+	            if (0 != roomsAvailableList)
+	            {
+	            	alert('The reservation been successfully updated.');
+	            }
+	        }
+	    });
+	}
+
+}
+
 function updateAvailableRooms(resId)
 {
 	var checkInDate 	= $('#dateBoxCheckIn-'+resId).datepicker("getDate");
@@ -574,8 +610,8 @@ function updateAvailableRooms(resId)
 	var checkOut		= $.datepicker.formatDate('mm/dd/yy', checkOutDate); 
 	
 	$('#availableRoomsSelect-'+resId+' option').remove();
-	var loadingOption  = '<option selected>Loading Rooms ... </option>';
-	$('#availableRoomsSelect-'+resId).append(loadingOption);
+//	var loadingOption  = '<option selected>Loading Rooms ... </option>';
+//	$('#availableRoomsSelect-'+resId).append(loadingOption);
 	
 	var roomId 			= $('#currentRoomId-'+resId).val();
 	var currentCheckIn 	= $('#currentCheckIn-'+resId).val();

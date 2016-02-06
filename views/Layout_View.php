@@ -664,15 +664,17 @@ class Layout_View
 						defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_in']); ?>"),
 						onSelect: function()
 						{
+							$('#availableRoomsSelect-'+<?php echo $reservation['reservation_id']; ?>).attr('disabled', false);
 							updateAvailableRooms("<?php echo $reservation['reservation_id']; ?>");
 						}
 					}
 				);
 				$( "#dateBoxCheckOut-<?php echo $reservation['reservation_id']; ?>").datepicker(
 					{
-						defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_mask']); ?>"),
+						defaultDate:new Date("<?php echo Tools::formatMYSQLToFront($reservation['check_out']); ?>"),
 						onSelect: function()
 						{
+							$('#availableRoomsSelect-'+<?php echo $reservation['reservation_id']; ?>).attr('disabled', false);
 							updateAvailableRooms("<?php echo $reservation['reservation_id']; ?>");
 						}
 					}
@@ -1237,37 +1239,43 @@ class Layout_View
    			
    			<div class="row bg-primary title">
    				<div class="col-sm-2">Date</div>
+   				<div class="col-sm-1">Room</div>
    				<div class="col-sm-2">Check-In</div>
    				<div class="col-sm-2">Check-Out</div>
-   				<div class="col-sm-2">Room</div>
-   				<div class="col-sm-2">Room Type</div>
-   				<div class="col-sm-2">Reservation ID</div>
+   				<div class="col-sm-1"></div>
+   				<div class="col-sm-1"></div>
+   				<div class="col-sm-1">Room Type</div>
+   				<div class="col-sm-1">Reservation ID</div>
    			</div>
    				
    			<div class="row info">
 <!--    				Current info about rooms -->
    				<input type="hidden" id="currentRoomId-<?php echo $data['reservation_id']; ?>" value="<?php echo $data['room_id']; ?>" />
    				<input type="hidden" id="currentCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMySQLtoJS($data['check_in']); ?>" />
-   				<input type="hidden" id="currentCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMySQLtoJS($data['check_mask']); ?>" />
+   				<input type="hidden" id="currentCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMySQLtoJS($data['check_out']); ?>" />
    				
    				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['date']); ?></div>
-   				<div class="col-sm-2"><strong><input type="text" resId="you mama" id="dateBoxCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_in']); ?>"> </strong></div>
-   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_mask']); ?>"> </strong></div>
-   				<div class="col-sm-2">
-   					<select id="availableRoomsSelect-<?php echo $data['reservation_id']; ?>">
+   				<div class="col-sm-1"><strong><?php echo $data['room']; ?></strong></div>
+   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_in']); ?>"> </strong></div>
+   				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToFront($data['check_out']); ?>"> </strong></div>
+   				<div class="col-sm-1">
+   					<select id="availableRoomsSelect-<?php echo $data['reservation_id']; ?>"  disabled="true">
    						<option selected><?php echo $data['room']; ?></option>
    						<?php 
    						foreach ($data['availableRooms'] as $room)
    						{
    							?>
-   							<option><?php echo $room['room']; ?></option>
+   							<option value="<?php echo $room['room_id']; ?>"><?php echo $room['room']; ?></option>
    							<?php
    						}
    						?>
    					</select>
    				</div>
-   				<div class="col-sm-2"><strong><?php echo $data['room_type']; ?></strong></div>
-   				<div class="col-sm-2"><strong><?php echo $data['reservation_id']; ?></strong></div>
+   				<div class="col-sm-1">
+   					<button type="button" class="updateRoom btn btn-default btn-xs btn-info" res-id="<?php echo $data['reservation_id']; ?>">Update room</button>
+   				</div>
+   				<div class="col-sm-1"><strong><?php echo $data['room_type']; ?></strong></div>
+   				<div class="col-sm-1"><strong><?php echo $data['reservation_id']; ?></strong></div>
    			</div>
    				
    			<div class="row extra">

@@ -968,6 +968,11 @@ ul.inbox-pagination li {
  	min-height: 20px;
  }
  
+.memberReservations .updateRoom {
+	padding: 3px 6px;
+	font-size: 10px;
+} 
+ 
  /*****************  Rooms Calendar week *************/
  
  

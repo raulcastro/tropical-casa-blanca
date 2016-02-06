@@ -797,8 +797,8 @@ class Layout_Model
 			LEFT JOIN room_types rt ON r.room_type_id = rt.room_type_id
 			WHERE r.room_id NOT IN (SELECT room_id
 			FROM reservations
-			WHERE (check_in <= "'.$checkIn.'" AND check_out >="'.$checkIn.'")
-			OR (check_in <= "'.$checkOut.'" AND check_out >="'.$checkOut.'")
+			WHERE (check_in < "'.$checkOut.'" AND check_out >="'.$checkOut.'")
+			OR (check_in <= "'.$checkIn.'" AND check_out >"'.$checkIn.'")
 			OR (check_in >= "'.$checkIn.'" AND check_out <= "'.$checkOut.'"))
 			AND r.room_id = '.$data['roomId'].'
 			ORDER BY r.room_order ASC
@@ -931,7 +931,7 @@ class Layout_Model
 					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
 					LEFT JOIN members m ON m.member_id = s.member_id
 					LEFT JOIN agencies a ON s.agency = a.agency_id
-					WHERE s.member_id = '.$memberId.' ORDER BY s.reservation_id DESC';
+					WHERE s.member_id = '.$memberId.' ORDER BY s.check_in ASC';
 				
 			return $this->db->getArray($query);
 		} catch (Exception $e) {
@@ -1280,6 +1280,35 @@ class Layout_Model
 					WHERE reservation_id = '.$reservationId;
 			
 			return $this->db->run($query);
+			
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function updateReservation($data)
+	{
+		try {
+			$checkIn 	= Tools::formatToMYSQL($data['checkIn']);
+			$checkIn	= date($checkIn);
+		
+			$checkOut 	= Tools::formatToMYSQL($data['checkOut']);
+			$checkOut 	= date($checkOut);
+		
+			$query = 'UPDATE reservations
+					SET check_in = ?,
+					check_out = ?,
+					room_id = ?
+					WHERE reservation_id = '.$data['reservationId'];
+			
+			$prep = $this->db->prepare($query);
+			
+			$prep->bind_param('ssi',
+					$checkIn,
+					$checkOut,
+					$data['roomId']);
+			
+			return $prep->execute();
 			
 		} catch (Exception $e) {
 			return false;

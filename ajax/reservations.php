@@ -57,6 +57,7 @@ switch ($_POST['opt'])
 		}
 	break;
 	
+// 	Add payment
 	case 6:
 		if ($model->addPayment($_POST))
 		{
@@ -66,7 +67,6 @@ switch ($_POST['opt'])
 		{
 			echo '0';
 		}	
-		
 	break;
 	
 	// Reservation grand total
@@ -141,7 +141,7 @@ switch ($_POST['opt'])
 		{
 			$currentRoom = $model->getSingleRoomById($roomId);
 			?>
-			<option selected><?php echo $currentRoom['room']; ?></option>
+			<option selected value="<?php echo $currentRoom['room_id']; ?>"><?php echo $currentRoom['room']; ?></option>
 			<?php 
 		}
 		
@@ -152,16 +152,49 @@ switch ($_POST['opt'])
 		if ($neededMax > $currentMax)
 		{
 			
-			if ($neededMin >= $currentMin && $neededMin <= $currentMax)
+			if ($neededMin >= $currentMin && $neededMin < $currentMax)
 			{
 				$info = array('roomId' => $roomId, 'checkIn'=>$currentCheckOut, 'checkOut'=>$checkOut);
 				if ($currentRoom = $model->searchSingleRoom($info))
 				{
 				?>
-				<option selected><?php echo $currentRoom['room']; ?></option>
+				<option selected value="<?php echo $currentRoom['room_id']; ?>"><?php echo $currentRoom['room']; ?></option>
 				<?php 					
 				}
-				
+			}
+		}
+		
+		if ($neededmin < $currentMin && $neededMax != $currentMin)
+		{
+			if ($neededMin <= $currentMin && $neededMax < $currentMax)
+			{
+				$info = array('roomId' => $roomId, 'checkIn'=>$checkIn, 'checkOut'=>$currentCheckIn);
+				if ($currentRoom = $model->searchSingleRoom($info))
+				{
+				?>
+				<option selected value="<?php echo $currentRoom['room_id']; ?>"><?php echo $currentRoom['room']; ?></option>
+				<?php 					
+				}
+			}
+		}
+		
+		if ($neededmin < $currentMin && $neededMax > $currentMin)
+		{
+			$info = array('roomId' => $roomId, 'checkIn'=>$currentCheckOut, 'checkOut'=>$checkOut);
+			$left = $model->searchSingleRoom($info);
+			
+			$info = array('roomId' => $roomId, 'checkIn'=>$checkIn, 'checkOut'=>$currentCheckIn);
+			$rigth = $model->searchSingleRoom($info);
+			
+			if ($left && $rigth)
+			{
+				echo 'here';
+				if ($currentRoom = $model->getSingleRoomById($roomId))
+				{
+				?>
+				<option selected value="<?php echo $currentRoom['room_id']; ?>"><?php echo $currentRoom['room']; ?></option>
+				<?php 					
+				}
 			}
 		}
 		
@@ -170,10 +203,17 @@ switch ($_POST['opt'])
 			foreach ($rooms as $room)
    			{
 	   			?>
-	   			<option><?php echo $room['room']; ?></option>
+	   			<option value="<?php echo $room['room_id']; ?>"><?php echo $room['room']; ?></option>
 	   			<?php
 	   		}
 		}
+	break;
+	
+	case 15:
+		if ($model->updateReservation($_POST))
+			echo '1';
+		else
+			echo '0';
 	break;
 
 	default:
