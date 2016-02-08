@@ -272,7 +272,7 @@ class Layout_View
 			<nav id='nav navbar-nav navbar-fixed-top'>
 				<ul class="nav navbar-nav main-menu">
 					<li><a <?php if ($_GET['section'] == 1) echo $active; ?> href="/dashboard/"><b><?php echo $this->data['userInfo']['name']; ?></b></a></li>
-					<!-- <li><a <?php if ($_GET['section'] == 5) echo $active; ?> href="#">Settings</a></li> -->					
+					<li><a <?php if ($_GET['section'] == 5) echo $active; ?> href="#">Settings</a></li>					
 					<li><a <?php if ($_GET['section'] == 10) echo $active; ?> href="/sign-out/" class="sign-out">Log Out</a></li>
 				</ul>
 			</nav>
@@ -1333,14 +1333,21 @@ class Layout_View
    			</div>
    			
    			<div class="row-extra">
-   				<div class="col-sm-12">
+   				<div class="col-sm-4">
    					<h5>Grand Total <strong> $ <span id="payment-grand-total-<?php echo $data['reservation_id']; ?>"><?php echo $data['grandTotal']; ?></span></strong></h5>
+   				</div>
+   				<div class="col-sm-4">
+   					<h5>Paid: <strong> <span id="payment-paid-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['paid']; ?></span></strong></h5>
+   				</div>
+   				<div class="col-sm-4">
+   					<h5 class="pending-highlight">Pending: <strong> <span id="payment-pending-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['unpaid']; ?></span></strong></h5>
    				</div>
    			</div>
    			
    			<div class="row-extra">
-   				<div class="col-sm-3">Paid: <strong id="payment-paid-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['paid']; ?></strong></div>
-   				<div class="col-sm-3 pending-highlight">Pending: <strong id="payment-pending-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['unpaid']; ?></strong></div>
+   				<div class="col-sm-4">Staying cost total: $<strong id="payment-staying-total-<?php echo $data['reservation_id']; ?>"> <?php echo $data['staying_total']; ?> </strong></div>
+   				<div class="col-sm-4">Staying cost paid: <strong id="payment-staying-paid-<?php echo $data['reservation_id']; ?>"> $ <?php echo $data['staying_paid']; ?></strong></div>
+   				<div class="col-sm-4">Staying cost pending: <strong id="payment-staying-pending-<?php echo $data['reservation_id']; ?>"> $ <?php echo $data['staying_pending']; ?></strong></div>
    			</div>
    			
    			<div class="clearfix"></div>
@@ -1351,6 +1358,7 @@ class Layout_View
    				echo Layout_View::getPaymentItems($data[0]['payments']);
    			?>
    			</div>
+   			<br>
    			<?php 
    			if ($data['status'] != '5')
    			{
@@ -1360,7 +1368,12 @@ class Layout_View
 	   				<div class="col-sm-3">
 	   					<input type="text" placeholder="description" id="extra-pay-des-<?php echo $data['reservation_id']; ?>" />
 	   				</div>
-	   				<div class="col-sm-2">$ <input type="text" class="input-cost" placeholder="cost" id="extra-pay-cost-<?php echo $data['reservation_id']; ?>" /></div>
+	   				<div class="col-sm-2">
+	   					$ <input type="text" class="input-cost" placeholder="cost" id="extra-pay-cost-<?php echo $data['reservation_id']; ?>" />
+	   				</div>
+	   				<div class="col-sm-2">
+	   					<input type="checkbox" name="staying" value="staying" id="extra-pay-staying-<?php echo $data['reservation_id']; ?>"> Staying cost
+	   				</div>
 	   				<div class="col-sm-1">
 	   					<button type="button" class="btn btn-info btn-xs add-extra-pay" res-id="<?php echo $data['reservation_id']; ?>" >ADD</button>
 	   				</div>
@@ -1399,6 +1412,11 @@ class Layout_View
    			<div class="col-sm-3">
    				<i>
  			<?php 
+ 			if ($payment['staying'] == 1)
+ 			{
+ 				echo "<strong>[Staying]</strong> ";	
+ 			}
+ 			
    			if ($payment['active'] == 0)
    			{
    				echo "<s>".$payment['description']."</s>";

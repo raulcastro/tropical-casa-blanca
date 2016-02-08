@@ -133,6 +133,10 @@ class generalBackend
 					$paid 		= $this->model->getReservationPaidByReservationId($reservation['reservation_id']);
 					$unpaid 	= $this->model->getReservationUnpaidByReservationId($reservation['reservation_id']);
 					
+					$grandTotalStaying = $this->model->getReservationStayingCostTotal($reservation['reservation_id']);
+					$paidStaying		= $this->model->getReservationStayingCostPaid($reservation['reservation_id']);
+					$pendingStaying	= $this->model->getReservationStayingPending($reservation['reservation_id']);
+					
 					// List of available rooms of for the current range of date
 					$reservationDate 	= array('checkIn' => $reservation['check_in'], 'checkOut' => $reservation['check_out']);
 					$availableRooms 	= $this->model->searchRooms($reservationDate);
@@ -156,6 +160,9 @@ class generalBackend
 							'grandTotal' 		=> $grandTotal,
 							'paid' 				=> $paid,
 							'unpaid' 			=> $unpaid,
+							'staying_total'		=> $grandTotalStaying,
+							'staying_paid'		=> $paidStaying,
+							'staying_pending'	=> $pendingStaying,
 							'availableRooms'	=> $availableRooms
 					);
 					

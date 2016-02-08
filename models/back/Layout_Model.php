@@ -883,8 +883,8 @@ class Layout_Model
 			
 			if ($prep->execute())
 			{
-				$info = array('reservationId' => $prep->insert_id, 'description' => "Staying cost", 'cost' => $data['price']);
-				$this->addPayment($info);
+// 				$info = array('reservationId' => $prep->insert_id, 'description' => "Staying cost", 'cost' => $data['price']);
+// 				$this->addPayment($info);
 				return $prep->insert_id;
 				
 			}
@@ -1078,15 +1078,16 @@ class Layout_Model
 	public function addPayment($data)
 	{
 		try {
-			$query = 'INSERT INTO payments(reservation_id, description, cost)
-						VALUES(?,?, ?);';
+			$query = 'INSERT INTO payments(reservation_id, description, cost, staying)
+						VALUES(?, ?, ?, ?);';
 	
 			$prep = $this->db->prepare($query);
 	
-			$prep->bind_param('isi',
+			$prep->bind_param('isii',
 					$data['reservationId'],
 					$data['description'],
-					$data['cost']);
+					$data['cost'],
+					$data['staying']);
 			
 			return $prep->execute();
 // 			if ($prep->execute())
@@ -1131,8 +1132,12 @@ class Layout_Model
 	{
 		try {
 			$reservation_id = (int) $reservation_id;
-			$query = 'SELECT SUM(cost) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1";
-			return $this->db->getValue($query);
+			
+			$stayingTotal = $this->getReservationStayingCostTotal($reservation_id);
+			
+			$query = 'SELECT SUM(cost) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND staying = 0";
+			
+			return ($this->db->getValue($query) + $stayingTotal);
 		} catch (Exception $e) {
 			return false;
 		}
@@ -1168,9 +1173,44 @@ class Layout_Model
 	public function getReservationUnpaidByReservationId($reservation_id)
 	{
 		try {
+			
+			$total = $this->getReservationGrandTotalByReservationId($reservation_id);
+			$paid = $this->getReservationPaidByReservationId($reservation_id);
+			
+			return ($total - $paid);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function getReservationStayingCostTotal($reservation_id)
+	{
+		try {
 			$reservation_id = (int) $reservation_id;
-			$query = 'SELECT IFNULL(SUM(cost), 0) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 0";
+			$query = 'SELECT price FROM reservations WHERE reservation_id = '.$reservation_id;
 			return $this->db->getValue($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function getReservationStayingCostPaid($reservation_id)
+	{
+		try {
+			$query = 'SELECT IFNULL(SUM(cost), 0) as staying_paid FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 1 AND staying = 1";
+			return $this->db->getValue($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function getReservationStayingPending($reservation_id)
+	{
+		try {
+			$total = $this->getReservationStayingCostTotal($reservation_id);
+			$paid = $this->getReservationStayingCostPaid($reservation_id);
+			
+			return $total - $paid;
 		} catch (Exception $e) {
 			return false;
 		}
@@ -1314,6 +1354,7 @@ class Layout_Model
 			return false;
 		}
 	}
+	
 }
 
 

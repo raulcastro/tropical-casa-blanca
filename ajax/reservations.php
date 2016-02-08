@@ -78,12 +78,25 @@ switch ($_POST['opt'])
 	
 	case 8:
 		if ($grandTotal = $model->getReservationPaidByReservationId($_POST['reservationId']))
+		{
 			echo '$ '.$grandTotal;
+		}
+		else 
+		{
+			echo '$ 0';
+		}
 	break;
 			
 	case 9:
-		$grandTotal = $model->getReservationUnpaidByReservationId($_POST['reservationId']);
-		echo '$ '.$grandTotal;
+		if ($grandTotal = $model->getReservationUnpaidByReservationId($_POST['reservationId']))
+		{
+			echo '$ '.$grandTotal;
+		}
+		else 
+		{
+			echo '$ 0';
+		}
+		
 	break;
 	
 	case 10:
@@ -229,6 +242,31 @@ switch ($_POST['opt'])
 			echo '1';
 		else
 			echo '0';
+	break;
+	
+	case 16:
+		if ($paidStaying		= $model->getReservationStayingCostPaid($_POST['reservationId']))
+		{	
+			echo '$ '.$paidStaying;
+		}
+		else 
+		{
+			echo '$ 0';
+		}
+	break;
+	
+	case 17:
+		if ($pendingStaying		= $model->getReservationStayingPending($_POST['reservationId']))
+		{
+			echo '$ '.$pendingStaying;
+		}
+		else
+		{
+			echo '$ 0';
+		}
+		
+			
+		
 	break;
 
 	default:

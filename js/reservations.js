@@ -94,6 +94,8 @@ function unActivePayment(resId, payId)
 	            	getGrandTotal(resId);
 	            	getPaid(resId);
 	            	getPending(resId);
+	            	getStayingPaid(resId);
+	            	getStayingPending(resId);
 	            }
 	        }
 	    });
@@ -121,6 +123,8 @@ function setPaymentStatus(resId, payId)
 	            	getGrandTotal(resId);
 	            	getPaid(resId);
 	            	getPending(resId);
+	            	getStayingPaid(resId);
+	            	getStayingPending(resId);
 	            }
 	        }
 	    });
@@ -166,6 +170,8 @@ function processExtraPayment(resId)
 	getGrandTotal(resId);
 	getPaid(resId);
 	getPending(resId);
+	getStayingPaid(resId);
+	getStayingPending(resId);
 }
 
 function getAllPayments(resId)
@@ -224,6 +230,12 @@ function addExtraPayment(resId)
 {
 	var extraDes 	= $('#extra-pay-des-'+resId).val();
 	var extraCost 	= $('#extra-pay-cost-'+resId).val();
+	var staying		= 0;
+	
+	if ($('#extra-pay-staying-'+resId).is(':checked'))
+	{
+		staying = 1;
+	}
 	
 	if (extraDes && extraCost)
 	{
@@ -234,6 +246,7 @@ function addExtraPayment(resId)
 		        	reservationId:	resId,
 		        	description: 	extraDes,
 					cost: 			extraCost,
+					staying:		staying,
 		            opt: 			6
 	             },
 	        success:
@@ -243,6 +256,7 @@ function addExtraPayment(resId)
 	            {
 	            	$('#extra-pay-des-'+resId).val('');
 	            	$('#extra-pay-cost-'+resId).val('');
+	            	$('#extra-pay-staying-'+resId).attr('checked', false);
 	            }
 	        }
 	    });
@@ -312,6 +326,52 @@ function getPending(resId)
 	            if ('Null' != xml)
 	            {
 	            	$('#payment-pending-total-'+resId).html(xml);
+	            }
+	        }
+	    });
+	}
+}
+
+function getStayingPaid(resId)
+{
+	if (resId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		            opt: 			16
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	$('#payment-staying-paid-'+resId).html(xml);
+	            }
+	        }
+	    });
+	}
+}
+
+function getStayingPending(resId)
+{
+	if (resId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		            opt: 			17
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	$('#payment-staying-pending-'+resId).html(xml);
 	            }
 	        }
 	    });
@@ -642,5 +702,4 @@ function updateAvailableRooms(resId)
 	        }
 	    });
 	}
-	
 }

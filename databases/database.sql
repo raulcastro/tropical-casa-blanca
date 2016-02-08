@@ -168,7 +168,7 @@ CREATE TABLE `cancelations` (
 ) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 
 
-
+ALTER TABLE payments ADD COLUMN `staying` INT(1) DEFAULT 0;
 
 
 
