@@ -1338,15 +1338,17 @@ class Layout_Model
 			$query = 'UPDATE reservations
 					SET check_in = ?,
 					check_out = ?,
-					room_id = ?
+					room_id = ?,
+					price = ?
 					WHERE reservation_id = '.$data['reservationId'];
 			
 			$prep = $this->db->prepare($query);
 			
-			$prep->bind_param('ssi',
+			$prep->bind_param('ssii',
 					$checkIn,
 					$checkOut,
-					$data['roomId']);
+					$data['roomId'],
+					$data['total']);
 			
 			return $prep->execute();
 			

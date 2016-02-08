@@ -31,6 +31,16 @@ $(function(){
 		$('#totalReservation').val(totalReservation);
 	});
 	
+	$('.priceCalculator').change(function(){
+		var resId = $(this).attr('resId');
+		
+		totalDays = $('#totalNightsRes-'+resId).html();
+		pricePerNight = $('#newCostPerNight-'+resId).val();
+
+		totalReservation = totalDays * pricePerNight;
+		$('#newTotalStaying-'+resId).html(totalReservation);
+	});
+	
 	$('.reservation-options div').click(function(){
 		var optRes = $(this).attr('opt-res');
 		var singleRes =  $(this).attr('single-res');
@@ -326,6 +336,29 @@ function getPending(resId)
 	            if ('Null' != xml)
 	            {
 	            	$('#payment-pending-total-'+resId).html(xml);
+	            }
+	        }
+	    });
+	}
+}
+
+function getStayingTotal(resId)
+{
+	if (resId)
+	{
+		$.ajax({
+	        type:   'POST',
+	        url:    '/ajax/reservations.php',
+	        data:{  
+		        	reservationId:	resId,
+		            opt: 			18
+	             },
+	        success:
+	        function(xml)
+	        {
+	            if (0 != xml)
+	            {
+	            	$('#payment-staying-total-'+resId).html(xml);
 	            }
 	        }
 	    });
@@ -635,6 +668,7 @@ function updateReservation(reservationId)
 	var roomId 		= $('#availableRoomsSelect-'+reservationId).val();
 	var checkIn 	= $('#dateBoxCheckIn-'+reservationId).val();
 	var checkOut 	= $('#dateBoxCheckOut-'+reservationId).val();
+	var total		= $('#newTotalStaying-'+reservationId).html();
 	
 	if (roomId)
 	{
@@ -646,6 +680,7 @@ function updateReservation(reservationId)
 	        	roomId: 			roomId,
 	        	checkIn: 			checkIn,
 				checkOut: 			checkOut,
+				total:				total,
 	            opt: 				15
 	             },
 	        success:
@@ -653,7 +688,14 @@ function updateReservation(reservationId)
 	        {
 	            if (0 != roomsAvailableList)
 	            {
+	            	getGrandTotal(reservationId);
+	            	getPaid(reservationId);
+	            	getPending(reservationId);
+	            	getStayingPaid(reservationId);
+	            	getStayingPending(reservationId);
+	            	getStayingTotal(reservationId);
 	            	alert('The reservation been successfully updated.');
+	            	$('.room-aux-'+reservationId).hide();
 	            }
 	        }
 	    });
@@ -667,6 +709,13 @@ function updateAvailableRooms(resId)
 	
 	var checkOutDate	= $('#dateBoxCheckOut-'+resId).datepicker("getDate");
 	var checkOut		= $.datepicker.formatDate('mm/dd/yy', checkOutDate); 
+	
+	if (checkIn && checkOut)
+	{
+		totalNights = restaFechas(checkIn, checkOut);
+	}
+
+	$('#totalNightsRes-'+resId).html(totalNights);
 	
 	$('#availableRoomsSelect-'+resId+' option').remove();
 //	var loadingOption  = '<option selected>Loading Rooms ... </option>';

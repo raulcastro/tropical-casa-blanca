@@ -666,6 +666,8 @@ class Layout_View
 						{
 							$('#availableRoomsSelect-'+<?php echo $reservation['reservation_id']; ?>).attr('disabled', false);
 							updateAvailableRooms("<?php echo $reservation['reservation_id']; ?>");
+
+							$('.room-aux-'+<?php echo $reservation['reservation_id']; ?>).show();
 						}
 					}
 				);
@@ -676,6 +678,7 @@ class Layout_View
 						{
 							$('#availableRoomsSelect-'+<?php echo $reservation['reservation_id']; ?>).attr('disabled', false);
 							updateAvailableRooms("<?php echo $reservation['reservation_id']; ?>");
+							$('.room-aux-'+<?php echo $reservation['reservation_id']; ?>).show();
 						}
 					}
 				);
@@ -1238,14 +1241,12 @@ class Layout_View
    		<div class="col-sm-12 reservation-item <?php echo $class; ?>" id="reservation-item-<?php echo $data['reservation_id']; ?>">
    			
    			<div class="row bg-primary title">
-   				<div class="col-sm-2">Date</div>
+   				<div class="col-sm-1">Date</div>
    				<div class="col-sm-1">Room</div>
    				<div class="col-sm-2">Check-In</div>
    				<div class="col-sm-2">Check-Out</div>
    				<div class="col-sm-1"></div>
    				<div class="col-sm-1"></div>
-   				<div class="col-sm-1">Room Type</div>
-   				<div class="col-sm-1">Reservation ID</div>
    			</div>
    				
    			<div class="row info">
@@ -1254,7 +1255,7 @@ class Layout_View
    				<input type="hidden" id="currentCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMySQLtoJS($data['check_in']); ?>" />
    				<input type="hidden" id="currentCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMySQLtoJS($data['check_out']); ?>" />
    				
-   				<div class="col-sm-2"><?php echo Tools::formatMYSQLToFront($data['date']); ?></div>
+   				<div class="col-sm-1"><?php echo Tools::formatMYSQLToFront($data['date']); ?></div>
    				<div class="col-sm-1"><strong><?php echo $data['room']; ?></strong></div>
    				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckIn-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToJS($data['check_in']); ?>"> </strong></div>
    				<div class="col-sm-2"><strong><input type="text" id="dateBoxCheckOut-<?php echo $data['reservation_id']; ?>" value="<?php echo Tools::formatMYSQLToJS($data['check_out']); ?>"> </strong></div>
@@ -1271,14 +1272,18 @@ class Layout_View
    						?>
    					</select>
    				</div>
-   				<div class="col-sm-1">
+   				<div class="col-sm-1 room-aux room-aux-<?php echo $data['reservation_id']; ?>">No. Days: <strong id="totalNightsRes-<?php echo $data['reservation_id']; ?>"></strong></div>
+   				<div class="col-sm-2 room-aux room-aux-<?php echo $data['reservation_id']; ?>"><input type="text" class="priceCalculator" placeholder="cost per night" value="0" id="newCostPerNight-<?php echo $data['reservation_id']; ?>" resId="<?php echo $data['reservation_id']; ?>"/></div>
+   				<div class="col-sm-1 room-aux room-aux-<?php echo $data['reservation_id']; ?>">Total: <strong id="newTotalStaying-<?php echo $data['reservation_id']; ?>" ></strong></div>
+   				<div class="col-sm-1 room-aux room-aux-<?php echo $data['reservation_id']; ?>">
    					<button type="button" class="updateRoom btn btn-default btn-xs btn-info" res-id="<?php echo $data['reservation_id']; ?>">Update room</button>
    				</div>
-   				<div class="col-sm-1"><strong><?php echo $data['room_type']; ?></strong></div>
-   				<div class="col-sm-1"><strong><?php echo $data['reservation_id']; ?></strong></div>
+   				
    			</div>
    				
    			<div class="row extra">
+   				<div class="col-sm-2">Room Type: <strong><?php echo $data['room_type']; ?></strong></div>
+   				<div class="col-sm-2">Reservation ID: <strong><?php echo $data['reservation_id']; ?></strong></div>
    				<div class="col-sm-4">Adults: <strong><?php echo $data['adults']; ?></strong></div>
    				<div class="col-sm-4">Children: <strong><?php echo $data['children']; ?></strong></div>
    			</div>
@@ -1345,7 +1350,7 @@ class Layout_View
    			</div>
    			
    			<div class="row-extra">
-   				<div class="col-sm-4">Staying cost total: $<strong id="payment-staying-total-<?php echo $data['reservation_id']; ?>"> <?php echo $data['staying_total']; ?> </strong></div>
+   				<div class="col-sm-4">Staying cost total: <strong id="payment-staying-total-<?php echo $data['reservation_id']; ?>">$ <?php echo $data['staying_total']; ?> </strong></div>
    				<div class="col-sm-4">Staying cost paid: <strong id="payment-staying-paid-<?php echo $data['reservation_id']; ?>"> $ <?php echo $data['staying_paid']; ?></strong></div>
    				<div class="col-sm-4">Staying cost pending: <strong id="payment-staying-pending-<?php echo $data['reservation_id']; ?>"> $ <?php echo $data['staying_pending']; ?></strong></div>
    			</div>

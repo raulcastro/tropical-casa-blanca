@@ -264,9 +264,17 @@ switch ($_POST['opt'])
 		{
 			echo '$ 0';
 		}
-		
-			
-		
+	break;
+	
+	case 18:
+		if ($grandTotalStaying		= $model->getReservationStayingCostTotal($_POST['reservationId']))
+		{
+			echo '$ '.$grandTotalStaying;
+		}
+		else
+		{
+			echo '$ 0';
+		}
 	break;
 
 	default:
