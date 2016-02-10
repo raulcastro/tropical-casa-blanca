@@ -127,6 +127,10 @@ class Layout_View
 				case 'tasks':
 					echo self :: getTasksHead();
 				break;
+				
+				case 'reports':
+					echo self :: getReportsHead();
+				break;
 			}
 			?>
 		</head>
@@ -180,6 +184,10 @@ class Layout_View
 
 							case 'tasks':
 								echo self :: getAllTasks();
+							break;
+							
+							case 'reports':
+								echo self :: getReports();
 							break;
 							
 							default :
@@ -272,7 +280,7 @@ class Layout_View
 			<nav id='nav navbar-nav navbar-fixed-top'>
 				<ul class="nav navbar-nav main-menu">
 					<li><a <?php if ($_GET['section'] == 1) echo $active; ?> href="/dashboard/"><b><?php echo $this->data['userInfo']['name']; ?></b></a></li>
-					<li><a <?php if ($_GET['section'] == 5) echo $active; ?> href="#">Settings</a></li>					
+					<!-- <li><a <?php if ($_GET['section'] == 5) echo $active; ?> href="#">Settings</a></li> -->					
 					<li><a <?php if ($_GET['section'] == 10) echo $active; ?> href="/sign-out/" class="sign-out">Log Out</a></li>
 				</ul>
 			</nav>
@@ -416,6 +424,7 @@ class Layout_View
 			</ul>
 			
 			<ul class="nav nav-sidebar">
+				<li <?php if ($_GET['section'] == 16) echo $active; ?>><a href="/reports/">Reports</a></li>
 				<li <?php if ($_GET['section'] == 13) echo $active; ?>><a href="/rooms/">Rooms</a></li>
 				<!-- <li <?php if ($_GET['section'] == 11) echo $active; ?>><a href="/calendar/">Calendar</a></li> -->
 				<li <?php if ($_GET['section'] == 5) echo $active; ?>><a href="/agencies/">Agencies</a></li>
@@ -2310,6 +2319,131 @@ class Layout_View
    		ob_end_clean();
    		return $tasks; 
    	}
+   	
+   	public function getReportsHead()
+    {
+    	ob_start();
+    	?>
+       	<script src="/js/reports.js"></script>
+        <script>
+    	</script>
+        <?php
+        $signIn = ob_get_contents();
+        ob_end_clean();
+        return $signIn;
+    }
+    
+    public function getReports()
+	{
+		ob_start();
+		$curMonth = date('M Y');
+		?>
+		<div class="row agencyForm">
+			<div class="col-sm-2">
+				<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+					<option value="/rooms/">Select a month</option>
+					<?php 
+					for ($i = 0; $i <= 12; $i ++)
+					{
+						$interval = '+'.$i.' month';
+						?>
+						<option value="/reports/from/<?php echo date('Y-m-d', strtotime($interval, strtotime($curMonth))); ?>/">
+							<?php echo date('M Y', strtotime($interval, strtotime($curMonth))); ?>
+						</option>
+						<?php 
+					}
+					
+					if (!$_GET['from'])
+					{
+						$from = date('Y-m-d', strtotime(' -1 day'));
+						$start = date('Y-m-d', strtotime(' -1 day', strtotime($from)));
+						$end = date('Y-m-d', strtotime(' +31 day', strtotime($from)));
+					}
+					else 
+					{
+						$from = date('Y-m-d', strtotime($_GET['from']));
+						$start = date('Y-m-d', strtotime(' -1 day', strtotime($_GET['from'])));
+						$end = date('Y-m-d', strtotime(' +32 day', strtotime($_GET['from'])));
+					}
+					?>
+				</select>
+				
+			</div>
+			
+			<?php
+			if ($this->data['userInfo']['type'] == 1)
+			{
+				?>
+			<div class="col-sm-2">
+				<a href="/get-report.php?from=<?php echo $_GET['from']; ?>" class="btn btn-info btn-xs" id="" target="_blank">Get Report</a>
+			</div>
+				<?php
+			}
+			?>
+			
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="table-responsive">
+		   		   	<table class="table table-striped">
+		   				<thead>
+		   					<tr>
+		   						<th>R. ID</th>
+		   						<th>Date</th>
+		   						<th>Guest Name</th>
+		   						<th>Ad.</th>
+		   						<th>Ch.</th>
+		   						<th>Nights</th>
+		   						<th>Agency</th>
+		   						<th>PPN</th>
+		   						<th>Total</th>
+		   						<th>Paid</th>
+		   						<th>Room</th>
+		   						<th>Check In</th>
+		   						<th>Check Out</th>
+		   						<th>Status</th>
+		   						<th>Country</th>
+		   						<th>External Id</th>
+		   						<th>Comments</th>
+		   					</tr>
+		   				</thead>
+		   				<tbody id="agenciesList">
+		   					<?php 
+		   					foreach ($this->data['reservations'] as $reservation)
+		   					{
+		   						?>
+		   					<tr>
+		   						<td><?php echo $reservation['reservation_id']; ?></td>
+		   						<td><?php echo Tools::formatMYSQLToFront($reservation['date']); ?></td>
+		   						<td><?php echo $reservation['name'].' '.$reservation['last_name']; ?></td>
+		   						<td><?php echo $reservation['adults']; ?></td>
+		   						<td><?php echo $reservation['children']; ?></td>
+		   						<td><?php echo $reservation['n_days']; ?></td>
+		   						<td><?php echo $reservation['agency']; ?></td>
+		   						<td><?php echo $reservation['ppn']; ?></td>
+		   						<td><?php echo $reservation['total']; ?></td>
+		   						<td><?php echo $reservation['paid']; ?></td>
+		   						<td><?php echo $reservation['room']; ?></td>
+		   						<td><?php echo Tools::formatMYSQLToFront($reservation['check_in']); ?></td>
+		   						<td><?php echo Tools::formatMYSQLToFront($reservation['check_out']); ?></td>
+		   						<td><?php echo $reservation['r_status']; ?></td>
+		   						<td><?php echo $reservation['country']; ?></td>
+		   						<td><?php echo $reservation['external_id']; ?></td>
+		   						<td><?php echo $reservation['notes']; ?></td>	
+		   					</tr>
+		   						<?php 
+		   					}
+		   					?>
+		   				</tbody>
+		   			</table>
+			</div>
+			</div>
+		</div>
+		<?php
+		$agencies = ob_get_contents();
+		ob_end_clean();
+		return $agencies; 
+	}
    	
    	/**
    	 * The very awesome footer!

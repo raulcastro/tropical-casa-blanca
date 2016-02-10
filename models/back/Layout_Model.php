@@ -1326,6 +1326,42 @@ class Layout_Model
 		}
 	}
 	
+	public function getReservationsByRange($start, $end)
+	{
+		try {
+			$query = '
+					SELECT r.*,
+					m.name,
+					m.last_name,
+					a.agency,
+					ro.room,
+					m.country,
+					m.notes,
+					DATEDIFF(r.check_out, check_in) AS n_days,
+					((SELECT IFNULL(SUM(p.cost), 0) as grand_total FROM payments p WHERE p.reservation_id = r.reservation_id AND p.active = 1 AND p.staying = 0) + r.price) as total,
+					(SELECT IFNULL(SUM(cost), 0) as grand_total FROM payments WHERE reservation_id = r.reservation_id AND active = 1 AND status = 1) AS paid,
+					FORMAT((r.price/DATEDIFF(r.check_out, check_in)), 0) AS ppn,
+					CASE
+						WHEN r.status = 1 THEN "Pending"
+						WHEN r.status = 2 THEN "Confirmed"
+						WHEN r.status = 3 THEN "In"
+						WHEN r.status = 4 THEN "Out"
+						WHEN r.status = 5 THEN "Canceled"
+					END as r_status
+					FROM reservations r
+					LEFT JOIN members m ON r.member_id = m.member_id
+					LEFT JOIN agencies a ON r.agency = a.agency_id
+					LEFT JOIN rooms ro ON r.room_id = ro.room_id 
+					WHERE r.check_in
+					BETWEEN "'.$start.'" AND "'.$end.'"
+					';
+// 			echo $query;
+			return $this->db->getArray($query);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	public function updateReservation($data)
 	{
 		try {

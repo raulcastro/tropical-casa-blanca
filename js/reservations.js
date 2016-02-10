@@ -696,6 +696,7 @@ function updateReservation(reservationId)
 	            	getStayingTotal(reservationId);
 	            	alert('The reservation been successfully updated.');
 	            	$('.room-aux-'+reservationId).hide();
+	            	$('#availableRoomsSelect-'+reservationId).attr('disabled', true);
 	            }
 	        }
 	    });
