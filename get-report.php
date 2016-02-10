@@ -46,7 +46,6 @@ $objPHPExcel->getActiveSheet()->getCell('Q1')->setValue('Comments');
 $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFill()->getStartColor()->setRGB('111111');
 $objPHPExcel->getActiveSheet()->getStyle('A1:Q1')->getFont()->getColor()->setRGB('111111');
 
-
 $i = 1;
 foreach ($data['reservations'] as $reservation)
 {
@@ -74,17 +73,17 @@ foreach ($data['reservations'] as $reservation)
 if (!$_GET['from'])
 {
 	$from = date('Y-m-d', strtotime(' -1 day'));
-	$start = date('Y-M-d', strtotime(' -1 day', strtotime($from)));
+	$start = date('Y-Md', strtotime(' -1 day', strtotime($from)));
 	$end = date('Y-m-M', strtotime(' +31 day', strtotime($from)));
 }
 else
 {
 	$from = date('Y-m-d', strtotime($_GET['from']));
-	$start = date('Y-M-d', strtotime(' -1 day', strtotime($_GET['from'])));
+	$start = date('Y-M', strtotime(' -1 day', strtotime($_GET['from'])));
 	$end = date('Y-M-d', strtotime(' +32 day', strtotime($_GET['from'])));
 }
 
-$reportTitle = 'Report '.$start.' - '.$end;
+$reportTitle = 'Report '.$start.'.xlsx';
 
 $objPHPExcel->getActiveSheet()->setTitle($reportTitle);
 

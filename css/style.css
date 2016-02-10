@@ -1009,7 +1009,7 @@ ul.inbox-pagination li {
  	margin: 0;
 }
 
-.rooms-calendar .days-box .row-week-day:hover {
+.day-hover {
 	background-color: #ECECEC;
 }
 
@@ -1089,18 +1089,21 @@ ul.inbox-pagination li {
  
  /* Rooms monthly */
  
- .rooms-calendar .room-row-box .rooms-month-name
+ .rooms-calendar .rooms-month-name
 {
+	width: 5%;
 	border: 0;
 	border-left: 1px  solid #ECECEC;
 	border-right: 1px  solid #ECECEC;
-	border-top: 1px  solid #888;
-	min-height: 21.5px!important;
+	border-bottom: 1px  solid #888;
+	min-height: 25px!important;
 	font-weight: bold;
+	font-size: 9px;
+	float: left;
 }
  
  .rooms-calendar .days-box .row-week-day-header .month-day {
- 	width: 3.22580645%;
+ 	width: 3.06451612903226%;
  	float: left;
  	display: block;
  	position: relative;
@@ -1127,7 +1130,7 @@ ul.inbox-pagination li {
 }
  
 .rooms-calendar .days-box .row-week-day .month-day {
- 	width: 3.22580645%;
+ 	width: 3.06451612903226%;
  	float: left;
  	display: block;
  	position: relative;

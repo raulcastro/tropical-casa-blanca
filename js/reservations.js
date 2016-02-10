@@ -28,7 +28,7 @@ $(function(){
 		pricePerNight = $('#pricePerNight').val();
 		
 		totalReservation = totalDays * pricePerNight;
-		$('#totalReservation').val(totalReservation);
+		$('#totalReservation').val(totalReservation.toFixed(2));
 	});
 	
 	$('.priceCalculator').change(function(){
@@ -38,7 +38,7 @@ $(function(){
 		pricePerNight = $('#newCostPerNight-'+resId).val();
 
 		totalReservation = totalDays * pricePerNight;
-		$('#newTotalStaying-'+resId).html(totalReservation);
+		$('#newTotalStaying-'+resId).html(totalReservation.toFixed(2));
 	});
 	
 	$('.reservation-options div').click(function(){

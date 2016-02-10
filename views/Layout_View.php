@@ -1900,19 +1900,32 @@ class Layout_View
 			<script>
 			// Grab all elements with the class "hasTooltip"
 			$(document).ready(function() {
-			$('.hasTooltip').each(function() { // Notice the .each() loop, discussed below
-			    $(this).qtip({
-			        content: {
-			            text: $(this).next('div') // Use the "div" element next to this for the content
-			        },
-			        hide: {
-						fixed: true,
-						delay: 300
-					}
-			    });
-			});
+				$('.hasTooltip').each(function() { // Notice the .each() loop, discussed below
+				    $(this).qtip({
+				        content: {
+				            text: $(this).next('div') // Use the "div" element next to this for the content
+				        },
+				        hide: {
+							fixed: true,
+							delay: 300
+						}
+				    });
+				});
+
+				$('.month-day')
+					.mouseover(function() {
+						var className = $(this).attr('vertAux');
+						$(className).addClass('day-hover');
+					})
+					.mouseout(function() {
+						var className = $(this).attr('vertAux');
+						$(className).removeClass('day-hover');
+					});
 			});
 			</script>
+			<style media="screen" type="text/css">
+			
+			</style>
    		<?php		
    		$roomsHead = ob_get_contents();
    		ob_end_clean();
@@ -1933,47 +1946,22 @@ class Layout_View
    		$curMonth = date('M Y');
 		?>
 		<div class="row col-sm-12 rooms-calendar">
-			<div class="col-sm-1">
-				<div class="select-month">
-					<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-						<option value="/rooms/">Month</option>
-						<?php 
-						for ($i = 0; $i <= 12; $i ++)
-						{
-							$interval = '+'.$i.' month';
-							?>
-							<option value="/rooms/month/from/<?php echo date('Y-m-d', strtotime($interval, strtotime($curMonth))); ?>/">
-								<?php echo date('M Y', strtotime($interval, strtotime($curMonth))); ?>
-							</option>
-							<?php 
-						}
-						?>
-					</select>
-				</div>
+		
    					
-				<div class="empty-row row"></div>
-   					
-				<div class="room-row-box">
 					<?php 
-					foreach ($this->data['rooms'] as $room)
-					{
-						?>
-					<div class="rooms-month-name">
-						<p><?php echo $room['room']; ?></p>
-					</div>
-						<?php
-					}
    					
 // 					it calculates the url for the lins next and prev
 					if (!$_GET['from'])
 					{
-						$from = date('Y-m-d', strtotime(' -1 day'));
+						$from        = date('Y-m-d', strtotime(' -1 day'));
+						$month       = date('F', strtotime(' -1 day'));
 						$day['prev'] = date('Y-m-d', strtotime(' -31 day', strtotime($from)));
 						$day['next'] = date('Y-m-d', strtotime(' +31 day', strtotime($from)));
 					}
 					else 
 					{
-						$from = date('Y-m-d', strtotime($_GET['from']));
+						$from 		 = date('Y-m-d', strtotime($_GET['from']));
+						$month 		 = date('F', strtotime(' +1 day', strtotime($_GET['from'])));
 						$day['prev'] = date('Y-m-d', strtotime(' -31 day', strtotime($_GET['from'])));
 						$day['next'] = date('Y-m-d', strtotime(' +31 day', strtotime($_GET['from'])));
 					}
@@ -1985,23 +1973,43 @@ class Layout_View
 						{
 							$day[$i]['full'] 	= date('Y-m-d', strtotime($from));
 							$day[$i]['dayName'] = date('D', strtotime($from));
-							$day[$i]['day'] 	= date('M d', strtotime($from));
+							$day[$i]['day'] 	= date('Md', strtotime($from));
 						}
 						else
 						{
 							$day[$i]['full'] 	= date('Y-m-d', strtotime(' +'.($i-1).' day', strtotime($from)));
 							$day[$i]['dayName']	= date('D', strtotime(' +'.($i-1).' day', strtotime($from)));
-							$day[$i]['day'] 	= date('M d', strtotime(' +'.($i-1).' day', strtotime($from)));
+							$day[$i]['day'] 	= date('Md', strtotime(' +'.($i-1).' day', strtotime($from)));
 						}
 					}
 					
 					?>
-				</div>
-			</div>
 			<div class="col-sm-11">
 				<div class="row">
 					<div class="row status-bar ">
-						<div class="row col-sm-10">
+						<div class="row col-sm-1">
+							<div class="select-month">
+								<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+									<option value="/rooms/">Month</option>
+									<?php 
+									for ($i = 0; $i <= 12; $i ++)
+									{
+										$interval = '+'.$i.' month';
+										?>
+										<option value="/rooms/month/from/<?php echo date('Y-m-d', strtotime($interval, strtotime($curMonth))); ?>/">
+											<?php echo date('M Y', strtotime($interval, strtotime($curMonth))); ?>
+										</option>
+										<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+					
+						<div class="row col-sm-1">
+							<span><strong><?php echo $month; ?></strong></span>
+						</div>
+						<div class="row col-sm-8">
 							<a href="/rooms/">Week</a>
 							<a href="/rooms/month/">Month</a>
 						</div>
@@ -2014,6 +2022,10 @@ class Layout_View
 					<div class="row">
 						<div class="days-box">
 							<div class="row-week-day-header">
+								<div class="month-day" style="width: 5%;">
+									<p class="text-center"><small>Room</small></p> 
+									<p class="text-center month-bottom">#</p>
+								</div>
 								<?php 
 								for ($i = 1; $i <= 31; $i++)
 								{
@@ -2034,11 +2046,14 @@ class Layout_View
 								
 							?>
 								<div class="row-week-day">
+									<div class="rooms-month-name">
+										<p><?php echo $room['room']; ?></p>
+									</div>
 								<?php 
 								for ($i = 1; $i <= 31; $i++)
 								{
 									?>
-									<div class="month-day full">
+									<div class="month-day full vertHover-<?php echo $day[$i]['full'];?>" vertAux=".vertHover-<?php echo $day[$i]['full'];?>">
 									<?php 
 										if ($room['0']['reservations'])
 										{
