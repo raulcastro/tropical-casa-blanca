@@ -658,7 +658,27 @@ class Layout_View
 		<script src="/js/reservations.js"></script>
 		<script>
 		$(function() {
-			$( "#task-date, #checkIn, #checkOut" ).datepicker();
+			$( "#task-date" ).datepicker();
+
+			$( "#checkIn" ).datepicker({
+				altFormat: "d M, y",
+				changeMonth: true,
+			    changeYear: true,
+				onSelect: function(dateText, inst) 
+				{
+	            	$( "#checkOut" ).datepicker( "option", "defaultDate", dateText );
+	        	}
+        	});
+        	
+	        $( "#checkOut" ).datepicker({
+	        	altFormat: "d M, y",
+				changeMonth: true,
+			    changeYear: true,
+		        onSelect: function(dateText, inst) 
+		        {
+	            	$( "#checkIn" ).datepicker( "option", "defaultDate", dateText );
+	        	}
+        	});
 
 	<?php 
 					
@@ -1647,12 +1667,27 @@ class Layout_View
 		<script src="/js/reservations.js"></script>
 		<script>
 		$(function() {
-			$( "#checkIn, #checkOut" ).datepicker({
+
+			$( "#checkIn" ).datepicker({
 				altFormat: "d M, y",
 				changeMonth: true,
-			      changeYear: true
-				});
-			});
+			    changeYear: true,
+				onSelect: function(dateText, inst) 
+				{
+	            	$( "#checkOut" ).datepicker( "option", "defaultDate", dateText );
+	        	}
+        	});
+        	
+	        $( "#checkOut" ).datepicker({
+	        	altFormat: "d M, y",
+				changeMonth: true,
+			    changeYear: true,
+		        onSelect: function(dateText, inst) 
+		        {
+	            	$( "#checkIn" ).datepicker( "option", "defaultDate", dateText );
+	        	}
+        	});
+		});
 		</script>
 		<?php		
 	   	$signIn = ob_get_contents();
