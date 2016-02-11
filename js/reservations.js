@@ -508,11 +508,14 @@ function restaFechas(f1,f2)
  */
 function addReservationMember()
 {
-	var memberName = $('#member-name').val();
-	var memberLastName = $('#member-last-name').val();
+	var memberName 		= $('#member-name').val();
+	var memberLastName 	= $('#member-last-name').val();
 	
 	if (memberName && memberLastName )
 	{
+		$('#bookRoom').hide();
+		$('#loadingText').show();
+		
 		$.ajax({
 	        type:   'POST',
 	        url:    '/ajax/reservations.php',
@@ -528,8 +531,8 @@ function addReservationMember()
 	            {
 	            	$('#memberId').val(xml);
 	            	addReservation();
+	            	$('#loadingText').hide();
 	            	$('#completeProfileBtn').show();
-	            	$('#bookRoom').hide();
 	            	$('#completeProfileBtn').attr('href','/'+xml+'/new-reservation/');
 	            }
 	        }
@@ -595,6 +598,8 @@ function addReservationMemberPanel()
 	
 	if (memberId && roomId )
 	{
+		$('#bookRoomMember').hide();
+		
 		$.ajax({
 	        type:   'POST',
 	        url:    '/ajax/reservations.php',
@@ -615,6 +620,7 @@ function addReservationMemberPanel()
 	        {
 	            if (0 != xml)
 	            {
+	            	$('#bookRoomMember').show();
 	            	pathArray = $(location).attr('href').split( '/' );
 	            	
 	            	newURL = pathArray[0]+'//'+pathArray[2]+'/'+pathArray[3]+'/add-reservation-'+Math.floor((Math.random() * 100) + 1)+'/#utilitiesBox';

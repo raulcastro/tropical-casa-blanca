@@ -1198,7 +1198,9 @@ ul.inbox-pagination li {
 	display: none;
 }  
  
- 
+#loadingText {
+	display: none;
+} 
  
  
  

@@ -687,7 +687,7 @@ class Layout_View
 		{
 			if ($reservation['status'] != 5)
 			{
-	?>
+			?>
 				$( "#dateBoxCheckIn-<?php echo $reservation['reservation_id']; ?>").datepicker(
 					{
 						defaultDate:new Date("<?php echo Tools::formatMYSQLToJS($reservation['check_in']); ?>"),
@@ -1243,7 +1243,11 @@ class Layout_View
 				</div>
 					<?php
 				}
-				?>	
+				?>
+				
+				<div class="row text-center text-info" id="loadingText">
+					<i>Loading ...</i>
+				</div>
 			</div>
 		</div>
 		<?php
