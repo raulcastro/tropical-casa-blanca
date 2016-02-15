@@ -285,7 +285,7 @@ class Layout_View
 			<nav id='nav navbar-nav navbar-fixed-top'>
 				<ul class="nav navbar-nav main-menu">
 					<li><a <?php if ($_GET['section'] == 1) echo $active; ?> href="/dashboard/"><b><?php echo $this->data['userInfo']['name']; ?></b></a></li>
-					<!-- <li><a <?php if ($_GET['section'] == 5) echo $active; ?> href="#">Settings</a></li> -->					
+					<li><a <?php if ($_GET['section'] == 5) echo $active; ?> href="#">Main Sliders</a></li>					
 					<li><a <?php if ($_GET['section'] == 10) echo $active; ?> href="/sign-out/" class="sign-out">Log Out</a></li>
 				</ul>
 			</nav>
