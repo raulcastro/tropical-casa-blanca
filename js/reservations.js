@@ -150,9 +150,9 @@ function setPaymentType(resId, payId, payType)
 	        url:    '/ajax/reservations.php',
 	        data:{  
 		        	reservationId:	resId,
-		        	paymentId: 	payId,
-		        	payType: 	payType,
-		            opt: 		12
+		        	paymentId: 		payId,
+		        	payType: 		payType,
+		            opt: 			12
 	             },
 	        success:
 	        function(xml)
@@ -210,9 +210,9 @@ function getAllPayments(resId)
 	            	});
 	            	
 	            	$('.btn-pay-type').click(function(){
-	            		var info  = $(this).parent();
-	            		var resId = $(info).attr('res-id');
-	            		var payId = $(info).attr('pay-id');
+	            		var info  	= $(this).parent();
+	            		var resId 	= $(info).attr('res-id');
+	            		var payId 	= $(info).attr('pay-id');
 	            		var payType = $(this).attr('pay-type');
 	            		setPaymentType(resId, payId, payType);
 	            	});
@@ -621,9 +621,8 @@ function addReservationMemberPanel()
 	            if (0 != xml)
 	            {
 	            	$('#bookRoomMember').show();
-	            	pathArray = $(location).attr('href').split( '/' );
-	            	
-	            	newURL = pathArray[0]+'//'+pathArray[2]+'/'+pathArray[3]+'/add-reservation-'+Math.floor((Math.random() * 100) + 1)+'/#utilitiesBox';
+	            	pathArray 		= $(location).attr('href').split( '/' );
+	            	newURL 			= pathArray[0]+'//'+pathArray[2]+'/'+pathArray[3]+'/add-reservation-'+Math.floor((Math.random() * 100) + 1)+'/#utilitiesBox';
 	            	window.location = newURL;
 	            }
 	        }
@@ -654,9 +653,8 @@ function updateMemberReservation(reservationId)
 	            {
 	            	if (optRes == 5)// if it was a cancelation
 	            	{
-	            		pathArray = $(location).attr('href').split( '/' );
-		            	
-		            	newURL = pathArray[0]+'//'+pathArray[2]+'/'+pathArray[3]+'/process-cancelation'+reservationId+'/#utilitiesBox';
+	            		pathArray 	= $(location).attr('href').split( '/' );
+		            	newURL 		= pathArray[0]+'//'+pathArray[2]+'/'+pathArray[3]+'/process-cancelation'+reservationId+'/#utilitiesBox';
 		            	window.location = newURL;
 	            	}
 	            	else
@@ -725,14 +723,11 @@ function updateAvailableRooms(resId)
 	$('#totalNightsRes-'+resId).html(totalNights);
 	
 	$('#availableRoomsSelect-'+resId+' option').remove();
-//	var loadingOption  = '<option selected>Loading Rooms ... </option>';
-//	$('#availableRoomsSelect-'+resId).append(loadingOption);
 	
 	var roomId 			= $('#currentRoomId-'+resId).val();
 	var currentCheckIn 	= $('#currentCheckIn-'+resId).val();
 	var currentCheckOut = $('#currentCheckOut-'+resId).val();
 	
-//	alert(checkIn);
 	if (checkIn && checkOut )
 	{
 		$.ajax({
@@ -751,7 +746,6 @@ function updateAvailableRooms(resId)
 	        {
 	            if (0 != roomsAvailableList)
 	            {
-	            	//alert(roomsAvailableList);
 	            	$('#availableRoomsSelect-'+resId+' option').remove();
 	            	$('#availableRoomsSelect-'+resId).append(roomsAvailableList);
 	            }

@@ -199,8 +199,11 @@ class Layout_View
 				</div>
 			</div>
 			<?php
-			}else {
-				switch ($section) {
+			}
+			else
+			{
+				switch ($section) 
+				{
 					case 'sign-in':
 						echo self :: getSignInContent();
 					break;
@@ -213,6 +216,8 @@ class Layout_View
 					break;
 				}
 			}
+			
+			echo self::getFooter();
 			?>
 		</body>
 	</html>
@@ -424,9 +429,15 @@ class Layout_View
 			</ul>
 			
 			<ul class="nav nav-sidebar">
+				<?php 
+   				if ($this->data['userInfo']['type'] == 1)
+   				{
+   					?>
 				<li <?php if ($_GET['section'] == 16) echo $active; ?>><a href="/reports/">Reports</a></li>
+				<?php 
+				}
+				?>
 				<li <?php if ($_GET['section'] == 13) echo $active; ?>><a href="/rooms/">Rooms</a></li>
-				<!-- <li <?php if ($_GET['section'] == 11) echo $active; ?>><a href="/calendar/">Calendar</a></li> -->
 				<li <?php if ($_GET['section'] == 5) echo $active; ?>><a href="/agencies/">Agencies</a></li>
 			</ul>
 		</div>
@@ -1398,7 +1409,7 @@ class Layout_View
    			</div>
    			<br>
    			<?php 
-   			if ($data['status'] != '5')
+   			if ($data['status'] < 4)
    			{
    			?>
    			<div class="row-extra payment-extra" id="">
