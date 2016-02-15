@@ -126,7 +126,7 @@ class Layout_Model
 					LEFT JOIN user_detail d ON m.user_id = d.user_id
 					'.$filter.'
 					 ORDER BY m.member_id DESC
-					LIMIT 0, 10
+					LIMIT 0, 20
 					';
 
 			return $this->db->getArray($query);
@@ -176,6 +176,13 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * getAllCountries
+	 * 
+	 * get all the countries from the DB
+	 * 
+	 * @return Array if success, false on failed
+	 */
 	public function getAllCountries()
 	{
 		try {
@@ -189,6 +196,13 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * getAllStates
+	 * 
+	 * get all the states by a country
+	 * @param int $country
+	 * @return array of info if success, false on fail
+	 */
 	public function getAllStatesByCountry($country)
 	{
 		try
@@ -206,6 +220,14 @@ class Layout_Model
 		}
 	}
 	
+	/**
+	 * getCitiesByEstate
+	 * 
+	 * get the cities by state id
+	 * 
+	 * @param string $code
+	 * @return array of info if success, false on fail
+	 */
 	public function getCitiesByEstate($code)
 	{
 		try
@@ -907,7 +929,8 @@ class Layout_Model
 	{
 		$memberId = (int) $memberId;
 		try {
-			$query = 'SELECT s.reservation_id,
+			$query = 'SELECT 
+					s.reservation_id,
 					s.check_in,
 					DATE_ADD(s.check_in, INTERVAL -1 DAY) AS check_in_mask,
 					s.check_out,
@@ -1017,7 +1040,10 @@ class Layout_Model
 	{
 		try {
 			$roomId = (int) $roomId;
-			$query = 'SELECT r.*, rt.room_type, rt.abbr
+			$query = 'SELECT 
+					r.*, 
+					rt.room_type, 
+					rt.abbr
 					FROM rooms r
 					LEFT JOIN room_types rt ON rt.room_type_id = r.room_type_id
 					WHERE r.room_id = '.$roomId.'
@@ -1078,8 +1104,13 @@ class Layout_Model
 	public function addPayment($data)
 	{
 		try {
-			$query = 'INSERT INTO payments(reservation_id, description, cost, staying)
-						VALUES(?, ?, ?, ?);';
+			$query = 'INSERT INTO 
+					payments(
+						reservation_id, 
+						description, 
+						cost, 
+						staying)
+					VALUES(?, ?, ?, ?);';
 	
 			$prep = $this->db->prepare($query);
 	
@@ -1112,7 +1143,9 @@ class Layout_Model
 		try {
 			$reservation_id = (int) $reservation_id;
 			
-			$query = "SELECT * FROM payments WHERE reservation_id = ".$reservation_id;
+			$query = "SELECT * 
+						FROM payments 
+						WHERE reservation_id = ".$reservation_id;
 			return $this->db->getArray($query);
 			
 		} catch (Exception $e) {
@@ -1135,7 +1168,12 @@ class Layout_Model
 			
 			$stayingTotal = $this->getReservationStayingCostTotal($reservation_id);
 			
-			$query = 'SELECT SUM(cost) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND staying = 0";
+			$query = 'SELECT 
+						SUM(cost) as grand_total 
+						FROM payments 
+						WHERE reservation_id = '.$reservation_id." 
+						AND active = 1 
+						AND staying = 0";
 			
 			return ($this->db->getValue($query) + $stayingTotal);
 		} catch (Exception $e) {
@@ -1155,7 +1193,12 @@ class Layout_Model
 	{
 		try {
 			$reservation_id = (int) $reservation_id;
-			$query = 'SELECT IFNULL(SUM(cost), 0) as grand_total FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 1";
+			$query = 'SELECT 
+						IFNULL(SUM(cost), 0) as grand_total 
+						FROM payments 
+						WHERE reservation_id = '.$reservation_id." 
+						AND active = 1 
+						AND status = 1";
 			return $this->db->getValue($query);
 		} catch (Exception $e) {
 			return false;
@@ -1187,7 +1230,10 @@ class Layout_Model
 	{
 		try {
 			$reservation_id = (int) $reservation_id;
-			$query = 'SELECT price FROM reservations WHERE reservation_id = '.$reservation_id;
+			$query = 'SELECT 
+					price 
+					FROM reservations 
+					WHERE reservation_id = '.$reservation_id;
 			return $this->db->getValue($query);
 		} catch (Exception $e) {
 			return false;
@@ -1197,7 +1243,13 @@ class Layout_Model
 	public function getReservationStayingCostPaid($reservation_id)
 	{
 		try {
-			$query = 'SELECT IFNULL(SUM(cost), 0) as staying_paid FROM payments WHERE reservation_id = '.$reservation_id." AND active = 1 AND status = 1 AND staying = 1";
+			$query = 'SELECT 
+					IFNULL(SUM(cost), 0) as staying_paid 
+					FROM payments 
+					WHERE reservation_id = '.$reservation_id." 
+					AND active = 1 
+					AND status = 1 
+					AND staying = 1";
 			return $this->db->getValue($query);
 		} catch (Exception $e) {
 			return false;
@@ -1219,7 +1271,9 @@ class Layout_Model
 	public function setPaymentStatus($paymentId)
 	{
 		try {
-			$query = 'UPDATE payments SET status = 1 WHERE payment_id = '.$paymentId;
+			$query = 'UPDATE payments 
+					SET status = 1 
+					WHERE payment_id = '.$paymentId;
 			
 			return $this->db->run($query);
 		} catch (Exception $e) {
@@ -1230,7 +1284,9 @@ class Layout_Model
 	public function setPaymentType($data)
 	{
 		try {
-			$query = 'UPDATE payments SET payment_type = '.$data['payType'].' WHERE payment_id = '.$data['paymentId'];
+			$query = 'UPDATE payments 
+					SET payment_type = '.$data['payType'].' 
+					WHERE payment_id = '.$data['paymentId'];
 			return $this->db->run($query);
 		} catch (Exception $e) {
 			return false;
@@ -1240,7 +1296,9 @@ class Layout_Model
 	public function unActivePayment($paymentId)
 	{
 		try {
-			$query = 'UPDATE payments SET active = 0 WHERE payment_id = '.$paymentId;
+			$query = 'UPDATE payments 
+					SET active = 0 
+					WHERE payment_id = '.$paymentId;
 			return $this->db->run($query);
 		} catch (Exception $e) {
 			return false;
