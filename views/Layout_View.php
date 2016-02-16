@@ -217,7 +217,7 @@ class Layout_View
 				}
 			}
 			
-			echo self::getFooter();
+// 			echo self::getFooter();
 			?>
 		</body>
 	</html>
