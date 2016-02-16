@@ -36,4 +36,26 @@ RewriteRule ^rooms/month/from/([A-Za-z0-9-]+)/$ 	/rooms-month.php?from=$1&sectio
 RewriteRule ^reports/$ 						/reports.php?section=16
 RewriteRule ^reports/from/([A-Za-z0-9-]+)/$ 	/reports.php?from=$1&section=16
 
-#	Rooms
+#	Brand
+
+RewriteRule ^main-sliders/$ 					/main-sliders.php?section=17
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

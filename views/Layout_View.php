@@ -131,6 +131,10 @@ class Layout_View
 				case 'reports':
 					echo self :: getReportsHead();
 				break;
+				
+				case 'main-sliders':
+					echo self :: getMainSliderHead();
+	 			break;
 			}
 			?>
 		</head>
@@ -188,6 +192,10 @@ class Layout_View
 							
 							case 'reports':
 								echo self :: getReports();
+							break;
+							
+							case 'main-sliders':
+								echo self :: getMainSlider();
 							break;
 							
 							default :
@@ -285,7 +293,7 @@ class Layout_View
 			<nav id='nav navbar-nav navbar-fixed-top'>
 				<ul class="nav navbar-nav main-menu">
 					<li><a <?php if ($_GET['section'] == 1) echo $active; ?> href="/dashboard/"><b><?php echo $this->data['userInfo']['name']; ?></b></a></li>
-					<li><a <?php if ($_GET['section'] == 5) echo $active; ?> href="#">Main Sliders</a></li>
+					<li><a <?php if ($_GET['section'] == 17) echo $active; ?> href="/main-sliders/">Main Sliders</a></li>
 					<li><a <?php if ($_GET['section'] == 5) echo $active; ?> href="#">Manage Rooms</a></li>		
 					<li><a <?php if ($_GET['section'] == 10) echo $active; ?> href="/sign-out/" class="sign-out">Log Out</a></li>
 				</ul>
@@ -2541,4 +2549,39 @@ class Layout_View
     	ob_end_clean();
     	return $footer;
 	}
+	
+	/**
+	 * extra files for the main-slider
+	 * @return string
+	 */
+	public function getMainSliderHead()
+	{
+		ob_start();
+		?>
+		<script src="/js/agencies.js"></script>
+   		<?php		
+		$agenciesHead = ob_get_contents();
+		ob_end_clean();
+		return $agenciesHead;
+	}
+	
+	/**
+	 * Main slider
+	 * 
+	 * @return string
+	 */
+	public function getMainSlider()
+	{
+		ob_start();
+		?>
+		<div class="row">
+			main-sliders
+		</div>
+		<?php
+		$agencies = ob_get_contents();
+		ob_end_clean();
+		return $agencies; 
+	}
+	
+	
 }

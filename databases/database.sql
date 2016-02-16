@@ -170,7 +170,15 @@ CREATE TABLE `cancelations` (
 
 ALTER TABLE payments ADD COLUMN `staying` INT(1) DEFAULT 0;
 
-
+CREATE TABLE `sliders` (
+  `slider_id` int(10) NOT NULL AUTO_INCREMENT,
+  `slider` varchar(256) NOT NULL,
+  `title` varchar(256) DEFAULT '',
+  `cover` int(1) DEFAULT '0',
+  `link` varchar(512) DEFAULT NULL,
+  `info` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`slider_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
 
 
 
