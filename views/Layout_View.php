@@ -1034,43 +1034,23 @@ class Layout_View
 		if ($rooms)
 		{
 			?>
-			<ul class="roomTypeList">
+			<ul class="roomList">
 			<?php
 			$roomType = 0;
 			$c = 0;
 			foreach ($rooms as $room)
 			{
-				if ($c == 0 && $roomType != $room['room_type_id']) 
-				{
-					?>
-				<li class="row">
-					<ul class="roomList">
-					<?php
-					$roomType = $room['room_type_id'];
-				}
 				?>
-						<li class="row bg-success">
-							<div class="title col-sm-8">
-								<strong><?php echo $room['room']; ?></strong>
-								 - <?php echo $room['room_type']; ?>
-							</div>
-							<div class="operator col-sm-4">
-								<a href="javascript:void (0);" rn="<?php echo $room['room']; ?>" ri="<?php echo $room['room_id']; ?>">book now</a>
-							</div>
-						</li>
-				<?php
-				if ($roomType != $room['room_type_id'] )
-				{
-					?>
-					</ul>
+				<li class="row bg-success">
+					<div class="title col-sm-8">
+						<strong><?php echo $room['room']; ?></strong>
+						 - <?php echo $room['room_type']; ?>
+					</div>
+					<div class="operator col-sm-4">
+						<a href="javascript:void (0);" rn="<?php echo $room['room']; ?>" ri="<?php echo $room['room_id']; ?>">book now</a>
+					</div>
 				</li>
-				<li class="row">
-					
-					<ul class="roomList">	
-					<?php
-					$roomType = $room['room_type_id'];
-				}
-				$c++;
+				<?php
 			}
 			?>
 			</ul>
