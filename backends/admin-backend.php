@@ -277,19 +277,24 @@ class generalBackend
 			case 'reports':
 				if (!$_GET['from'])
 				{
-					$from = date('Y-m-d', strtotime(' -1 day'));
-					$start = date('Y-m-d', strtotime(' -1 day', strtotime($from)));
-					$end = date('Y-m-d', strtotime(' +31 day', strtotime($from)));
+					$from 	= date('Y-m-d', strtotime(' -1 day'));
+					$start 	= date('Y-m-d', strtotime(' -1 day', strtotime($from)));
+					$end 	= date('Y-m-d', strtotime(' +31 day', strtotime($from)));
 				}
 				else
 				{
-					$from = date('Y-m-d', strtotime($_GET['from']));
-					$start = date('Y-m-d', strtotime(' -1 day', strtotime($_GET['from'])));
-					$end = date('Y-m-d', strtotime(' +32 day', strtotime($_GET['from'])));
+					$from 	= date('Y-m-d', strtotime($_GET['from']));
+					$start 	= date('Y-m-d', strtotime(' -1 day', strtotime($_GET['from'])));
+					$end 	= date('Y-m-d', strtotime(' +32 day', strtotime($_GET['from'])));
 				}
 				
 				$reservationsArray = $this->model->getReservationsByRange($start, $end);
 				$data['reservations'] = $reservationsArray; 
+			break;
+			
+			case 'main-sliders':
+				$slidersArray 		= $this->model->getSliders();
+				$data['sliders'] 	= $slidersArray;
 			break;
 			
 			default:

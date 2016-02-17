@@ -1202,9 +1202,21 @@ ul.inbox-pagination li {
 	display: none;
 } 
  
- 
- 
- 
+/************** Sliders ****************/
+
+#slidersBox {
+	margin: 20px 0;
+} 
+
+.slider-item {
+	margin: 20px 0!important;
+	padding: 10px;
+	background-color: #F9F9F9;
+}
+
+.slider-item .slider-section {
+	margin: 10px 0;
+}
  
  
  

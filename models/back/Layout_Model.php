@@ -1393,7 +1393,104 @@ class Layout_Model
 		}
 	}
 	
+	public function addSlider($name)
+	{
+		try
+		{
+			$query = 'INSERT INTO sliders(slider)
+	                VALUES(?)';
+			
+			$prep = $this->db->prepare($query);
+			
+			$prep->bind_param(
+					's',
+					$name
+					);
+				
+			if ($prep->execute())
+				return $prep->insert_id;
+		}
+		catch (Exception $e)
+		{
+			return false;
+		}
+	}
+	
+	public function getSliders()
+	{
+		try {
+			$query = 'SELECT * FROM sliders ORDER BY slider_id DESC';
+			
+			return $this->db->getArray($query);
+			
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function updateSlider($data)
+	{
+		try {
+			$query = 'UPDATE sliders 
+					SET 
+					title = ?,
+					link = ?,
+					info = ?
+					WHERE slider_id = ?
+					';
+			
+			$prep = $this->db->prepare($query);
+			
+			$prep->bind_param(
+					'sssi', 
+					$data['titleSlider'],
+					$data['linkSlider'],
+					$data['infoSlider'],
+					$data['sId']
+					);
+			
+			return $prep->execute();
+			
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	public function deleteSlider($data)
+	{
+		try {
+			$query = 'DELETE FROM sliders WHERE slider_id = ?';
+			
+			$prep = $this->db->prepare($query);
+			
+			$prep->bind_param('i', $data['sId']);
+			
+			if($prep->execute())
+			{
+				return true;
+			}
+			
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

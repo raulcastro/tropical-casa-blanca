@@ -4,6 +4,7 @@
 .settings/
 databases/
 deploy/
+images-system/
 
 # Object files
 *.o

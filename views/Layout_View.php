@@ -2558,7 +2558,9 @@ class Layout_View
 	{
 		ob_start();
 		?>
-		<script src="/js/agencies.js"></script>
+		<link href="/css/uploadfile.css" rel="stylesheet">
+		<script src="/js/jquery.uploadfile.min.js"></script>
+		<script src="/js/sliders.js"></script>
    		<?php		
 		$agenciesHead = ob_get_contents();
 		ob_end_clean();
@@ -2575,12 +2577,60 @@ class Layout_View
 		ob_start();
 		?>
 		<div class="row">
-			main-sliders
+			<div class="col-sm-12">
+				<h5>(2050 * 640 px)</h5>
+			</div>
+			<div class="col-sm-12 upload-slider">
+				Upload
+			</div>
+		</div>
+		
+		<div class="row" id="slidersBox">
+			<?php 
+			foreach ($this->data['sliders'] as $slider)
+			{
+				echo self::getSliderItem($slider);
+			}
+			?>
 		</div>
 		<?php
 		$agencies = ob_get_contents();
 		ob_end_clean();
 		return $agencies; 
+	}
+	
+	public function getSliderItem($slider)
+	{
+		ob_start();
+		?>
+		<div class="col-sm-12 slider-item" id="sId-<?php echo $slider['slider_id']; ?>">
+			<div class="col-sm-12">
+				<div class="col-sm-4">
+					<img alt="" src="/images-system/sliders/<?php echo $slider['slider']; ?>" />
+				</div>
+				<div class="col-sm-offset-7 col-sm-1">
+					<a href="javascript:void(0);" class="btn btn-info btn-xs saveSlider" sId="<?php echo $slider['slider_id']; ?>">Save</a>
+					<a href="javascript:void(0);" class="btn btn-danger btn-xs deleteSlider" sId="<?php echo $slider['slider_id']; ?>">Delete</a>
+				</div>
+			</div>
+			
+			<div class="col-sm-12 slider-section">
+				<div class="col-sm-6">
+					<input type="text" placeholder="Title" class="form-control" id="titleSlider-<?php echo $slider['slider_id']; ?>" value="<?php echo $slider['title']; ?>">
+				</div>
+				<div class="col-sm-6">
+					<input type="text" placeholder="Link" class="form-control" id="linkSlider-<?php echo $slider['slider_id']; ?>" value="<?php echo $slider['link']; ?>">
+				</div>
+			</div>
+			
+			<div class="col-sm-12 slider-section">
+				<textarea rows="2" cols="" class="form-control" placeholder="Info" id="infoSlider-<?php echo $slider['slider_id']; ?>"><?php echo $slider['info']; ?></textarea>
+			</div>
+		</div>
+		<?php
+		$sliders = ob_get_contents();
+		ob_end_clean();
+		return $sliders;
 	}
 	
 	
