@@ -308,7 +308,6 @@ class Layout_View
     	return $header;
     }
     
-    
     /**
      * it is the head that works for the sign in section, aparently isn't getting 
      * any parameter, I just left it here for future cases
@@ -501,7 +500,7 @@ class Layout_View
    	/**
    	 * Last n members
    	 * 
-   	 * Is like a preview, it is printed onthe dashboard
+   	 * Is like a preview, it is printed on the dashboard
    	 * 
    	 * @return string
    	 */
@@ -699,7 +698,6 @@ class Layout_View
 	            	$( "#checkIn" ).datepicker( "option", "defaultDate", dateText );
 	        	}
         	});
-
 	<?php 
 					
 	if ($this->data['memberReservations'])
@@ -735,7 +733,7 @@ class Layout_View
    			}
 		}
 	?>
-			});
+		});
 		</script>
 		
 		<?php
@@ -1173,7 +1171,7 @@ class Layout_View
 						<input type="text" id="member-last-name" />
 					</div>
 				</div>
-					<?php
+				<?php
 				}
 				?>
 				
@@ -1233,7 +1231,7 @@ class Layout_View
 				<div class="row text-center">
 					<a href="javascript:void(0);" class="text-success" id="completeProfileBtn">Complete Profile</a>
 				</div>
-					<?php
+				<?php
 				}
 				else 
 				{
@@ -1241,7 +1239,7 @@ class Layout_View
 				<div class="row text-center">
 					<a href="javascript:void(0);" class="btn btn-info btn-xs" id="bookRoomMember">Book Now</a>
 				</div>
-					<?php
+				<?php
 				}
 				?>
 				
@@ -1299,7 +1297,7 @@ class Layout_View
    						foreach ($data['availableRooms'] as $room)
    						{
    							?>
-   							<option value="<?php echo $room['room_id']; ?>"><?php echo $room['room']; ?></option>
+   						<option value="<?php echo $room['room_id']; ?>"><?php echo $room['room']; ?></option>
    							<?php
    						}
    						?>
@@ -1341,7 +1339,7 @@ class Layout_View
 						}
 						?>
 					</select>
-   						<?php
+   					<?php
    					}
    					else
    					{
@@ -1458,7 +1456,9 @@ class Layout_View
    			if ($payment['active'] == 0)
    			{
    				echo "<s>".$payment['description']."</s>";
-   			} else {
+   			} 
+   			else 
+   			{
    				echo $payment['description']; 
    			}
    			?>
@@ -1470,7 +1470,9 @@ class Layout_View
    			if ($payment['active'] == 0)
    			{
    				echo "<s>".$payment['cost']."</s>";
-   			} else {
+   			} 
+   			else 
+   			{
    				echo $payment['cost']; 
    			}
    			?>
@@ -1736,17 +1738,18 @@ class Layout_View
 			<script>
 			// Grab all elements with the class "hasTooltip"
 			$(document).ready(function() {
-			$('.hasTooltip').each(function() { // Notice the .each() loop, discussed below
-			    $(this).qtip({
-			        content: {
-			            text: $(this).next('div') // Use the "div" element next to this for the content
-			        },
-			        hide: {
-						fixed: true,
-						delay: 300
-					}
-			    });
-			});
+				$('.hasTooltip').each(function() 
+				{ // Notice the .each() loop, discussed below
+				    $(this).qtip({
+				        content: {
+				            text: $(this).next('div') // Use the "div" element next to this for the content
+				        },
+				        hide: {
+							fixed: true,
+							delay: 300
+						}
+				    });
+				});
 			});
 			</script>
    		<?php		
@@ -1906,7 +1909,7 @@ class Layout_View
 									<?php
 								}
 								?>
-								<div class="clearfix"></div>
+									<div class="clearfix"></div>
 								</div>
 							<?php 
 							}
@@ -1985,10 +1988,7 @@ class Layout_View
    		$curMonth = date('M Y');
 		?>
 		<div class="row col-sm-12 rooms-calendar">
-		
-   					
 					<?php 
-   					
 // 					it calculates the url for the lins next and prev
 					if (!$_GET['from'])
 					{
@@ -2021,7 +2021,6 @@ class Layout_View
 							$day[$i]['day'] 	= date('Md', strtotime(' +'.($i-1).' day', strtotime($from)));
 						}
 					}
-					
 					?>
 			<div class="col-sm-11">
 				<div class="row">
@@ -2490,7 +2489,7 @@ class Layout_View
 		   					?>
 		   				</tbody>
 		   			</table>
-			</div>
+				</div>
 			</div>
 		</div>
 		<?php
