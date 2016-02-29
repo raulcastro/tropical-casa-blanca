@@ -942,6 +942,7 @@ class Layout_Model
 					s.status,
 					s.external_id,
 					s.room_id,
+					DATEDIFF(s.check_out, s.check_in) AS n_days,
 					rt.room_type,
 					rt.abbr,
 					r.room,

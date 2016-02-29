@@ -1328,8 +1328,9 @@ class Layout_View
    			<div class="row extra">
    				<div class="col-sm-2">Room Type: <strong><?php echo $data['room_type']; ?></strong></div>
    				<div class="col-sm-2">Reservation ID: <strong><?php echo $data['reservation_id']; ?></strong></div>
-   				<div class="col-sm-4">Adults: <strong><?php echo $data['adults']; ?></strong></div>
-   				<div class="col-sm-4">Children: <strong><?php echo $data['children']; ?></strong></div>
+   				<div class="col-sm-2">Adults: <strong><?php echo $data['adults']; ?></strong></div>
+   				<div class="col-sm-2">Children: <strong><?php echo $data['children']; ?></strong></div>
+   				<div class="col-sm-2">No. of nights: <strong><?php echo $data['n_days']; ?></strong></div>
    			</div>
    			
    			<div class="row extra">
