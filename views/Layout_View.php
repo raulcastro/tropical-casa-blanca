@@ -2409,7 +2409,7 @@ class Layout_View
 				<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
 					<option value="/rooms/">Select a month</option>
 					<?php 
-					for ($i = 0; $i <= 12; $i ++)
+					for ($i = -18; $i <= 6; $i ++)
 					{
 						$interval = '+'.$i.' month';
 						?>
